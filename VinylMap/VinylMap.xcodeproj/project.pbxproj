@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		290B9DC9625C84FB7A681CD3 /* libPods-VinylMap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DB2F4E455B0DD720EF5E177 /* libPods-VinylMap.a */; };
 		2B6016F21BFCC978003DB81A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B6016F11BFCC978003DB81A /* main.m */; };
 		2B6016F51BFCC978003DB81A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B6016F41BFCC978003DB81A /* AppDelegate.m */; };
 		2B6016F81BFCC978003DB81A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B6016F71BFCC978003DB81A /* ViewController.m */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0B6AC5D55AAFBD88916EA832 /* Pods-VinylMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VinylMap.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VinylMap/Pods-VinylMap.debug.xcconfig"; sourceTree = "<group>"; };
 		2B6016ED1BFCC978003DB81A /* VinylMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VinylMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B6016F11BFCC978003DB81A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2B6016F31BFCC978003DB81A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -26,6 +28,8 @@
 		2B6016FC1BFCC978003DB81A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2B6016FF1BFCC978003DB81A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2B6017011BFCC978003DB81A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4DB2F4E455B0DD720EF5E177 /* libPods-VinylMap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VinylMap.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC7883F19BEA89C8E01E26FD /* Pods-VinylMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VinylMap.release.xcconfig"; path = "Pods/Target Support Files/Pods-VinylMap/Pods-VinylMap.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,17 +37,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				290B9DC9625C84FB7A681CD3 /* libPods-VinylMap.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		246B8CFC43E89A4BD3048959 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4DB2F4E455B0DD720EF5E177 /* libPods-VinylMap.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		2B6016E41BFCC978003DB81A = {
 			isa = PBXGroup;
 			children = (
 				2B6016EF1BFCC978003DB81A /* VinylMap */,
 				2B6016EE1BFCC978003DB81A /* Products */,
+				8C44B61D7914FBE819173F96 /* Pods */,
+				246B8CFC43E89A4BD3048959 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -79,6 +94,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		8C44B61D7914FBE819173F96 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0B6AC5D55AAFBD88916EA832 /* Pods-VinylMap.debug.xcconfig */,
+				BC7883F19BEA89C8E01E26FD /* Pods-VinylMap.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -86,9 +110,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2B6017041BFCC978003DB81A /* Build configuration list for PBXNativeTarget "VinylMap" */;
 			buildPhases = (
+				FEBB8D6319CAD013F7782AF9 /* Check Pods Manifest.lock */,
 				2B6016E91BFCC978003DB81A /* Sources */,
 				2B6016EA1BFCC978003DB81A /* Frameworks */,
 				2B6016EB1BFCC978003DB81A /* Resources */,
+				14BE499D91F56FFFD044A468 /* Embed Pods Frameworks */,
+				AE76E0CE1F2F510F41F22F61 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -143,6 +170,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		14BE499D91F56FFFD044A468 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VinylMap/Pods-VinylMap-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AE76E0CE1F2F510F41F22F61 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VinylMap/Pods-VinylMap-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FEBB8D6319CAD013F7782AF9 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2B6016E91BFCC978003DB81A /* Sources */ = {
@@ -261,6 +336,7 @@
 		};
 		2B6017051BFCC978003DB81A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0B6AC5D55AAFBD88916EA832 /* Pods-VinylMap.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = VinylMap/Info.plist;
@@ -272,6 +348,7 @@
 		};
 		2B6017061BFCC978003DB81A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BC7883F19BEA89C8E01E26FD /* Pods-VinylMap.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = VinylMap/Info.plist;
@@ -300,6 +377,7 @@
 				2B6017061BFCC978003DB81A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
