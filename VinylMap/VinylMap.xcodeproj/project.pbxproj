@@ -14,6 +14,7 @@
 		2B6016FB1BFCC978003DB81A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B6016F91BFCC978003DB81A /* Main.storyboard */; };
 		2B6016FD1BFCC978003DB81A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B6016FC1BFCC978003DB81A /* Assets.xcassets */; };
 		2B6017001BFCC978003DB81A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B6016FE1BFCC978003DB81A /* LaunchScreen.storyboard */; };
+		2B60170C1BFCDFE4003DB81A /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B60170B1BFCDFE4003DB81A /* Constants.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,8 @@
 		2B6016FC1BFCC978003DB81A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2B6016FF1BFCC978003DB81A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2B6017011BFCC978003DB81A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2B60170A1BFCDFE4003DB81A /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		2B60170B1BFCDFE4003DB81A /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		4DB2F4E455B0DD720EF5E177 /* libPods-VinylMap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VinylMap.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC7883F19BEA89C8E01E26FD /* Pods-VinylMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VinylMap.release.xcconfig"; path = "Pods/Target Support Files/Pods-VinylMap/Pods-VinylMap.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -73,6 +76,8 @@
 		2B6016EF1BFCC978003DB81A /* VinylMap */ = {
 			isa = PBXGroup;
 			children = (
+				2B60170A1BFCDFE4003DB81A /* Constants.h */,
+				2B60170B1BFCDFE4003DB81A /* Constants.m */,
 				2B6016F31BFCC978003DB81A /* AppDelegate.h */,
 				2B6016F41BFCC978003DB81A /* AppDelegate.m */,
 				2B6016F61BFCC978003DB81A /* ViewController.h */,
@@ -227,6 +232,7 @@
 				2B6016F81BFCC978003DB81A /* ViewController.m in Sources */,
 				2B6016F51BFCC978003DB81A /* AppDelegate.m in Sources */,
 				2B6016F21BFCC978003DB81A /* main.m in Sources */,
+				2B60170C1BFCDFE4003DB81A /* Constants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
