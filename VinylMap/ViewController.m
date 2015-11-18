@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "BarCodeViewController.h"
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *lindaButton;
@@ -39,8 +40,9 @@
     
 }
 
-- (IBAction)jasonButtonPressed:(id)sender {
-    
+- (IBAction)jasonButtonPressed:(id)sender
+{
+    BarcodeViewController *barcodeVC;
     
     
 }
