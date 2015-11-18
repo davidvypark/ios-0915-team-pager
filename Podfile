@@ -9,6 +9,6 @@ pod 'Masonry'
 pod 'LayerKit'
 pod 'Atlas'
 pod 'RSBarcodes', '~> 0.1.4'
-
+pod 'AFNetworking'
 end
 

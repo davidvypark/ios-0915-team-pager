@@ -1,4 +1,25 @@
 PODS:
+  - AFNetworking (2.6.3):
+    - AFNetworking/NSURLConnection (= 2.6.3)
+    - AFNetworking/NSURLSession (= 2.6.3)
+    - AFNetworking/Reachability (= 2.6.3)
+    - AFNetworking/Security (= 2.6.3)
+    - AFNetworking/Serialization (= 2.6.3)
+    - AFNetworking/UIKit (= 2.6.3)
+  - AFNetworking/NSURLConnection (2.6.3):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.6.3):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.6.3)
+  - AFNetworking/Security (2.6.3)
+  - AFNetworking/Serialization (2.6.3)
+  - AFNetworking/UIKit (2.6.3):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
   - Atlas (1.0.11):
     - LayerKit (>= 0.16.0)
   - LayerKit (0.16.0)
@@ -7,6 +28,7 @@ PODS:
   - RSBarcodes (0.1.4)
 
 DEPENDENCIES:
+  - AFNetworking
   - Atlas
   - LayerKit
   - Masonry
@@ -14,6 +36,7 @@ DEPENDENCIES:
   - RSBarcodes (~> 0.1.4)
 
 SPEC CHECKSUMS:
+  AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   Atlas: 9bb6dccf270236d591b36882288ecf185b464f82
   LayerKit: 8976a2a4d5f73b808e6328a5c66732605a3c247a
   Masonry: ff105a956abcd19a618b2028b121cb638d7a8e2f
