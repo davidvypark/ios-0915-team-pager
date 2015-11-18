@@ -75,10 +75,9 @@
                                                              AVMetadataMachineReadableCodeObject *barcodeObject = barcodeObjects.firstObject;
                                                              [[BarcodesObject sharedBarcodes].barcodesSet addObject:barcodeObject.stringValue];
                                                              dispatch_async(dispatch_get_main_queue(), ^{
-                                                                 [self.scannerVC dismissViewControllerAnimated:true completion:nil];
-                                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                                 [self.scannerVC dismissViewControllerAnimated:true completion:^{
                                                                      [self barcodeDisplayAlertViewControllerFor:barcodeObject.stringValue];
-                                                                 });
+                                                                 }];
                                                              });
                                                          } preferredCameraPosition:AVCaptureDevicePositionBack];
     [self.scannerVC setStopOnFirst:YES];
@@ -168,6 +167,14 @@
                                           alertControllerWithTitle:@"Barcode Found"
                                           message:barcode
                                           preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       NSLog(@"Cancel action");
+                                   }];
+    
     UIAlertAction *okAction = [UIAlertAction
                                actionWithTitle:NSLocalizedString(@"OK", @"OK action")
                                style:UIAlertActionStyleDefault
@@ -176,13 +183,6 @@
                                    //ADD OBJECT ACTION
                                }];
     
-    UIAlertAction *cancelAction = [UIAlertAction
-                                   actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
-                                   style:UIAlertActionStyleCancel
-                                   handler:^(UIAlertAction *action)
-                                   {
-                                       NSLog(@"Cancel action");
-                                   }];
     
     [alertController addAction:okAction];
     [alertController addAction:cancelAction];
