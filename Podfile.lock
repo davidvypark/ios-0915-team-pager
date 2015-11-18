@@ -20,8 +20,6 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - Atlas (1.0.15):
-    - LayerKit (>= 0.17.1)
   - LayerKit (0.17.2)
   - Masonry (0.6.3)
   - MTBBarcodeScanner (1.8.10)
@@ -29,7 +27,6 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
-  - Atlas
   - LayerKit
   - Masonry
   - MTBBarcodeScanner
@@ -37,7 +34,6 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
-  Atlas: bd66c5b17719857a6b9e22299f76527245e06e88
   LayerKit: 60f1f23923e2718992eba22c6e9a8ef92b6344bc
   Masonry: ff105a956abcd19a618b2028b121cb638d7a8e2f
   MTBBarcodeScanner: 20bdb750b6f7ef34d7fdf6bf7831a69b45a3d08f
