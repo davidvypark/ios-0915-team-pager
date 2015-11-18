@@ -8,8 +8,7 @@ pod "MTBBarcodeScanner"
 pod 'Masonry'
 pod 'LayerKit'
 pod 'Atlas'
+pod 'RSBarcodes', '~> 0.1.4'
 
-platform :ios, '7.0'
-pod 'ZXingObjC', '~> 3.0'
 end
 

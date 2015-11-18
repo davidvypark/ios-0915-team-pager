@@ -8,7 +8,7 @@
 
 #import "BarCodeViewController.h"
 #import <Masonry.h>
-
+#import <RSBarcodes.h>
 
 
 @interface BarcodeViewController ()
@@ -16,7 +16,9 @@
 @property (nonatomic, strong) UIButton *dismissButton;
 @property (nonatomic, strong) UIButton *barcodeButton;
 @property (nonatomic, strong) UIButton *secondBarcode;
-
+@property (nonatomic, strong) RSScannerViewController *scanner;
+@property (nonatomic, strong) RSScannerViewController *scannerVC;
+@property (nonatomic, strong) UIAlertController *barcodeAlert;
 
 @end
 
@@ -28,8 +30,8 @@
     //only allow portrait mode
     [self restrictRotation:YES];
     [[UIDevice currentDevice] setValue:@(UIInterfaceOrientationPortrait) forKey:@"orientation"];
+    [self secondBarcodeScanner];
     [self displayButtons];
-
 }
 
 
@@ -46,19 +48,19 @@
         make.height.equalTo(self.view).multipliedBy(0.25);
     }];
     
-    MTBBarcodeScanner *scanner = [[MTBBarcodeScanner alloc] initWithPreviewView:self.cameraView];
+    MTBBarcodeScanner *scannerMTB = [[MTBBarcodeScanner alloc] initWithPreviewView:self.cameraView];
     [MTBBarcodeScanner requestCameraPermissionWithSuccess:^(BOOL success) {
         if (success) {
             
-            [scanner startScanningWithResultBlock:^(NSArray *codes) {
+            [scannerMTB startScanningWithResultBlock:^(NSArray *codes) {
                 AVMetadataMachineReadableCodeObject *code = [codes firstObject];
                 NSLog(@"Found code: %@", code.stringValue);
                 
-                [scanner stopScanning];
+                [scannerMTB stopScanning];
             }];
             
         } else {
-            [self displayAlertViewController];
+            [self displayAlertViewControllerForCamera];
             
         }
     }];
@@ -67,12 +69,29 @@
 -(void)secondBarcodeScanner
 {
     
-    
+    self.scannerVC = [[RSScannerViewController alloc] initWithCornerView:YES
+                                                             controlView:YES
+                                                         barcodesHandler:^(NSArray *barcodeObjects) {
+                                                             AVMetadataMachineReadableCodeObject *barcodeObject = barcodeObjects.firstObject;
+                                                             [[BarcodesObject sharedBarcodes].barcodesSet addObject:barcodeObject.stringValue];
+                                                             dispatch_async(dispatch_get_main_queue(), ^{
+                                                                 [self.scannerVC dismissViewControllerAnimated:true completion:nil];
+                                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                                     [self barcodeDisplayAlertViewControllerFor:barcodeObject.stringValue];
+                                                                 });
+                                                             });
+                                                         } preferredCameraPosition:AVCaptureDevicePositionBack];
+    [self.scannerVC setStopOnFirst:YES];
+    [self.scannerVC setIsButtonBordersVisible:YES];
     
 }
 
+- (IBAction)presentModal:(id)sender {
+    [self presentViewController:self.scannerVC animated:YES completion:nil];
+}
 
 #pragma mark - buttons
+
 -(void)displayButtons
 {
     self.dismissButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -112,7 +131,7 @@
     
     
     
-    NSArray *buttonArray = @[self.dismissButton,self.barcodeButton];
+    NSArray *buttonArray = @[self.dismissButton,self.barcodeButton,self.secondBarcode];
     for (UIButton *button in buttonArray) {
         [button addTarget:self
                    action:@selector(buttonClicked:)
@@ -135,7 +154,7 @@
         [self barcodeScanner];
     } else if ([sendingButton isEqual:self.secondBarcode])
     {
-        [self secondBarcode];
+        [self presentModal:nil];
         
     }
     
@@ -143,7 +162,36 @@
 
 #pragma mark - alert view controller
 
--(void)displayAlertViewController
+-(void)barcodeDisplayAlertViewControllerFor:(NSString *)barcode
+{
+    UIAlertController *alertController = [UIAlertController
+                                          alertControllerWithTitle:@"Barcode Found"
+                                          message:barcode
+                                          preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"OK", @"OK action")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction *action)
+                               {
+                                   //ADD OBJECT ACTION
+                               }];
+    
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       NSLog(@"Cancel action");
+                                   }];
+    
+    [alertController addAction:okAction];
+    [alertController addAction:cancelAction];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+
+-(void)displayAlertViewControllerForCamera
 {
     UIAlertController *alertController = [UIAlertController
                                           alertControllerWithTitle:@"Camera"
@@ -169,6 +217,7 @@
     
     [self presentViewController:alertController animated:YES completion:nil];
 }
+
 
 #pragma mark - other
 

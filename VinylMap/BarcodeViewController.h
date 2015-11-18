@@ -8,11 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "MTBBarcodeScanner.h"
-#import <AVFoundation>
-#import <RSBarcodes/aHeader.h>
-#import <RSBarcodes/RSBarcodes.h>
+#import "BarcodesObject.h"
 #import "AppDelegate.h"
 
-@interface BarcodeViewController : UIViewController
+
+@interface BarcodeViewController : UIViewController <UIAlertViewDelegate>
 
 @end
