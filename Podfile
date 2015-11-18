@@ -10,5 +10,6 @@ pod 'ZXingObjC', '~> 3.0'
 pod 'Masonry'
 pod 'LayerKit'
 pod 'Atlas'
+pod 'AFNetworking'
 end
 

@@ -7,6 +7,8 @@
 //
 
 #import "ViewController.h"
+#import <AFNetworking.h>
+#import "VinylConstants.h"
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *lindaButton;
@@ -34,8 +36,21 @@
 
 
 - (IBAction)haarisButtonPressed:(id)sender {
+    NSString *discogsURL = @"https://api.discogs.com/database/search";
     
+    NSDictionary *params = @{@"q":@"659123015011", @"type":@"barcode", @"key":DiscogsConsumerKey, @"secret":DiscogsConsumerSecret};
     
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    [manager GET:discogsURL parameters:params success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+        NSDictionary *responseDictionary = (NSDictionary *)responseObject;
+        NSArray *resultsArray = responseDictionary[@"results"];
+        for (NSDictionary *vinylDictionary in resultsArray){
+            NSLog(@"%@", vinylDictionary[@"title"]);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"Request failed with error %@", error);
+    }];
     
 }
 
