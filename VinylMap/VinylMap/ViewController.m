@@ -9,6 +9,9 @@
 #import "ViewController.h"
 
 @interface ViewController ()
+@property (weak, nonatomic) IBOutlet UIButton *lindaButton;
+@property (weak, nonatomic) IBOutlet UIButton *haarisButton;
+@property (weak, nonatomic) IBOutlet UIButton *jasonButton;
 
 @end
 
@@ -23,5 +26,25 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (IBAction)lindaButtonPressed:(id)sender {
+    
+    
+}
+
+
+- (IBAction)haarisButtonPressed:(id)sender {
+    
+    
+    
+}
+
+- (IBAction)jasonButtonPressed:(id)sender {
+    
+    
+    
+}
+
+
 
 @end

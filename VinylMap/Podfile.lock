@@ -1,0 +1,18 @@
+PODS:
+  - Masonry (0.6.3)
+  - MTBBarcodeScanner (1.8.10)
+  - ZXingObjC (3.1.0):
+    - ZXingObjC/All (= 3.1.0)
+  - ZXingObjC/All (3.1.0)
+
+DEPENDENCIES:
+  - Masonry
+  - MTBBarcodeScanner
+  - ZXingObjC (~> 3.0)
+
+SPEC CHECKSUMS:
+  Masonry: ff105a956abcd19a618b2028b121cb638d7a8e2f
+  MTBBarcodeScanner: 20bdb750b6f7ef34d7fdf6bf7831a69b45a3d08f
+  ZXingObjC: bf15b3814f7a105b6d99f47da2333c93a063650a
+
+COCOAPODS: 0.39.0
