@@ -42,7 +42,9 @@
 
 - (IBAction)jasonButtonPressed:(id)sender
 {
-    BarcodeViewController *barcodeVC;
+    BarcodeViewController *barcodeVC = [[BarcodeViewController alloc] init];
+    [self presentViewController:barcodeVC animated:YES completion:nil];
+    
     
     
 }

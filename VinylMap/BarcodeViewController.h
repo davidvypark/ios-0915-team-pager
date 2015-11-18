@@ -7,6 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MTBBarcodeScanner.h"
+#import <AVFoundation>
+#import <RSBarcodes/aHeader.h>
+#import <RSBarcodes/RSBarcodes.h>
+#import "AppDelegate.h"
 
 @interface BarcodeViewController : UIViewController
 

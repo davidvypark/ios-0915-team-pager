@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
+@property (nonatomic, assign) bool restrictRotation;
 @property (strong, nonatomic) UIWindow *window;
 
 
