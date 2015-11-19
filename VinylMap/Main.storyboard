@@ -43,13 +43,13 @@
                                     <action selector="jasonButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mWd-5Y-ZuM"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M2N-j3-paH">
-                                <rect key="frame" x="78" y="332" width="30" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ocT-O7-Vbt">
+                                <rect key="frame" x="53" y="333" width="106" height="30"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="29"/>
-                                <state key="normal" title="+"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <state key="normal" title="DUMMY LOGIN"/>
                                 <connections>
-                                    <segue destination="G6t-G7-Qgk" kind="presentation" id="t3N-eg-xlQ"/>
+                                    <segue destination="LZT-Gn-6Fh" kind="showDetail" id="X4D-b9-6K5"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -65,6 +65,59 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="548" y="458"/>
+        </scene>
+        <!--Login View Controller-->
+        <scene sceneID="ie4-Xy-nGh">
+            <objects>
+                <viewController id="LZT-Gn-6Fh" customClass="LoginViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zq0-I4-jjV"/>
+                        <viewControllerLayoutGuide type="bottom" id="Cbw-L3-N8M"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="yVC-bS-S75">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DfL-Pv-HvT">
+                                <rect key="frame" x="35" y="82" width="104" height="30"/>
+                                <animations/>
+                                <state key="normal" title="GOOGLE PLUS"/>
+                                <connections>
+                                    <action selector="googleLoginPressed:" destination="LZT-Gn-6Fh" eventType="touchUpInside" id="aBZ-g6-P0Z"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cqF-lg-F9i">
+                                <rect key="frame" x="71" y="140" width="79" height="30"/>
+                                <animations/>
+                                <state key="normal" title="FACEBOOK"/>
+                                <connections>
+                                    <action selector="facebookLoginPressed:" destination="LZT-Gn-6Fh" eventType="touchUpInside" id="3EC-Si-Xo9"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C0u-cB-koa">
+                                <rect key="frame" x="77" y="214" width="66" height="30"/>
+                                <animations/>
+                                <state key="normal" title="DISCOGS"/>
+                                <connections>
+                                    <action selector="discogsLoginPressed:" destination="LZT-Gn-6Fh" eventType="touchUpInside" id="Upe-Nb-9Dh"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SUy-1W-Ymt">
+                                <rect key="frame" x="82" y="285" width="57" height="30"/>
+                                <animations/>
+                                <state key="normal" title="OURS??"/>
+                                <connections>
+                                    <action selector="otherLoginPressed:" destination="LZT-Gn-6Fh" eventType="touchUpInside" id="9sU-mz-OYP"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dzL-wL-qUY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="571" y="1105"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="fQV-Ne-Xgw">

@@ -20,8 +20,6 @@
 
 @implementation DiscogsAPI
 
-
-
 +(void)barcodeAPIsearch:(NSString *)barcode
          withCompletion:(void (^)(NSArray *arrayOfAlbums, bool isError))completionBlock
 {

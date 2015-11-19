@@ -9,5 +9,6 @@ pod 'Masonry'
 pod 'LayerKit'
 pod 'RSBarcodes', '~> 0.1.4'
 pod 'AFNetworking'
+pod 'AFOAuth2Manager'
 end
 

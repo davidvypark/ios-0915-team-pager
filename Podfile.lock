@@ -20,6 +20,8 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - AFOAuth2Manager (2.2.0):
+    - AFNetworking/NSURLConnection (~> 2.2)
   - LayerKit (0.17.2)
   - Masonry (0.6.3)
   - MTBBarcodeScanner (1.8.10)
@@ -27,6 +29,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
+  - AFOAuth2Manager
   - LayerKit
   - Masonry
   - MTBBarcodeScanner
@@ -34,6 +37,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
+  AFOAuth2Manager: 952eb62e8fd8022971e64c6e8fe28b9e999224af
   LayerKit: 60f1f23923e2718992eba22c6e9a8ef92b6344bc
   Masonry: ff105a956abcd19a618b2028b121cb638d7a8e2f
   MTBBarcodeScanner: 20bdb750b6f7ef34d7fdf6bf7831a69b45a3d08f
