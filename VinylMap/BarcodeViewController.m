@@ -13,7 +13,7 @@
 #import "VinylConstants.h"
 
 
-@interface BarcodeViewController ()
+@interface BarcodeViewController () <UIGestureRecognizerDelegate>
 @property (nonatomic, strong) UIView *cameraView;
 @property (nonatomic, strong) UIButton *dismissButton;
 @property (nonatomic, strong) UIButton *barcodeButton;
@@ -30,19 +30,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    self.view.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.5];
-    self.view.backgroundColor = [UIColor clearColor];
-    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-    UIVisualEffectView *backgroundView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-//    backgroundView.alpha = 1;
-    [self.view addSubview:backgroundView];
-    
-    [backgroundView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.edges.equalTo(self.view);
-        make.height.equalTo(self.view);
-        make.left.equalTo(self.view);
-        make.width.equalTo(self.view).multipliedBy(0.5);
+//    self.view.backgroundColor = [UIColor clearColor];
+    UIView *behindVisualEffect = [[UIView alloc] init];
+    behindVisualEffect.alpha = 0.9;
+    [self.view addSubview:behindVisualEffect];
+    [behindVisualEffect mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(behindVisualEffect.superview);
     }];
     
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    UIVisualEffectView *backgroundView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    backgroundView.accessibilityLabel = @"back out";
+    [behindVisualEffect addSubview:backgroundView];
+    
+
+    [backgroundView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
     
     [self barcodeScanner];
     
@@ -64,6 +68,7 @@
     self.cameraView.backgroundColor = [UIColor lightGrayColor];
     self.cameraView.opaque = YES;
     self.cameraView.alpha = 1;
+    self.cameraView.accessibilityLabel = @"cameraView";
     [self.view addSubview:self.cameraView];
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -94,6 +99,22 @@
 }
 
 
+-(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [super touchesEnded:touches withEvent:event];
+    
+    NSLog(@"%@",touches.anyObject.view);
+    
+    if([touches.anyObject.view.accessibilityLabel isEqualToString:@"backOut"])
+    {
+        NSLog(@"Dismiss Camera");
+        [self.delegate barcodeScanResult:@"dismissed"];
+    }
+    
+}
+
+
+
 //-(void)secondBarcodeScanner
 //{
 //    
@@ -111,10 +132,10 @@
 //    [self.scannerVC setIsButtonBordersVisible:YES];
 //    
 //}
-
-- (IBAction)presentModal:(id)sender {
-    [self presentViewController:self.scannerVC animated:YES completion:nil];
-}
+//
+//- (IBAction)presentModal:(id)sender {
+//    [self presentViewController:self.scannerVC animated:YES completion:nil];
+//}
 
 #pragma mark - buttons
 

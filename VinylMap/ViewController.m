@@ -10,11 +10,14 @@
 #import "BarCodeViewController.h"
 #import <AFNetworking.h>
 #import "VinylConstants.h"
+#import <Masonry.h>
+#import "DiscogsAPI.h"
 
-@interface ViewController ()
+@interface ViewController () <BarCodeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *lindaButton;
 @property (weak, nonatomic) IBOutlet UIButton *haarisButton;
 @property (weak, nonatomic) IBOutlet UIButton *jasonButton;
+@property (nonatomic, strong) BarcodeViewController *barcodeVC;
 
 @end
 
@@ -23,6 +26,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    UIImage *background = [UIImage imageNamed:@"russiaImage"];
+    UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:background];
+    [self.view insertSubview:backgroundImageView atIndex:0];
+    
+    [backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -59,12 +71,29 @@
 
 - (IBAction)jasonButtonPressed:(id)sender
 {
-    BarcodeViewController *barcodeVC = [[BarcodeViewController alloc] init];
-    [barcodeVC setModalPresentationStyle:UIModalPresentationOverFullScreen];
-    [self presentViewController:barcodeVC animated:NO completion:nil];
+    self.barcodeVC = [[BarcodeViewController alloc] init];
+    self.barcodeVC.delegate = self;
+    [self.barcodeVC setModalPresentationStyle:UIModalPresentationOverFullScreen];
+    [self presentViewController:self.barcodeVC animated:NO completion:nil];
     
+}
+
+-(NSArray *)barcodeScanResult:(NSString *)barcode
+{
+    [self.barcodeVC dismissViewControllerAnimated:NO completion:^{
+        NSLog(@"searching for %@",barcode);
+        UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        spinner.center = CGPointMake(160, 240);
+        spinner.tag = 12;
+        [self.view addSubview:spinner];
+        [spinner startAnimating];
+        [DiscogsAPI barcodeAPIsearch:barcode withCompletion:^(NSArray *arrayOfAlbums, bool isError) {
+            NSLog(@"%@",arrayOfAlbums);
+//            [spinner removeFromSuperview];
+        }];
+    }];
     
-    
+    return nil;
 }
 
 

@@ -15,7 +15,7 @@
 
 @required
 
--(void)barcodeScanResult:(NSString *)barcode;
+-(NSArray *)barcodeScanResult:(NSString *)barcode;
 
 @end
 
