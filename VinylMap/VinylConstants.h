@@ -8,5 +8,5 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString *const DiscogsConsumerKey;
-extern NSString *const DiscogsConsumerSecret;
+extern NSString *const DISCOGS_CONSUMER_KEY;
+extern NSString *const DISCOGS_CONSUMER_SECRET;

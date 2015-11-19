@@ -39,7 +39,7 @@
 - (IBAction)haarisButtonPressed:(id)sender {
     NSString *discogsURL = @"https://api.discogs.com/database/search";
     
-    NSDictionary *params = @{@"q":@"659123015011", @"type":@"barcode", @"key":DiscogsConsumerKey, @"secret":DiscogsConsumerSecret};
+    NSDictionary *params = @{@"q":@"659123015011", @"type":@"barcode", @"key":DISCOGS_CONSUMER_KEY, @"secret":DISCOGS_CONSUMER_SECRET};
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
@@ -58,7 +58,8 @@
 - (IBAction)jasonButtonPressed:(id)sender
 {
     BarcodeViewController *barcodeVC = [[BarcodeViewController alloc] init];
-    [self presentViewController:barcodeVC animated:YES completion:nil];
+    [barcodeVC setModalPresentationStyle:UIModalPresentationOverFullScreen];
+    [self presentViewController:barcodeVC animated:NO completion:nil];
     
     
     

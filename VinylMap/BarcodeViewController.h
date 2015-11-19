@@ -8,10 +8,24 @@
 
 #import <UIKit/UIKit.h>
 #import "MTBBarcodeScanner.h"
-#import "BarcodesObject.h"
 #import "AppDelegate.h"
 
 
+@protocol BarCodeViewControllerDelegate
+
+@required
+
+-(void)barcodeScanResult:(NSString *)barcode;
+
+@end
+
+
 @interface BarcodeViewController : UIViewController <UIAlertViewDelegate>
+
+@property (nonatomic, weak) id<BarCodeViewControllerDelegate> delegate;
+
+
+
+
 
 @end
