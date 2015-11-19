@@ -40,7 +40,7 @@
     
     UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
     UIVisualEffectView *backgroundView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-    backgroundView.accessibilityLabel = @"back out";
+    backgroundView.accessibilityLabel = @"backOut";
     [behindVisualEffect addSubview:backgroundView];
     
 

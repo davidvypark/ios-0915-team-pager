@@ -49,7 +49,6 @@
 
 
 
-
 - (IBAction)haarisButtonPressed:(id)sender {
     NSString *discogsURL = @"https://api.discogs.com/database/search";
     
@@ -69,6 +68,12 @@
     
 }
 
+
+
+
+
+
+
 - (IBAction)jasonButtonPressed:(id)sender
 {
     self.barcodeVC = [[BarcodeViewController alloc] init];
@@ -80,18 +85,25 @@
 
 -(NSArray *)barcodeScanResult:(NSString *)barcode
 {
-    [self.barcodeVC dismissViewControllerAnimated:NO completion:^{
-        NSLog(@"searching for %@",barcode);
-        UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        spinner.center = CGPointMake(160, 240);
-        spinner.tag = 12;
-        [self.view addSubview:spinner];
-        [spinner startAnimating];
-        [DiscogsAPI barcodeAPIsearch:barcode withCompletion:^(NSArray *arrayOfAlbums, bool isError) {
-            NSLog(@"%@",arrayOfAlbums);
-//            [spinner removeFromSuperview];
+    if([barcode isEqualToString:@"dismissed"])
+    {
+        [self.barcodeVC dismissViewControllerAnimated:NO completion:nil];
+    } else
+    {
+        [self.barcodeVC dismissViewControllerAnimated:NO completion:^{
+            NSLog(@"searching for %@",barcode);
+            UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            spinner.center = CGPointMake(160, 240);
+            spinner.tag = 12;
+            [self.view addSubview:spinner];
+            [spinner startAnimating];
+            [DiscogsAPI barcodeAPIsearch:barcode withCompletion:^(NSArray *arrayOfAlbums, bool isError) {
+                NSLog(@"%@",arrayOfAlbums);
+                [spinner removeFromSuperview];
+            }];
         }];
-    }];
+    }
+    
     
     return nil;
 }
