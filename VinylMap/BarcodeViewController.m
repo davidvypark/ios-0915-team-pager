@@ -103,11 +103,10 @@
 {
     [super touchesEnded:touches withEvent:event];
     
-    NSLog(@"%@",touches.anyObject.view);
+    NSLog(@"user touched this object: %@",touches.anyObject.view);
     
     if([touches.anyObject.view.accessibilityLabel isEqualToString:@"backOut"])
     {
-        NSLog(@"Dismiss Camera");
         [self.delegate barcodeScanResult:@"dismissed"];
     }
     

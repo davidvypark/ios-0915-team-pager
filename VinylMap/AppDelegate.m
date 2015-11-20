@@ -11,8 +11,8 @@
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <Google/Core.h>
 #import <Google/SignIn.h>
-
-
+#import "UserObject.h"
+#import "VinylConstants.h"
 
 @interface AppDelegate () <GIDSignInDelegate>
 
@@ -24,15 +24,23 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions]; // THIS WAKES UP THE FACEBOOK DELEGATES
+    [UserObject sharedUser].facebookUserID = [FBSDKAccessToken currentAccessToken].userID;
     
+    [self setUpGoogle];
     
-    NSError* configureError;
-    [[GGLContext sharedInstance] configureWithError: &configureError];
-    NSAssert(!configureError, @"Error configuring Google services: %@", configureError);
-    [GIDSignIn sharedInstance].delegate = self;
     
     return YES;
 }
+
+-(void)setUpGoogle
+{
+    NSError* configureError;
+    [[GGLContext sharedInstance] configureWithError: &configureError];
+    [GIDSignIn sharedInstance].delegate = self;
+    NSAssert(!configureError, @"Error configuring Google services: %@", configureError);
+    
+}
+
 
 -(void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user withError:(NSError *)error
 {
@@ -51,10 +59,21 @@
 -(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options
 {
     //MAKE THIS CONDITIONAL FOR FACEBOOK
-    [[FBSDKApplicationDelegate sharedInstance] application:app
-                                                   openURL:url
-                                         sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
-                                                annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
+    NSString *stringFromURL = [url absoluteString];
+    NSLog(@"%lu",(unsigned long)[stringFromURL rangeOfString:FACEBOOK_KEY].location);
+    if ([stringFromURL rangeOfString:FACEBOOK_KEY].location != NSNotFound) // facebook
+    {
+        [[FBSDKApplicationDelegate sharedInstance] application:app
+                                                       openURL:url
+                                             sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+                                                    annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
+    } else
+    {
+        
+        
+    }
+    
+    
     return YES;
 }
 
