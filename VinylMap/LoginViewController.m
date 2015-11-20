@@ -10,10 +10,12 @@
 #import <Masonry.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKApplicationDelegate.h>
 
 
 @interface LoginViewController () <FBSDKLoginButtonDelegate>
 @property (nonatomic, strong) FBSDKLoginButton *facebookLoginButton;
+@property (nonatomic, strong) UIButton *dismissViewControllerButton;
 
 @end
 
@@ -22,9 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
     [self setUpButtons];
-    
     
     
     
@@ -36,7 +36,6 @@
 -(void)setUpButtons
 {
     
-//    [FBSDKAccessToken currentAccessToken]; // CALL THIS FIRST BUT TO CHECK IF BUTTON IS NECESSARY
     self.facebookLoginButton = [[FBSDKLoginButton alloc] init];
     self.facebookLoginButton.accessibilityIdentifier = @"facebookLogin";
     [self.view addSubview:self.facebookLoginButton];
@@ -48,9 +47,21 @@
     }];
     
     
+    self.dismissViewControllerButton = [[UIButton alloc] init];
+    [self.dismissViewControllerButton setTitle:@"Dismiss VC" forState:UIControlStateNormal];
+    self.dismissViewControllerButton.tintColor = [UIColor grayColor];
+    self.dismissViewControllerButton.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:self.dismissViewControllerButton];
+    [self.dismissViewControllerButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@40);
+        make.width.equalTo(self.view);
+        make.bottomMargin.equalTo(self.view);
+    }];
     
-//    NSArray *arrayOfButtons = @[self.facebookLoginButton];
-    for (id button in @[]) {
+    
+    
+    NSArray *arrayOfButtons = @[self.dismissViewControllerButton];
+    for (id button in arrayOfButtons) {
         [button addTarget:self
                    action:@selector(buttonClicked:)
          forControlEvents:UIControlEventTouchUpInside];
@@ -62,11 +73,23 @@
 -(void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error
 
 {
-    NSLog(@"did complete: %@", result);
-    [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-        NSLog(@"me: %@", result);
-    }];
+    NSLog(@"did complete with error %@",error);
+//    [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+//        NSLog(@"me: %@", result);
+//    }];
+    NSSet *grantedPermissions = result.token.permissions;
+    NSSet *declinedPermissions = result.token.declinedPermissions;
+    NSString *userID = result.token.userID;
+    NSString *tokenString = result.token.tokenString;
+    NSLog(@"userID: %@ \n token: %@ \n permissions: %@ \n declined permissions: %@ \n",userID,tokenString,grantedPermissions,declinedPermissions);
+    
+    
+    
+    
 }
+
+
+
 
 
 -(void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton
@@ -74,13 +97,19 @@
     
 }
 
+- (BOOL) loginButtonWillLogin:(FBSDKLoginButton *)loginButton
+{
+    
+    return YES;
+}
+
 
 -(void)buttonClicked:(UIButton *)sendingButton
 {
 
-    if([sendingButton isEqual:self.facebookLoginButton])
+    if([sendingButton isEqual:self.dismissViewControllerButton])
     {
-
+        [self dismissViewControllerAnimated:YES completion:nil];
     } else if (YES)
     {
         
@@ -88,6 +117,8 @@
     {
         
     }
+    
+    
 }
 
 

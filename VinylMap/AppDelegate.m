@@ -9,8 +9,12 @@
 #import "AppDelegate.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <Google/Core.h>
+#import <Google/SignIn.h>
 
-@interface AppDelegate ()
+
+
+@interface AppDelegate () <GIDSignInDelegate>
 
 @end
 
@@ -19,10 +23,21 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions]; // THIS WAKES UP THE FACEBOOK DELEGATES
     
     
+    NSError* configureError;
+    [[GGLContext sharedInstance] configureWithError: &configureError];
+    NSAssert(!configureError, @"Error configuring Google services: %@", configureError);
+    [GIDSignIn sharedInstance].delegate = self;
     
     return YES;
+}
+
+-(void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user withError:(NSError *)error
+{
+    //GOOGLE'S APP DELEGATE FOR SIGN IN
+    
 }
 
 -(UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
@@ -35,17 +50,11 @@
 
 -(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options
 {
-    NSLog(@"User was authenticated and returned: \n%@",url.absoluteString);
-    
-//    NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:nil];
-    
+    //MAKE THIS CONDITIONAL FOR FACEBOOK
     [[FBSDKApplicationDelegate sharedInstance] application:app
                                                    openURL:url
-                                         sourceApplication:options[UIApplicationLaunchOptionsSourceApplicationKey]
-                                                annotation:options[UIApplicationLaunchOptionsAnnotationKey]];
-    
-    
-    
+                                         sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+                                                annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
     return YES;
 }
 

@@ -13,5 +13,7 @@ pod 'AFOAuth2Manager'
 pod 'FBSDKCoreKit'
 pod 'FBSDKLoginKit'
 pod 'FBSDKShareKit'
+pod 'Google'
+pod 'Google/SignIn'
 end
 

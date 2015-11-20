@@ -23,6 +23,9 @@ xcuserdata
 *.xcuserstate
 *.xcscmblueprint
 *.xcscheme
+
+## KEYS
+GoogleService-Info.plist
 *VinylConstants.m
 
 ## Obj-C/Swift specific
