@@ -11,6 +11,7 @@
 @implementation AlbumTableViewCell
 
 - (void)awakeFromNib {
+    
     // Initialization code
 }
 

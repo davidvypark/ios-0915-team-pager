@@ -22,6 +22,8 @@
 //        forCellWithReuseIdentifier:@"albumCell"];
     self.myCollection.delegate = self;
     self.myCollection.dataSource = self;
+    
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -34,12 +36,17 @@
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 4;
+    return 11;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
     AlbumCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"albumCell" forIndexPath:indexPath];
-    [cell.albumLabel setText:[NSString stringWithFormat:@"Album cell #%lu", indexPath.row]];
+    
+    
+    
+    [cell.albumLabel setText:[NSString stringWithFormat:@"Album #%lu", indexPath.row+1]];
     return cell;
 }
 
