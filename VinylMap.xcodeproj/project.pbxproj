@@ -18,6 +18,8 @@
 		2BF0EB431BFE843A00EA03B1 /* AlbumTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB421BFE843A00EA03B1 /* AlbumTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
 		2BF0EB461BFE847F00EA03B1 /* MyAlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB451BFE847F00EA03B1 /* MyAlbumsViewController.m */; settings = {ASSET_TAGS = (); }; };
 		2BF0EB491BFE84CC00EA03B1 /* AlbumsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB481BFE84CC00EA03B1 /* AlbumsTableViewController.m */; settings = {ASSET_TAGS = (); }; };
+		2BF0EB531BFF8E1D00EA03B1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2BF0EB521BFF8E1D00EA03B1 /* GoogleService-Info.plist */; settings = {ASSET_TAGS = (); }; };
+		2BF0EB551BFF9D0700EA03B1 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 2BF0EB541BFF9D0700EA03B1 /* Images */; settings = {ASSET_TAGS = (); }; };
 		2BFEA0F91BFE2E9500C65717 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFEA0F81BFE2E9500C65717 /* SearchViewController.m */; };
 		963AE0571BFD30CF001A2178 /* Users.json in Resources */ = {isa = PBXBuildFile; fileRef = 963AE0561BFD30CF001A2178 /* Users.json */; };
 		965333561BFE347D00BB4F7A /* DiscogsAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 965333551BFE347D00BB4F7A /* DiscogsAPI.m */; };
@@ -50,6 +52,8 @@
 		2BF0EB451BFE847F00EA03B1 /* MyAlbumsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAlbumsViewController.m; sourceTree = "<group>"; };
 		2BF0EB471BFE84CC00EA03B1 /* AlbumsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumsTableViewController.h; sourceTree = "<group>"; };
 		2BF0EB481BFE84CC00EA03B1 /* AlbumsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumsTableViewController.m; sourceTree = "<group>"; };
+		2BF0EB521BFF8E1D00EA03B1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2BF0EB541BFF9D0700EA03B1 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
 		2BFEA0F71BFE2E9500C65717 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		2BFEA0F81BFE2E9500C65717 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		4DB2F4E455B0DD720EF5E177 /* libPods-VinylMap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VinylMap.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -136,12 +140,14 @@
 				2BF0EB421BFE843A00EA03B1 /* AlbumTableViewCell.m */,
 				2BF0EB441BFE847F00EA03B1 /* MyAlbumsViewController.h */,
 				2BF0EB451BFE847F00EA03B1 /* MyAlbumsViewController.m */,
+				2BF0EB541BFF9D0700EA03B1 /* Images */,
 				2B6016FC1BFCC978003DB81A /* Assets.xcassets */,
 				2B6016FE1BFCC978003DB81A /* LaunchScreen.storyboard */,
 				9653335D1BFE5B0F00BB4F7A /* UserObject.h */,
 				9653335E1BFE5B0F00BB4F7A /* UserObject.m */,
 				2B6016F01BFCC978003DB81A /* Supporting Files */,
 				2B6017011BFCC978003DB81A /* Info.plist */,
+				2BF0EB521BFF8E1D00EA03B1 /* GoogleService-Info.plist */,
 				96AF908F1BFCE1DA00BCFC96 /* VinylConstants.h */,
 				96AF90901BFCE1DA00BCFC96 /* VinylConstants.m */,
 				963AE0561BFD30CF001A2178 /* Users.json */,
@@ -234,7 +240,9 @@
 			files = (
 				963AE0571BFD30CF001A2178 /* Users.json in Resources */,
 				96AF90991BFCE64B00BCFC96 /* Main.storyboard in Resources */,
+				2BF0EB531BFF8E1D00EA03B1 /* GoogleService-Info.plist in Resources */,
 				2B6017001BFCC978003DB81A /* LaunchScreen.storyboard in Resources */,
+				2BF0EB551BFF9D0700EA03B1 /* Images in Resources */,
 				2B6016FD1BFCC978003DB81A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
