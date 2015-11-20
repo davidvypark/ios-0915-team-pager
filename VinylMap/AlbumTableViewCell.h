@@ -1,5 +1,5 @@
 //
-//  AlbumCollectionViewController.h
+//  AlbumTableViewCell.h
 //  VinylMap
 //
 //  Created by Haaris Muneer on 11/19/15.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AlbumCollectionViewController : UICollectionViewController
+@interface AlbumTableViewCell : UITableViewCell
 
 @end

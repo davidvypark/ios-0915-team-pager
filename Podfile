@@ -10,5 +10,8 @@ pod 'LayerKit'
 pod 'RSBarcodes', '~> 0.1.4'
 pod 'AFNetworking'
 pod 'AFOAuth2Manager'
+pod 'FBSDKCoreKit'
+pod 'FBSDKLoginKit'
+pod 'FBSDKShareKit'
 end
 

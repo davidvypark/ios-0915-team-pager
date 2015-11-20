@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 @interface AppDelegate ()
 
@@ -30,6 +32,23 @@
     else
         return UIInterfaceOrientationMaskAll;
 }
+
+-(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options
+{
+    NSLog(@"User was authenticated and returned: \n%@",url.absoluteString);
+    
+//    NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:nil];
+    
+    [[FBSDKApplicationDelegate sharedInstance] application:app
+                                                   openURL:url
+                                         sourceApplication:options[UIApplicationLaunchOptionsSourceApplicationKey]
+                                                annotation:options[UIApplicationLaunchOptionsAnnotationKey]];
+    
+    
+    
+    return YES;
+}
+
 
 
 

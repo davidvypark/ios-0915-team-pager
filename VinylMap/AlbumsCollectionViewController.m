@@ -6,13 +6,13 @@
 //  Copyright © 2015 Toaster. All rights reserved.
 //
 
-#import "AlbumCollectionViewController.h"
+#import "AlbumsCollectionViewController.h"
 
-@interface AlbumCollectionViewController ()
+@interface AlbumsCollectionViewController ()
 
 @end
 
-@implementation AlbumCollectionViewController
+@implementation AlbumsCollectionViewController
 
 static NSString * const reuseIdentifier = @"Cell";
 
