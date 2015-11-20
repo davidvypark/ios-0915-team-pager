@@ -7,8 +7,10 @@
 //
 
 #import "MyAlbumsViewController.h"
+#import "AlbumCollectionViewCell.h"
 
 @interface MyAlbumsViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
+@property (weak, nonatomic) IBOutlet UICollectionView *myCollection;
 
 @end
 
@@ -16,12 +18,33 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+//    [self.myCollection registerNib:[UINib nibWithNibName:@"CustomAlbumCell" bundle:[NSBundle mainBundle]]
+//        forCellWithReuseIdentifier:@"albumCell"];
+    self.myCollection.delegate = self;
+    self.myCollection.dataSource = self;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return 4;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    AlbumCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"albumCell" forIndexPath:indexPath];
+    [cell.albumLabel setText:[NSString stringWithFormat:@"Album cell #%lu", indexPath.row]];
+    return cell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+    return CGSizeMake(150, 150);
 }
 
 /*

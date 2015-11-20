@@ -10,4 +10,6 @@
 
 @interface AlbumCollectionViewCell : UICollectionViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *albumLabel;
+
 @end

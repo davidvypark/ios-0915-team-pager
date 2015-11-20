@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -50,6 +51,13 @@
                                 <state key="normal" title="DUMMY LOGIN"/>
                                 <connections>
                                     <segue destination="LZT-Gn-6Fh" kind="showDetail" id="X4D-b9-6K5"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SXs-RG-dgd">
+                                <rect key="frame" x="43" y="52" width="102" height="30"/>
+                                <state key="normal" title="collection view"/>
+                                <connections>
+                                    <segue destination="IKb-7H-Nhk" kind="show" id="tpc-Ts-XhW"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -167,10 +175,10 @@
             </objects>
             <point key="canvasLocation" x="1256" y="458"/>
         </scene>
-        <!--View Controller-->
+        <!--My Albums View Controller-->
         <scene sceneID="QPc-TP-s9R">
             <objects>
-                <viewController id="IKb-7H-Nhk" sceneMemberID="viewController">
+                <viewController id="IKb-7H-Nhk" customClass="MyAlbumsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="TlH-iK-CpT"/>
                         <viewControllerLayoutGuide type="bottom" id="BNt-ba-JNe"/>
@@ -178,12 +186,54 @@
                     <view key="view" contentMode="scaleToFill" id="m0g-5G-OL7">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="NAl-9B-dyO">
+                                <rect key="frame" x="0.0" y="40" width="600" height="520"/>
+                                <color key="backgroundColor" red="0.68648436719999995" green="0.86868956080000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="30" minimumInteritemSpacing="10" id="MOH-bD-sbS">
+                                    <size key="itemSize" width="150" height="150"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="40" minY="40" maxX="40" maxY="40"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="albumCell" id="e7t-vj-a96" customClass="AlbumCollectionViewCell">
+                                        <rect key="frame" x="40" y="40" width="150" height="150"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" red="0.37656649199999997" green="1" blue="0.461456953" alpha="1" colorSpace="calibratedRGB"/>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="BNt-ba-JNe" firstAttribute="top" secondItem="NAl-9B-dyO" secondAttribute="bottom" constant="100" id="45s-da-2BN"/>
+                            <constraint firstItem="NAl-9B-dyO" firstAttribute="centerY" secondItem="m0g-5G-OL7" secondAttribute="centerY" id="5Gg-eu-2Nh"/>
+                            <constraint firstItem="NAl-9B-dyO" firstAttribute="height" secondItem="m0g-5G-OL7" secondAttribute="height" constant="-80" id="SCr-EW-uYb"/>
+                            <constraint firstItem="NAl-9B-dyO" firstAttribute="leading" secondItem="m0g-5G-OL7" secondAttribute="leadingMargin" constant="-20" id="Zam-LE-3hE"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="NAl-9B-dyO" secondAttribute="trailing" constant="-20" id="jpE-AA-E8E"/>
+                            <constraint firstItem="NAl-9B-dyO" firstAttribute="top" secondItem="TlH-iK-CpT" secondAttribute="bottom" constant="100" id="lvG-mx-z6a"/>
+                            <constraint firstItem="NAl-9B-dyO" firstAttribute="centerX" secondItem="m0g-5G-OL7" secondAttribute="centerX" id="qV9-CN-xZc"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="lvG-mx-z6a"/>
+                                <exclude reference="45s-da-2BN"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="myCollection" destination="NAl-9B-dyO" id="cbI-uC-ruV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J0f-ko-qPi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1914" y="458"/>
+            <point key="canvasLocation" x="548" y="-224"/>
         </scene>
     </scenes>
 </document>

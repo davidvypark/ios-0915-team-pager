@@ -38,5 +38,28 @@
             <size key="customSize" width="227" height="227"/>
             <point key="canvasLocation" x="428.5" y="346.5"/>
         </collectionViewCell>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="albumCell" id="gIX-Ln-QxG" customClass="AlbumCollectionViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="253" height="253"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="253" height="253"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ddP-vy-A2J">
+                        <rect key="frame" x="105" y="116" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <color key="backgroundColor" red="0.37656649199999997" green="1" blue="0.461456953" alpha="1" colorSpace="calibratedRGB"/>
+            <size key="customSize" width="253" height="253"/>
+            <connections>
+                <outlet property="albumLabel" destination="ddP-vy-A2J" id="7v4-lS-EY5"/>
+            </connections>
+            <point key="canvasLocation" x="409.5" y="354.5"/>
+        </collectionViewCell>
     </objects>
 </document>

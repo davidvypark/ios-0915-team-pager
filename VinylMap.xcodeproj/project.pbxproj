@@ -116,12 +116,6 @@
 				2B6016F41BFCC978003DB81A /* AppDelegate.m */,
 				2B6016F61BFCC978003DB81A /* ViewController.h */,
 				2B6016F71BFCC978003DB81A /* ViewController.m */,
-
-				9653335A1BFE5A2C00BB4F7A /* LoginViewController.h */,
-				9653335B1BFE5A2C00BB4F7A /* LoginViewController.m */,
-
-				96AF90981BFCE64B00BCFC96 /* Main.storyboard */,
-
 				2BFEA0F71BFE2E9500C65717 /* SearchViewController.h */,
 				2BFEA0F81BFE2E9500C65717 /* SearchViewController.m */,
 				96AF909D1BFCEA1D00BCFC96 /* BarcodeViewController.h */,
