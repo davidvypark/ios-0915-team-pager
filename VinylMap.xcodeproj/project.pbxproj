@@ -149,7 +149,6 @@
 			isa = PBXGroup;
 			children = (
 				2B6016F11BFCC978003DB81A /* main.m */,
-				964422AE1BFF8D3A00E0CF47 /* GoogleService-Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -168,6 +167,7 @@
 			children = (
 				9653335A1BFE5A2C00BB4F7A /* LoginViewController.h */,
 				9653335B1BFE5A2C00BB4F7A /* LoginViewController.m */,
+				964422AE1BFF8D3A00E0CF47 /* GoogleService-Info.plist */,
 			);
 			name = "Login Files";
 			sourceTree = "<group>";
