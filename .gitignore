@@ -27,6 +27,7 @@ xcuserdata
 ## KEYS
 GoogleService-Info.plist
 *VinylConstants.m
+*GoogleService-info.plist
 
 ## Obj-C/Swift specific
 *.hmap

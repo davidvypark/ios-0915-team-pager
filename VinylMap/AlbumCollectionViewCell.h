@@ -10,4 +10,11 @@
 
 @interface AlbumCollectionViewCell : UICollectionViewCell
 
+
+@property (weak, nonatomic) IBOutlet UILabel *albumLabel;
+@property (weak, nonatomic) IBOutlet UILabel *artistLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *albumArtView;
+
+
+
 @end
