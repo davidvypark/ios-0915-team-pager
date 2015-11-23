@@ -11,7 +11,15 @@
 @implementation UserObject
 
 
-
++ (instancetype)sharedUser {
+    static UserObject *_sharedUser = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _sharedUser = [[UserObject alloc] init];
+    });
+    
+    return _sharedUser;
+}
 
 
 @end

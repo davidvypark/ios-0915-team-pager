@@ -11,6 +11,9 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKApplicationDelegate.h>
+#import "UserObject.h"
+#import <Google/Core.h>
+#import <Google/SignIn.h>
 
 
 @interface LoginViewController () <FBSDKLoginButtonDelegate>
@@ -25,7 +28,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setUpButtons];
-    
     
     
 }
@@ -74,15 +76,12 @@
 
 {
     NSLog(@"did complete with error %@",error);
-//    [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-//        NSLog(@"me: %@", result);
-//    }];
     NSSet *grantedPermissions = result.token.permissions;
     NSSet *declinedPermissions = result.token.declinedPermissions;
     NSString *userID = result.token.userID;
     NSString *tokenString = result.token.tokenString;
     NSLog(@"userID: %@ \n token: %@ \n permissions: %@ \n declined permissions: %@ \n",userID,tokenString,grantedPermissions,declinedPermissions);
-    
+    [UserObject sharedUser].facebookUserID = [FBSDKAccessToken currentAccessToken].userID;
     
     
     

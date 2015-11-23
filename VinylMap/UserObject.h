@@ -12,10 +12,10 @@
 @interface UserObject : NSObject
 
 @property (nonatomic, strong) NSString *userName;
-@property (nonatomic, strong) AFOAuthCredential *facebookCredential;
+@property (nonatomic, strong) NSString *facebookUserID;
 
 
-
++ (instancetype)sharedUser;
 
 
 @end
