@@ -13,11 +13,6 @@
 		2B6016F81BFCC978003DB81A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B6016F71BFCC978003DB81A /* ViewController.m */; };
 		2B6016FD1BFCC978003DB81A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B6016FC1BFCC978003DB81A /* Assets.xcassets */; };
 		2B6017001BFCC978003DB81A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B6016FE1BFCC978003DB81A /* LaunchScreen.storyboard */; };
-		2BF0EB3D1BFE7AA600EA03B1 /* AlbumsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB3C1BFE7AA600EA03B1 /* AlbumsCollectionViewController.m */; };
-		2BF0EB401BFE813800EA03B1 /* AlbumCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB3F1BFE813800EA03B1 /* AlbumCollectionViewCell.m */; };
-		2BF0EB431BFE843A00EA03B1 /* AlbumTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB421BFE843A00EA03B1 /* AlbumTableViewCell.m */; };
-		2BF0EB461BFE847F00EA03B1 /* MyAlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB451BFE847F00EA03B1 /* MyAlbumsViewController.m */; };
-		2BF0EB491BFE84CC00EA03B1 /* AlbumsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB481BFE84CC00EA03B1 /* AlbumsTableViewController.m */; };
 		2BF0EB3D1BFE7AA600EA03B1 /* AlbumsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB3C1BFE7AA600EA03B1 /* AlbumsCollectionViewController.m */; settings = {ASSET_TAGS = (); }; };
 		2BF0EB401BFE813800EA03B1 /* AlbumCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB3F1BFE813800EA03B1 /* AlbumCollectionViewCell.m */; settings = {ASSET_TAGS = (); }; };
 		2BF0EB431BFE843A00EA03B1 /* AlbumTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB421BFE843A00EA03B1 /* AlbumTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
@@ -119,7 +114,8 @@
 		2B6016EF1BFCC978003DB81A /* VinylMap */ = {
 			isa = PBXGroup;
 			children = (
-				96AF90981BFCE64B00BCFC96 /* Main.storyboard */,
+				2BF0EB561C0355DD00EA03B1 /* Storyboards */,
+				2BF0EB571C0355FF00EA03B1 /* Album Collection/Wishlist */,
 				2B6016F31BFCC978003DB81A /* AppDelegate.h */,
 				2B6016F41BFCC978003DB81A /* AppDelegate.m */,
 				2B6016F61BFCC978003DB81A /* ViewController.h */,
@@ -131,19 +127,8 @@
 				965333541BFE347D00BB4F7A /* DiscogsAPI.h */,
 				965333551BFE347D00BB4F7A /* DiscogsAPI.m */,
 				964422AD1BFF8A9300E0CF47 /* Login Files */,
-				2BF0EB3B1BFE7AA600EA03B1 /* AlbumsCollectionViewController.h */,
-				2BF0EB3C1BFE7AA600EA03B1 /* AlbumsCollectionViewController.m */,
-				2BF0EB471BFE84CC00EA03B1 /* AlbumsTableViewController.h */,
-				2BF0EB481BFE84CC00EA03B1 /* AlbumsTableViewController.m */,
-				2BF0EB3E1BFE813700EA03B1 /* AlbumCollectionViewCell.h */,
-				2BF0EB3F1BFE813800EA03B1 /* AlbumCollectionViewCell.m */,
-				2BF0EB411BFE843A00EA03B1 /* AlbumTableViewCell.h */,
-				2BF0EB421BFE843A00EA03B1 /* AlbumTableViewCell.m */,
-				2BF0EB441BFE847F00EA03B1 /* MyAlbumsViewController.h */,
-				2BF0EB451BFE847F00EA03B1 /* MyAlbumsViewController.m */,
 				2BF0EB541BFF9D0700EA03B1 /* Images */,
 				2B6016FC1BFCC978003DB81A /* Assets.xcassets */,
-				2B6016FE1BFCC978003DB81A /* LaunchScreen.storyboard */,
 				9653335D1BFE5B0F00BB4F7A /* UserObject.h */,
 				9653335E1BFE5B0F00BB4F7A /* UserObject.m */,
 				2B6016F01BFCC978003DB81A /* Supporting Files */,
@@ -162,6 +147,32 @@
 				2B6016F11BFCC978003DB81A /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2BF0EB561C0355DD00EA03B1 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				96AF90981BFCE64B00BCFC96 /* Main.storyboard */,
+				2B6016FE1BFCC978003DB81A /* LaunchScreen.storyboard */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		2BF0EB571C0355FF00EA03B1 /* Album Collection/Wishlist */ = {
+			isa = PBXGroup;
+			children = (
+				2BF0EB3B1BFE7AA600EA03B1 /* AlbumsCollectionViewController.h */,
+				2BF0EB3C1BFE7AA600EA03B1 /* AlbumsCollectionViewController.m */,
+				2BF0EB471BFE84CC00EA03B1 /* AlbumsTableViewController.h */,
+				2BF0EB481BFE84CC00EA03B1 /* AlbumsTableViewController.m */,
+				2BF0EB3E1BFE813700EA03B1 /* AlbumCollectionViewCell.h */,
+				2BF0EB3F1BFE813800EA03B1 /* AlbumCollectionViewCell.m */,
+				2BF0EB411BFE843A00EA03B1 /* AlbumTableViewCell.h */,
+				2BF0EB421BFE843A00EA03B1 /* AlbumTableViewCell.m */,
+				2BF0EB441BFE847F00EA03B1 /* MyAlbumsViewController.h */,
+				2BF0EB451BFE847F00EA03B1 /* MyAlbumsViewController.m */,
+			);
+			name = "Album Collection/Wishlist";
 			sourceTree = "<group>";
 		};
 		8C44B61D7914FBE819173F96 /* Pods */ = {

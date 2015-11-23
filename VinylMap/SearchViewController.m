@@ -8,8 +8,13 @@
 
 #import "SearchViewController.h"
 #import "BarcodeViewController.h"
+#import <AFNetworking.h>
+#import "VinylConstants.h"
 
-@interface SearchViewController ()
+@interface SearchViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@property (weak, nonatomic) IBOutlet UITextField *searchField;
+@property (weak, nonatomic) IBOutlet UITableView *searchTableView;
+@property (nonatomic, strong) NSMutableArray *albumResults;
 
 @end
 
@@ -18,6 +23,35 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.searchField.delegate = self;
+    self.searchTableView.delegate = self;
+    self.searchTableView.dataSource = self;
+    self.albumResults = [NSMutableArray new];
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField {
+    
+}
+
+-(BOOL) textFieldShouldReturn:(UITextField *)textField {
+    
+    [textField resignFirstResponder];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *searchKeyword = self.searchField.text;
+    searchKeyword = [searchKeyword stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSString *discogsURL = [NSString stringWithFormat:@"https://api.discogs.com/database/search?q=%@&type=title&key=%@&secret=%@", searchKeyword, DISCOGS_CONSUMER_KEY, DISCOGS_CONSUMER_SECRET];
+    [manager GET:discogsURL parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+        NSDictionary *responseDictionary = (NSDictionary *)responseObject;
+        NSArray *resultsArray = responseDictionary[@"results"];
+        [self.albumResults removeAllObjects];
+        [self.albumResults addObjectsFromArray:resultsArray];
+        [self.searchTableView reloadData];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"Request failed with error %@", error);
+    }];
+    
+    return YES;
 }
 
 - (IBAction)barcodeButtonTapped:(id)sender {
@@ -34,14 +68,23 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
 }
-*/
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.albumResults.count;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"albumCell" forIndexPath:indexPath];
+    
+        NSDictionary *result = self.albumResults[indexPath.row];
+        cell.textLabel.text = result[@"title"];
+    
+    return cell;
+}
 
 @end
