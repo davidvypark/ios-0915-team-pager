@@ -13,15 +13,6 @@
 		2B6016F81BFCC978003DB81A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B6016F71BFCC978003DB81A /* ViewController.m */; };
 		2B6016FD1BFCC978003DB81A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B6016FC1BFCC978003DB81A /* Assets.xcassets */; };
 		2B6017001BFCC978003DB81A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B6016FE1BFCC978003DB81A /* LaunchScreen.storyboard */; };
-
-		2BF0EB3D1BFE7AA600EA03B1 /* AlbumsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB3C1BFE7AA600EA03B1 /* AlbumsCollectionViewController.m */; settings = {ASSET_TAGS = (); }; };
-		2BF0EB401BFE813800EA03B1 /* AlbumCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB3F1BFE813800EA03B1 /* AlbumCollectionViewCell.m */; settings = {ASSET_TAGS = (); }; };
-		2BF0EB431BFE843A00EA03B1 /* AlbumTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB421BFE843A00EA03B1 /* AlbumTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
-		2BF0EB461BFE847F00EA03B1 /* MyAlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB451BFE847F00EA03B1 /* MyAlbumsViewController.m */; settings = {ASSET_TAGS = (); }; };
-		2BF0EB491BFE84CC00EA03B1 /* AlbumsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB481BFE84CC00EA03B1 /* AlbumsTableViewController.m */; settings = {ASSET_TAGS = (); }; };
-		2BF0EB531BFF8E1D00EA03B1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2BF0EB521BFF8E1D00EA03B1 /* GoogleService-Info.plist */; settings = {ASSET_TAGS = (); }; };
-		2BF0EB551BFF9D0700EA03B1 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 2BF0EB541BFF9D0700EA03B1 /* Images */; settings = {ASSET_TAGS = (); }; };
-
 		2BF0EB3D1BFE7AA600EA03B1 /* AlbumsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB3C1BFE7AA600EA03B1 /* AlbumsCollectionViewController.m */; };
 		2BF0EB401BFE813800EA03B1 /* AlbumCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB3F1BFE813800EA03B1 /* AlbumCollectionViewCell.m */; };
 		2BF0EB431BFE843A00EA03B1 /* AlbumTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB421BFE843A00EA03B1 /* AlbumTableViewCell.m */; };
@@ -29,7 +20,7 @@
 		2BF0EB491BFE84CC00EA03B1 /* AlbumsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB481BFE84CC00EA03B1 /* AlbumsTableViewController.m */; };
 		2BF0EB531BFF8E1D00EA03B1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2BF0EB521BFF8E1D00EA03B1 /* GoogleService-Info.plist */; };
 		2BF0EB551BFF9D0700EA03B1 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 2BF0EB541BFF9D0700EA03B1 /* Images */; };
-
+		2BF0EB5A1C039EF800EA03B1 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB591C039EF800EA03B1 /* Album.m */; settings = {ASSET_TAGS = (); }; };
 		2BFEA0F91BFE2E9500C65717 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFEA0F81BFE2E9500C65717 /* SearchViewController.m */; };
 		963AE0571BFD30CF001A2178 /* Users.json in Resources */ = {isa = PBXBuildFile; fileRef = 963AE0561BFD30CF001A2178 /* Users.json */; };
 		964422AF1BFF8D3A00E0CF47 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 964422AE1BFF8D3A00E0CF47 /* GoogleService-Info.plist */; };
@@ -64,6 +55,8 @@
 		2BF0EB481BFE84CC00EA03B1 /* AlbumsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumsTableViewController.m; sourceTree = "<group>"; };
 		2BF0EB521BFF8E1D00EA03B1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2BF0EB541BFF9D0700EA03B1 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
+		2BF0EB581C039EF800EA03B1 /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
+		2BF0EB591C039EF800EA03B1 /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
 		2BFEA0F71BFE2E9500C65717 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		2BFEA0F81BFE2E9500C65717 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		4DB2F4E455B0DD720EF5E177 /* libPods-VinylMap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VinylMap.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,12 +117,12 @@
 		2B6016EF1BFCC978003DB81A /* VinylMap */ = {
 			isa = PBXGroup;
 			children = (
-
 				2BF0EB561C0355DD00EA03B1 /* Storyboards */,
 				2BF0EB571C0355FF00EA03B1 /* Album Collection/Wishlist */,
-
 				2B6016F31BFCC978003DB81A /* AppDelegate.h */,
 				2B6016F41BFCC978003DB81A /* AppDelegate.m */,
+				2BF0EB581C039EF800EA03B1 /* Album.h */,
+				2BF0EB591C039EF800EA03B1 /* Album.m */,
 				2B6016F61BFCC978003DB81A /* ViewController.h */,
 				2B6016F71BFCC978003DB81A /* ViewController.m */,
 				2BFEA0F71BFE2E9500C65717 /* SearchViewController.h */,
@@ -142,12 +135,9 @@
 				964422AD1BFF8A9300E0CF47 /* Login Files */,
 				2BF0EB541BFF9D0700EA03B1 /* Images */,
 				2B6016FC1BFCC978003DB81A /* Assets.xcassets */,
-
 				9653335D1BFE5B0F00BB4F7A /* UserObject.h */,
 				9653335E1BFE5B0F00BB4F7A /* UserObject.m */,
-
 				2B6016FE1BFCC978003DB81A /* LaunchScreen.storyboard */,
-
 				2B6016F01BFCC978003DB81A /* Supporting Files */,
 				2B6017011BFCC978003DB81A /* Info.plist */,
 				2BF0EB521BFF8E1D00EA03B1 /* GoogleService-Info.plist */,
@@ -169,8 +159,6 @@
 		2BF0EB561C0355DD00EA03B1 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				96AF90981BFCE64B00BCFC96 /* Main.storyboard */,
-				2B6016FE1BFCC978003DB81A /* LaunchScreen.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -207,8 +195,6 @@
 				9653335A1BFE5A2C00BB4F7A /* LoginViewController.h */,
 				9653335B1BFE5A2C00BB4F7A /* LoginViewController.m */,
 				964422AE1BFF8D3A00E0CF47 /* GoogleService-Info.plist */,
-				9653335D1BFE5B0F00BB4F7A /* UserObject.h */,
-				9653335E1BFE5B0F00BB4F7A /* UserObject.m */,
 			);
 			name = "Login Files";
 			sourceTree = "<group>";
@@ -347,6 +333,7 @@
 				9653335C1BFE5A2C00BB4F7A /* LoginViewController.m in Sources */,
 				9653335F1BFE5B0F00BB4F7A /* UserObject.m in Sources */,
 				2B6016F81BFCC978003DB81A /* ViewController.m in Sources */,
+				2BF0EB5A1C039EF800EA03B1 /* Album.m in Sources */,
 				2B6016F51BFCC978003DB81A /* AppDelegate.m in Sources */,
 				96AF90911BFCE1DA00BCFC96 /* VinylConstants.m in Sources */,
 				96AF909F1BFCEA1D00BCFC96 /* BarcodeViewController.m in Sources */,

@@ -20,8 +20,6 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - AFOAuth2Manager (2.2.0):
-    - AFNetworking/NSURLConnection (~> 2.2)
   - Bolts (1.5.0):
     - Bolts/AppLinks (= 1.5.0)
     - Bolts/Tasks (= 1.5.0)
@@ -41,6 +39,7 @@ PODS:
     - FBSDKCoreKit
   - FBSDKShareKit (4.8.0):
     - FBSDKCoreKit
+  - Firebase (2.4.3)
   - Google (1.2.1):
     - Google/Core (= 1.2.1)
   - Google/Core (1.2.1):
@@ -71,28 +70,26 @@ PODS:
   - LayerKit (0.17.2)
   - Masonry (0.6.3)
   - MTBBarcodeScanner (1.8.10)
-  - RSBarcodes (0.1.4)
 
 DEPENDENCIES:
   - AFNetworking
-  - AFOAuth2Manager
   - FBSDKCoreKit
   - FBSDKLoginKit
   - FBSDKShareKit
+  - Firebase (>= 2.4.3)
   - Google
   - Google/SignIn
   - LayerKit
   - Masonry
   - MTBBarcodeScanner
-  - RSBarcodes (~> 0.1.4)
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
-  AFOAuth2Manager: 952eb62e8fd8022971e64c6e8fe28b9e999224af
   Bolts: 722ab9a4f8b50fc4ed1b9998a5a7a2b3f16d80b4
   FBSDKCoreKit: 66a935d17b6e00b6b64e604f2eb9b72c9ab7deb8
   FBSDKLoginKit: d893fcbb98d854496925e9ff73c67b896982d3c4
   FBSDKShareKit: e7577ee3adf80fc04fb656dd133fbb522250672b
+  Firebase: 48179995b561e2262c5d4060ecdffca45fbbff8b
   Google: fd33b5fa40fa3aaee5176de49c873a74e3d11dce
   GoogleAppUtilities: c01c6a5671e9da8b9d690fdaec5959d6c2aac699
   GoogleAuthUtilities: 049ffd3a297cdffd271451b82fd4e75304f15ef3
@@ -104,6 +101,5 @@ SPEC CHECKSUMS:
   LayerKit: 60f1f23923e2718992eba22c6e9a8ef92b6344bc
   Masonry: ff105a956abcd19a618b2028b121cb638d7a8e2f
   MTBBarcodeScanner: 20bdb750b6f7ef34d7fdf6bf7831a69b45a3d08f
-  RSBarcodes: 6b062b5aba3e75a5e889b2465ef1bb256215fbd0
 
 COCOAPODS: 0.39.0

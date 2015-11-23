@@ -10,4 +10,15 @@
 
 @interface Album : NSObject
 
+@property (nonatomic, strong) NSString *albumName;
+@property (nonatomic, strong) NSString *artist;
+@property (nonatomic, strong) NSString *titleWithArtist;
+@property (nonatomic, strong) NSString *barcode;
+@property (nonatomic, strong) NSString *genre;
+@property (nonatomic, assign) NSString *albumID;
+@property (nonatomic, strong) NSURL *resourceURL;
+@property (nonatomic, assign) NSUInteger releaseYear;
+@property (nonatomic, assign) BOOL isInCollection;
+@property (nonatomic, assign) BOOL isInWishlist;
+
 @end

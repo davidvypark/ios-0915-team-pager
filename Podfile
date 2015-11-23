@@ -13,5 +13,6 @@ pod 'FBSDKLoginKit'
 pod 'FBSDKShareKit'
 pod 'Google'
 pod 'Google/SignIn'
+pod 'Firebase', '>= 2.4.3'
 end
 
