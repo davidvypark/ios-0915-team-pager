@@ -40,6 +40,8 @@ PODS:
   - FBSDKShareKit (4.8.0):
     - FBSDKCoreKit
   - Firebase (2.4.3)
+  - GeoFire (1.1.2):
+    - Firebase (~> 2.2)
   - Google (1.2.1):
     - Google/Core (= 1.2.1)
   - Google/Core (1.2.1):
@@ -67,7 +69,6 @@ PODS:
   - GoogleSymbolUtilities (1.0.3)
   - GoogleUtilities (1.1.0):
     - GoogleSymbolUtilities (~> 1.0.0)
-  - LayerKit (0.17.2)
   - Masonry (0.6.3)
   - MTBBarcodeScanner (1.8.10)
 
@@ -77,9 +78,9 @@ DEPENDENCIES:
   - FBSDKLoginKit
   - FBSDKShareKit
   - Firebase (>= 2.4.3)
+  - GeoFire (>= 1.1)
   - Google
   - Google/SignIn
-  - LayerKit
   - Masonry
   - MTBBarcodeScanner
 
@@ -90,6 +91,7 @@ SPEC CHECKSUMS:
   FBSDKLoginKit: d893fcbb98d854496925e9ff73c67b896982d3c4
   FBSDKShareKit: e7577ee3adf80fc04fb656dd133fbb522250672b
   Firebase: 48179995b561e2262c5d4060ecdffca45fbbff8b
+  GeoFire: 03db4e390a4cf3ff97422f19eb71ab1aa7d947dd
   Google: fd33b5fa40fa3aaee5176de49c873a74e3d11dce
   GoogleAppUtilities: c01c6a5671e9da8b9d690fdaec5959d6c2aac699
   GoogleAuthUtilities: 049ffd3a297cdffd271451b82fd4e75304f15ef3
@@ -98,7 +100,6 @@ SPEC CHECKSUMS:
   GoogleSignIn: 79929b51e6299c69f1197bbd9c7a1367d523ecd8
   GoogleSymbolUtilities: 82ad9f93d3615244b3f4ce440f5ab2515e8b4f56
   GoogleUtilities: 8ed9134debe11719097881711464752900668f10
-  LayerKit: 60f1f23923e2718992eba22c6e9a8ef92b6344bc
   Masonry: ff105a956abcd19a618b2028b121cb638d7a8e2f
   MTBBarcodeScanner: 20bdb750b6f7ef34d7fdf6bf7831a69b45a3d08f
 

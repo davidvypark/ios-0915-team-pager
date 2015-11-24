@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="G6t-G7-Qgk">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="NQq-QJ-hDf">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -35,15 +35,6 @@
                                     <action selector="haarisButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KyS-Jr-Lmo"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SbS-kt-lFL">
-                                <rect key="frame" x="53" y="248" width="82" height="60"/>
-                                <animations/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                <state key="normal" title="Jason"/>
-                                <connections>
-                                    <action selector="jasonButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mWd-5Y-ZuM"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ocT-O7-Vbt">
                                 <rect key="frame" x="53" y="333" width="106" height="30"/>
                                 <animations/>
@@ -62,10 +53,36 @@
                                     <segue destination="IKb-7H-Nhk" kind="show" id="tpc-Ts-XhW"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sv7-Sb-XkJ">
+                                <rect key="frame" x="70" y="380" width="48" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Search"/>
+                                <connections>
+                                    <segue destination="G6t-G7-Qgk" kind="show" id="z8k-Zi-qOl"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7aZ-KS-fFP">
+                                <rect key="frame" x="46" y="433" width="98" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Items For Sale"/>
+                                <connections>
+                                    <segue destination="ZED-Dd-gcy" kind="show" id="eBU-T5-jhB"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SbS-kt-lFL">
+                                <rect key="frame" x="53" y="248" width="82" height="60"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <state key="normal" title="Jason"/>
+                                <connections>
+                                    <action selector="jasonButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mWd-5Y-ZuM"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="KrE-IF-cd1"/>
                     <connections>
                         <outlet property="haarisButton" destination="zoZ-Dk-nQ7" id="AZf-NG-AZt"/>
                         <outlet property="jasonButton" destination="SbS-kt-lFL" id="xZN-3f-ZWo"/>
@@ -74,7 +91,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="548" y="458"/>
+            <point key="canvasLocation" x="1085" y="480"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="ie4-Xy-nGh">
@@ -127,7 +144,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dzL-wL-qUY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="571" y="1105"/>
+            <point key="canvasLocation" x="1744" y="1244"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="fQV-Ne-Xgw">
@@ -168,7 +185,7 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iEW-Aj-buL" id="BON-d7-5Mb">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="69.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="70"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="q1O-TV-rpG">
@@ -251,7 +268,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NU8-Ux-9Hk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1256" y="458"/>
+            <point key="canvasLocation" x="1769" y="480"/>
         </scene>
         <!--My Albums View Controller-->
         <scene sceneID="QPc-TP-s9R">
@@ -277,7 +294,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="albumCell" id="e7t-vj-a96" customClass="AlbumCollectionViewCell">
-                                        <rect key="frame" x="40" y="40" width="150" height="200"/>
+                                        <rect key="frame" x="40" y="104" width="150" height="200"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="200"/>
@@ -339,7 +356,111 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J0f-ko-qPi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="548" y="-224"/>
+            <point key="canvasLocation" x="1769" y="-176"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="e32-xB-zp2">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="NQq-QJ-hDf" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="3n0-sS-rdU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="VRc-b6-VWc"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gJ1-La-K27" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="451" y="480"/>
+        </scene>
+        <!--Add View Controller-->
+        <scene sceneID="PsK-f2-ugT">
+            <objects>
+                <viewController id="ITq-5N-15f" customClass="AddViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="a2B-ay-8za"/>
+                        <viewControllerLayoutGuide type="bottom" id="Fs5-DR-Lk6"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="EI7-bh-NHw">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="sEF-jZ-iSA">
+                                <rect key="frame" x="0.0" y="64" width="414" height="385"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="3IN-lc-2pI" appends="YES" id="IzP-cj-pcH"/>
+                                </connections>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GJA-9O-xTc">
+                                <rect key="frame" x="322" y="409" width="46" height="30"/>
+                                <state key="normal" title="Return"/>
+                                <connections>
+                                    <action selector="returnToUserTapped:" destination="ITq-5N-15f" eventType="touchUpInside" id="lGD-uk-yJf"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="addMapView" destination="sEF-jZ-iSA" id="sjb-vT-VBb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wpd-kO-iZm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="3IN-lc-2pI">
+                    <connections>
+                        <action selector="handleLongPress:" destination="ITq-5N-15f" id="sD3-tj-5m8"/>
+                    </connections>
+                </pongPressGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="1085" y="1244"/>
+        </scene>
+        <!--Map View Controller-->
+        <scene sceneID="4vD-Gs-ony">
+            <objects>
+                <viewController id="ZED-Dd-gcy" customClass="MapViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nqm-vq-V8H"/>
+                        <viewControllerLayoutGuide type="bottom" id="btb-BE-hXu"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="PH1-KP-Efw">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Itb-ui-Xiw">
+                                <rect key="frame" x="0.0" y="20" width="414" height="410"/>
+                                <gestureRecognizers/>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="20g-YY-8vP">
+                                <rect key="frame" x="107" y="480" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <segue destination="ITq-5N-15f" kind="show" id="LbG-jd-F05">
+                                        <nil key="action"/>
+                                    </segue>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fWo-XP-I7D">
+                                <rect key="frame" x="314" y="390" width="46" height="30"/>
+                                <state key="normal" title="Return"/>
+                                <connections>
+                                    <action selector="returnToUserTapped:" destination="ZED-Dd-gcy" eventType="touchUpInside" id="wYb-KY-Jsm"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Ufe-fn-sru"/>
+                    <connections>
+                        <outlet property="mapView" destination="Itb-ui-Xiw" id="Qak-SC-edm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SuY-Wy-fX7" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="451" y="1244"/>
         </scene>
     </scenes>
 </document>

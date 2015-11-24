@@ -6,7 +6,6 @@
 target 'VinylMap' do
 pod "MTBBarcodeScanner"
 pod 'Masonry'
-pod 'LayerKit'
 pod 'AFNetworking'
 pod 'FBSDKCoreKit'
 pod 'FBSDKLoginKit'
@@ -14,5 +13,6 @@ pod 'FBSDKShareKit'
 pod 'Google'
 pod 'Google/SignIn'
 pod 'Firebase', '>= 2.4.3'
+pod 'GeoFire', '>= 1.1'
 end
 
