@@ -85,8 +85,26 @@
     NSMutableString *albumInfo = [NSMutableString new];
     NSDictionary *result = self.albumResults[indexPath.row];
     NSArray *recordLabels = result[@"label"];
-    [albumInfo appendFormat:@"%@\n%@\n%@", result[@"title"], recordLabels.firstObject, result[@"year"]];
-    NSLog(@"%@",albumInfo);
+    NSLog(@"the record label is a %@ with a value of %@", [result[@"label"] class], result[@"label"]);
+
+    NSString *recordLabel;
+    if (!recordLabels.firstObject) {
+        recordLabel = @"";
+    }
+    else {
+        recordLabel = recordLabels.firstObject;
+    }
+    NSLog(@"the release year is a %@ with a value of %@", [result[@"year"] class], result[@"year"]);
+    NSString *releaseYear;
+    if (!result[@"year"]) {
+        releaseYear = @"";
+    }
+    else {
+        releaseYear = result[@"year"];
+    }
+    
+    [albumInfo appendFormat:@"%@\n%@\n%@", result[@"title"], recordLabel, releaseYear];
+    
     cell.albumInfoLabel.text = albumInfo;
     
     NSURL *albumArtURL = [NSURL URLWithString:result[@"thumb"]];
