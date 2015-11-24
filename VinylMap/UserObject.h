@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <AFOAuth2Manager/AFOAuth2Manager.h>
+
 
 @interface UserObject : NSObject
 

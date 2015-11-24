@@ -10,6 +10,8 @@
 #import "BarcodeViewController.h"
 #import <AFNetworking.h>
 #import "VinylConstants.h"
+#import "AlbumTableViewCell.h"
+#import <UIKit+AFNetworking.h>
 
 @interface SearchViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *searchField;
@@ -79,10 +81,16 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"albumCell" forIndexPath:indexPath];
+    AlbumTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"albumCell" forIndexPath:indexPath];
+    NSMutableString *albumInfo = [NSMutableString new];
+    NSDictionary *result = self.albumResults[indexPath.row];
+    NSArray *recordLabels = result[@"label"];
+    [albumInfo appendFormat:@"%@\n%@\n%@", result[@"title"], recordLabels.firstObject, result[@"year"]];
+    NSLog(@"%@",albumInfo);
+    cell.albumInfoLabel.text = albumInfo;
     
-        NSDictionary *result = self.albumResults[indexPath.row];
-        cell.textLabel.text = result[@"title"];
+    NSURL *albumArtURL = [NSURL URLWithString:result[@"thumb"]];
+    [cell.albumView setImageWithURL:albumArtURL];
     
     return cell;
 }

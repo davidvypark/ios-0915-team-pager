@@ -10,4 +10,7 @@
 
 @interface AlbumTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIImageView *albumView;
+@property (weak, nonatomic) IBOutlet UILabel *albumInfoLabel;
+
 @end

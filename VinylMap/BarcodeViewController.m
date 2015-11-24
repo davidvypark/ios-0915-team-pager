@@ -8,7 +8,7 @@
 
 #import "BarCodeViewController.h"
 #import <Masonry.h>
-#import <RSBarcodes.h>
+//#import <RSBarcodes.h>
 #import <AFNetworking.h>
 #import "VinylConstants.h"
 
@@ -18,8 +18,8 @@
 @property (nonatomic, strong) UIButton *dismissButton;
 @property (nonatomic, strong) UIButton *barcodeButton;
 @property (nonatomic, strong) UIButton *secondBarcode;
-@property (nonatomic, strong) RSScannerViewController *scanner;
-@property (nonatomic, strong) RSScannerViewController *scannerVC;
+//@property (nonatomic, strong) RSScannerViewController *scanner;
+//@property (nonatomic, strong) RSScannerViewController *scannerVC;
 @property (nonatomic, strong) UIAlertController *barcodeAlert;
 
 @end
