@@ -34,6 +34,7 @@
 		BF61240E1C04FA7A00B045D6 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF61240A1C04FA7A00B045D6 /* MapViewController.m */; };
 		BF61240F1C04FA7A00B045D6 /* VinylAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = BF61240C1C04FA7A00B045D6 /* VinylAnnotation.m */; };
 		BF6124121C05092A00B045D6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF6124111C05092A00B045D6 /* MapKit.framework */; };
+		BFC1BE4A1C0ACC35003DF47F /* ChatMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC1BE491C0ACC35003DF47F /* ChatMessagesViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,6 +86,8 @@
 		BF61240B1C04FA7A00B045D6 /* VinylAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VinylAnnotation.h; path = ../VinylAnnotation.h; sourceTree = "<group>"; };
 		BF61240C1C04FA7A00B045D6 /* VinylAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VinylAnnotation.m; path = ../VinylAnnotation.m; sourceTree = "<group>"; };
 		BF6124111C05092A00B045D6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		BFC1BE481C0ACC35003DF47F /* ChatMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessagesViewController.h; sourceTree = "<group>"; };
+		BFC1BE491C0ACC35003DF47F /* ChatMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessagesViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +133,7 @@
 		2B6016EF1BFCC978003DB81A /* VinylMap */ = {
 			isa = PBXGroup;
 			children = (
+				BFC1BE471C0ACBF0003DF47F /* Chat */,
 				2BF0EB561C0355DD00EA03B1 /* Storyboards */,
 				BF6124101C04FA8C00B045D6 /* Maps */,
 				2BF0EB571C0355FF00EA03B1 /* Album Collection/Wishlist */,
@@ -224,6 +228,15 @@
 				BF61240C1C04FA7A00B045D6 /* VinylAnnotation.m */,
 			);
 			name = Maps;
+			sourceTree = "<group>";
+		};
+		BFC1BE471C0ACBF0003DF47F /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				BFC1BE481C0ACC35003DF47F /* ChatMessagesViewController.h */,
+				BFC1BE491C0ACC35003DF47F /* ChatMessagesViewController.m */,
+			);
+			name = Chat;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -376,6 +389,7 @@
 				2BF0EB401BFE813800EA03B1 /* AlbumCollectionViewCell.m in Sources */,
 				2BF0EB461BFE847F00EA03B1 /* MyAlbumsViewController.m in Sources */,
 				BF61240F1C04FA7A00B045D6 /* VinylAnnotation.m in Sources */,
+				BFC1BE4A1C0ACC35003DF47F /* ChatMessagesViewController.m in Sources */,
 				BF61240E1C04FA7A00B045D6 /* MapViewController.m in Sources */,
 				2BFEA0F91BFE2E9500C65717 /* SearchViewController.m in Sources */,
 			);

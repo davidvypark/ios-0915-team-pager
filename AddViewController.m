@@ -27,10 +27,6 @@
     self.addMapView.delegate = self;
     self.locationManager.delegate = self;
     
-    UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc]
-                                          initWithTarget:self action:@selector(handleLongPress:)];
-    lpgr.minimumPressDuration = 3.0; //user needs to press for 2 seconds
-    [self.addMapView addGestureRecognizer:lpgr];
     // Do any additional setup after loading the view.
     Firebase *geofireRef = [[Firebase alloc] initWithUrl:@"https://amber-torch-8635.firebaseio.com/geofire"];
     self.geoFire = [[GeoFire alloc] initWithFirebaseRef:geofireRef];
@@ -82,7 +78,7 @@
 - (IBAction)handleLongPress:(UILongPressGestureRecognizer *)sender {
     if (sender.state != UIGestureRecognizerStateBegan)
         return;
-    
+    sender.minimumPressDuration = 2.0;
     CGPoint touchPoint = [sender locationInView:self.addMapView];
     CLLocationCoordinate2D touchMapCoordinate = [self.addMapView convertPoint:touchPoint toCoordinateFromView:self.addMapView];
     

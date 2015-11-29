@@ -24,6 +24,7 @@
                                 <state key="normal" title="Linda"/>
                                 <connections>
                                     <action selector="lindaButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ilY-yQ-Y2r"/>
+                                    <segue destination="quf-bS-riB" kind="show" id="gdv-uW-9R6"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zoZ-Dk-nQ7">
@@ -197,7 +198,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cUp-1H-knH">
                                                     <rect key="frame" x="88" y="5" width="462" height="60"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lXF-lq-Xib">
@@ -461,6 +462,75 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SuY-Wy-fX7" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="451" y="1244"/>
+        </scene>
+        <!--Chat Messages View Controller-->
+        <scene sceneID="9CH-7N-sre">
+            <objects>
+                <viewController id="quf-bS-riB" customClass="ChatMessagesViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="us8-nB-d9z"/>
+                        <viewControllerLayoutGuide type="bottom" id="b77-Fa-vMa"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="jxw-Kc-lvd">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2mb-NL-O0s">
+                                <rect key="frame" x="24" y="550" width="552" height="30"/>
+                                <color key="backgroundColor" white="0.84999999999999998" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="quf-bS-riB" id="AlI-yb-XrL"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dTE-Zp-ExA">
+                                <rect key="frame" x="276" y="72" width="50" height="21"/>
+                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="18"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="DMZ-pL-ylB">
+                                <rect key="frame" x="24" y="105" width="552" height="437"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="quf-bS-riB" id="YLr-ep-vbf"/>
+                                    <outlet property="delegate" destination="quf-bS-riB" id="Opr-bu-wna"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="DMZ-pL-ylB" firstAttribute="bottom" secondItem="2mb-NL-O0s" secondAttribute="top" constant="-8" id="5cf-j7-kOB"/>
+                            <constraint firstItem="2mb-NL-O0s" firstAttribute="centerX" secondItem="jxw-Kc-lvd" secondAttribute="centerX" id="9Mh-Pp-7B1"/>
+                            <constraint firstItem="2mb-NL-O0s" firstAttribute="width" secondItem="DMZ-pL-ylB" secondAttribute="width" id="C9g-JW-xMb"/>
+                            <constraint firstItem="dTE-Zp-ExA" firstAttribute="top" secondItem="us8-nB-d9z" secondAttribute="bottom" constant="8" id="Vy7-h8-Tfu"/>
+                            <constraint firstItem="dTE-Zp-ExA" firstAttribute="centerX" secondItem="jxw-Kc-lvd" secondAttribute="centerX" id="i0N-G1-7lo"/>
+                            <constraint firstItem="DMZ-pL-ylB" firstAttribute="leading" secondItem="jxw-Kc-lvd" secondAttribute="leadingMargin" constant="4" id="unB-xS-M6R"/>
+                            <constraint firstItem="2mb-NL-O0s" firstAttribute="bottom" secondItem="b77-Fa-vMa" secondAttribute="top" constant="-20" id="uqO-Cs-cQG"/>
+                            <constraint firstItem="DMZ-pL-ylB" firstAttribute="top" secondItem="dTE-Zp-ExA" secondAttribute="bottom" constant="12" id="vzP-aX-6ss"/>
+                            <constraint firstItem="DMZ-pL-ylB" firstAttribute="trailing" secondItem="jxw-Kc-lvd" secondAttribute="trailingMargin" constant="-4" id="xqq-pf-PEm"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="CMn-m4-tsJ" appends="YES" id="QNn-8T-QQz"/>
+                        </connections>
+                    </view>
+                    <connections>
+                        <outlet property="nameField" destination="dTE-Zp-ExA" id="FIa-zy-5MW"/>
+                        <outlet property="tableView" destination="DMZ-pL-ylB" id="Cfl-cf-NSw"/>
+                        <outlet property="textField" destination="2mb-NL-O0s" id="54Y-4Y-vBn"/>
+                        <outlet property="textFieldBottomContstraint" destination="uqO-Cs-cQG" id="HEm-rh-wIv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wog-bj-e6p" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="CMn-m4-tsJ">
+                    <connections>
+                        <action selector="viewTapped:" destination="quf-bS-riB" id="oi7-xP-Bqw"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="1076" y="-186"/>
         </scene>
     </scenes>
 </document>
