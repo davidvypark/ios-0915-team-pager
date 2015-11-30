@@ -16,6 +16,8 @@
 @property (nonatomic, strong) NSString *barcode;
 @property (nonatomic, strong) NSString *genre;
 @property (nonatomic, assign) NSString *albumID;
+@property (nonatomic, strong) NSString *recordLabel;
+@property (nonatomic, strong) NSString *country;
 @property (nonatomic, strong) NSURL *resourceURL;
 @property (nonatomic, assign) NSUInteger releaseYear;
 @property (nonatomic, assign) BOOL isInCollection;
