@@ -13,8 +13,9 @@
 #import <Google/SignIn.h>
 #import "UserObject.h"
 #import "VinylConstants.h"
+#import <FirebaseUI/FirebaseUI.h>
 
-@interface AppDelegate () <GIDSignInDelegate>
+@interface AppDelegate  () <GIDSignInDelegate>
 
 @end
 
@@ -23,14 +24,41 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [UserObject sharedUser];
     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions]; // THIS WAKES UP THE FACEBOOK DELEGATES
     [UserObject sharedUser].facebookUserID = [FBSDKAccessToken currentAccessToken].userID;
-    
-    [self setUpGoogle];
+    [self setUpFirebase];
     
     
     return YES;
 }
+
+
+
+-(void)setUpFirebase
+{
+    [UserObject sharedUser].firebaseRoot = [[Firebase alloc] initWithUrl:FIREBASE_URL];
+    [UserObject sharedUser].firebaseTestFolder = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@testing/",FIREBASE_URL]];
+    [[UserObject sharedUser].firebaseTestFolder observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        NSLog(@"TEST: %@ -> %@", snapshot.key, snapshot.value); //LOGS CHANGES IN TEST FOLDER
+    }];
+    
+    
+    //LISTEN FOR FIREBASE AUTH
+    [[UserObject sharedUser].firebaseRoot observeAuthEventWithBlock:^(FAuthData *authData) {
+        if(authData)
+        {
+            NSLog(@"%@",authData); //AUTHDATA COMPLETE
+            [UserObject sharedUser].firebaseAuthData = authData;
+        } else{
+            NSLog(@"USER NOT LOGGED IN/AUTHENITCATED %@",authData);
+        }
+    }];
+    
+    
+}
+
+
 
 -(void)setUpGoogle
 {

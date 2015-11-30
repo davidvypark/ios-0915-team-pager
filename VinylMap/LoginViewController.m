@@ -15,14 +15,19 @@
 #import <Google/Core.h>
 #import <Google/SignIn.h>
 #import <Firebase/Firebase.h>
+#import <FirebaseUI.h>
 #import "VinylConstants.h"
 
 
 @interface LoginViewController () <FBSDKLoginButtonDelegate>
 @property (nonatomic, strong) FBSDKLoginButton *facebookLoginButton;
 @property (nonatomic, strong) UIButton *dismissViewControllerButton;
+@property (nonatomic, strong) UIButton *firebaseLoginButton;
+@property (nonatomic, strong) FirebaseLoginViewController *firebaseLoginVC;
 
 @end
+
+
 
 @implementation LoginViewController
 
@@ -30,15 +35,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setUpButtons];
-    
-    
-    Firebase *myRootRef = [[Firebase alloc] initWithUrl:FIREBASE_URL];
-    // Write data to Firebase
-    [myRootRef setValue:@"Do you have data? You'll love Firebase. testing-won't write"];
-    // Read data and react to changes
-    [myRootRef observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
-        NSLog(@"%@ -> %@", snapshot.key, snapshot.value);
-    }];
+
     
     
 }
@@ -63,17 +60,27 @@
     self.dismissViewControllerButton = [[UIButton alloc] init];
     [self.dismissViewControllerButton setTitle:@"Dismiss VC" forState:UIControlStateNormal];
     self.dismissViewControllerButton.tintColor = [UIColor grayColor];
-    self.dismissViewControllerButton.backgroundColor = [UIColor blackColor];
+    self.dismissViewControllerButton.backgroundColor = [UIColor darkGrayColor];
     [self.view addSubview:self.dismissViewControllerButton];
     [self.dismissViewControllerButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@40);
         make.width.equalTo(self.view);
-        make.bottomMargin.equalTo(self.view);
+        make.bottom.equalTo(self.view);
     }];
     
+    self.firebaseLoginButton = [[UIButton alloc] init];
+    [self.firebaseLoginButton setTitle:@"FIREBASE LOGIN" forState:UIControlStateNormal];
+    self.firebaseLoginButton.tintColor = [UIColor grayColor];
+    self.firebaseLoginButton.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:self.firebaseLoginButton];
     
+    [self.firebaseLoginButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@40);
+        make.width.equalTo(self.view);
+        make.bottom.equalTo(self.dismissViewControllerButton.mas_top);
+    }];
     
-    NSArray *arrayOfButtons = @[self.dismissViewControllerButton];
+    NSArray *arrayOfButtons = @[self.dismissViewControllerButton, self.firebaseLoginButton];
     for (id button in arrayOfButtons) {
         [button addTarget:self
                    action:@selector(buttonClicked:)
@@ -94,8 +101,6 @@
     NSLog(@"userID: %@ \n token: %@ \n permissions: %@ \n declined permissions: %@ \n",userID,tokenString,grantedPermissions,declinedPermissions);
     [UserObject sharedUser].facebookUserID = [FBSDKAccessToken currentAccessToken].userID;
     
-    
-    
 }
 
 
@@ -113,6 +118,66 @@
     return YES;
 }
 
+-(void)firebaseLoginClicked
+{
+    UIAlertController *alertController = [UIAlertController
+                                          alertControllerWithTitle:@"Login"
+                                          message:@"Please Login to VinylMap"
+                                          preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField)
+     {
+         textField.placeholder = NSLocalizedString(@"Email", @"Email");
+     }];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField)
+     {
+         textField.placeholder = NSLocalizedString(@"Password", @"Password");
+         textField.secureTextEntry = YES;
+     }];
+    
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       NSLog(@"Cancel action");
+                                   }];
+    
+    UIAlertAction *okAction = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"OK", @"OK action")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction *action)
+                               {
+                                   UITextField *login = alertController.textFields.firstObject;
+                                   UITextField *password = alertController.textFields.lastObject;
+                                   [self loginToFirebase:login.text password:password.text];
+                               }];
+    
+    [alertController addAction:cancelAction];
+    [alertController addAction:okAction];
+    
+    [self presentViewController:alertController animated:YES completion:^{
+        //COMPLETION OF LOGIN ALERT VIEW CONTROLLER
+    }];
+
+    
+}
+
+-(void)loginToFirebase:(NSString *)username password:(NSString *)password
+{
+    [[UserObject sharedUser].firebaseRoot authUser:username password:password withCompletionBlock:^(NSError *error, FAuthData *authData) {
+    if (error) {
+        // an error occurred while attempting login
+        NSLog(@"error %@",error);
+    } else {
+        // user is logged in, check authData for data
+        NSLog(@"logged in successfully");
+    }
+}];
+    
+    
+}
 
 -(void)buttonClicked:(UIButton *)sendingButton
 {
@@ -120,8 +185,9 @@
     if([sendingButton isEqual:self.dismissViewControllerButton])
     {
         [self dismissViewControllerAnimated:YES completion:nil];
-    } else if (YES)
+    } else if ([sendingButton isEqual:self.firebaseLoginButton])
     {
+        [self firebaseLoginClicked];
         
     } else if (YES)
     {
