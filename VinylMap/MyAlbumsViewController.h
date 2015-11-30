@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FirebaseUI/FirebaseUI.h>
+#import <Firebase/Firebase.h>
 
 @interface MyAlbumsViewController : UIViewController
+
+@property (strong, nonatomic) Firebase *firebaseRef;
+@property (strong, nonatomic) FirebaseCollectionViewDataSource *dataSource;
 
 @end

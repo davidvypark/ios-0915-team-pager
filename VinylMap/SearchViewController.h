@@ -10,4 +10,6 @@
 
 @interface SearchViewController : UIViewController
 
+-(UITableViewCell*)getCellFromTableView:(UITableView*)tableView Sender:(id)sender;
+
 @end

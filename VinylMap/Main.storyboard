@@ -211,6 +211,9 @@
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                                     <state key="normal" title="+"/>
+                                                    <connections>
+                                                        <action selector="addButtonTapped:" destination="G6t-G7-Qgk" eventType="touchUpInside" id="3eg-7J-pAD"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <animations/>

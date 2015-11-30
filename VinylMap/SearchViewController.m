@@ -12,13 +12,20 @@
 #import "VinylConstants.h"
 #import "AlbumTableViewCell.h"
 #import <UIKit+AFNetworking.h>
+#import <Firebase/Firebase.h>
 #import "DiscogsAPI.h"
 
 @interface SearchViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, BarCodeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *searchField;
 @property (weak, nonatomic) IBOutlet UITableView *searchTableView;
 @property (nonatomic, strong) NSMutableArray *albumResults;
+@property (nonatomic, strong) Firebase *firebase;
+@property (nonatomic, strong) NSMutableArray* collection;
+@property (strong, nonatomic) NSIndexPath *cellIndexPath;
+
+
 @property (nonatomic, strong) BarcodeViewController *barcodeVC;
+
 
 @end
 
@@ -31,6 +38,7 @@
     self.searchTableView.delegate = self;
     self.searchTableView.dataSource = self;
     self.albumResults = [NSMutableArray new];
+    self.firebase = [[Firebase alloc] initWithUrl:@"https://amber-torch-8635.firebaseio.com/users/Cat/collection"];
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField {
@@ -79,6 +87,14 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.albumResults.count;
 }
+- (IBAction)addButtonTapped:(UIButton *)sender {
+    Firebase *album = [self.firebase childByAutoId];
+    CGPoint pos = [sender convertPoint:CGPointZero toView:self.searchTableView];
+    NSIndexPath *indexPath = [self.searchTableView indexPathForRowAtPoint:pos];
+    NSDictionary *result = self.albumResults[indexPath.row];
+    [album setValue:@{@"title": result[@"title"], @"imageURL": result[@"thumb"]}];
+}
+
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AlbumTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"albumCell" forIndexPath:indexPath];
@@ -110,6 +126,7 @@
     NSURL *albumArtURL = [NSURL URLWithString:result[@"thumb"]];
     [cell.albumView setImageWithURL:albumArtURL];
     
+//    self.cellIndexPath = indexPath;
     return cell;
 }
 
