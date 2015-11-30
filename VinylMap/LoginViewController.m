@@ -14,6 +14,8 @@
 #import "UserObject.h"
 #import <Google/Core.h>
 #import <Google/SignIn.h>
+#import <Firebase/Firebase.h>
+#import "VinylConstants.h"
 
 
 @interface LoginViewController () <FBSDKLoginButtonDelegate>
@@ -28,6 +30,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setUpButtons];
+    
+    
+    Firebase *myRootRef = [[Firebase alloc] initWithUrl:FIREBASE_URL];
+    // Write data to Firebase
+    [myRootRef setValue:@"Do you have data? You'll love Firebase. testing-won't write"];
+    // Read data and react to changes
+    [myRootRef observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        NSLog(@"%@ -> %@", snapshot.key, snapshot.value);
+    }];
     
     
 }

@@ -103,7 +103,7 @@
 {
     [super touchesEnded:touches withEvent:event];
     
-    NSLog(@"user touched this object: %@",touches.anyObject.view);
+    NSLog(@"user touched this object: %@",touches.anyObject.view.accessibilityLabel);
     
     if([touches.anyObject.view.accessibilityLabel isEqualToString:@"backOut"])
     {
