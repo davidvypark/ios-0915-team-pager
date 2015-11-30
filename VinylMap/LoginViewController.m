@@ -34,7 +34,7 @@
     
     Firebase *myRootRef = [[Firebase alloc] initWithUrl:FIREBASE_URL];
     // Write data to Firebase
-    [myRootRef setValue:@"Do you have data? You'll love Firebase.testing"];
+    [myRootRef setValue:@"Do you have data? You'll love Firebase. testing-won't write"];
     // Read data and react to changes
     [myRootRef observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
         NSLog(@"%@ -> %@", snapshot.key, snapshot.value);
