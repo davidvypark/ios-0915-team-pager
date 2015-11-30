@@ -13,7 +13,7 @@
 		2B6016F81BFCC978003DB81A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B6016F71BFCC978003DB81A /* ViewController.m */; };
 		2B6016FD1BFCC978003DB81A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B6016FC1BFCC978003DB81A /* Assets.xcassets */; };
 		2B6017001BFCC978003DB81A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B6016FE1BFCC978003DB81A /* LaunchScreen.storyboard */; };
-		2B9C06241C0C900300060A19 /* AlbumCollectionDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9C06231C0C900300060A19 /* AlbumCollectionDataStore.m */; settings = {ASSET_TAGS = (); }; };
+		2B9C06241C0C900300060A19 /* AlbumCollectionDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9C06231C0C900300060A19 /* AlbumCollectionDataStore.m */; };
 		2BF0EB3D1BFE7AA600EA03B1 /* AlbumsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB3C1BFE7AA600EA03B1 /* AlbumsCollectionViewController.m */; };
 		2BF0EB401BFE813800EA03B1 /* AlbumCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB3F1BFE813800EA03B1 /* AlbumCollectionViewCell.m */; };
 		2BF0EB431BFE843A00EA03B1 /* AlbumTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB421BFE843A00EA03B1 /* AlbumTableViewCell.m */; };
@@ -281,7 +281,7 @@
 				TargetAttributes = {
 					2B6016EC1BFCC978003DB81A = {
 						CreatedOnToolsVersion = 7.0.1;
-						DevelopmentTeam = CC29FAZZGY;
+						DevelopmentTeam = 9696XGVX3N;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
 								enabled = 1;

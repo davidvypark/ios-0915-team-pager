@@ -58,32 +58,8 @@
     return YES;
 }
 
-- (IBAction)barcodeButtonTapped:(id)sender {
-    self.barcodeVC = [[BarcodeViewController alloc] init];
-    self.barcodeVC.delegate = self;
-    [self presentViewController:self.barcodeVC animated:YES completion:nil];
-}
 
--(NSArray *)barcodeScanResult:(NSString *)barcode {
-    if([barcode isEqualToString:@"dismissed"])
-    {
-        [self.barcodeVC dismissViewControllerAnimated:NO completion:nil];
-    } else
-    {
-        [self.barcodeVC dismissViewControllerAnimated:NO completion:^{
-            NSLog(@"searching for %@",barcode);
-            UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-            spinner.center = CGPointMake(160, 240);
-            spinner.tag = 12;
-            [self.view addSubview:spinner];
-            [spinner startAnimating];
-            [DiscogsAPI barcodeAPIsearch:barcode withCompletion:^(NSArray *arrayOfAlbums, bool isError) {
-                NSLog(@"%@",arrayOfAlbums);
-            }];
-        }];
-    }
-    return nil;
-}
+
 
 - (IBAction)cancelButtonTapped:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -135,6 +111,38 @@
     [cell.albumView setImageWithURL:albumArtURL];
     
     return cell;
+}
+
+#pragma mark - barcode search
+- (IBAction)barcodeButtonTapped:(id)sender {
+    self.barcodeVC = [[BarcodeViewController alloc] init];
+    self.barcodeVC.delegate = self;
+    [self.barcodeVC setModalPresentationStyle:UIModalPresentationOverFullScreen];
+    [self presentViewController:self.barcodeVC animated:NO completion:nil];
+}
+
+-(NSArray *)barcodeScanResult:(NSString *)barcode {
+    
+    if([barcode isEqualToString:@"dismissed"])
+    {
+        [self.barcodeVC dismissViewControllerAnimated:NO completion:nil];
+    } else
+    {
+        [self.barcodeVC dismissViewControllerAnimated:NO completion:^{
+            NSLog(@"searching for %@",barcode);
+            UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            spinner.center = CGPointMake(160, 240);
+            spinner.tag = 12;
+            [self.view addSubview:spinner];
+            [spinner startAnimating];
+            [DiscogsAPI barcodeAPIsearch:barcode withCompletion:^(NSArray *arrayOfAlbums, bool isError) {
+                NSLog(@"%@",arrayOfAlbums);//RESULTS FROM DISCOGS API
+                [spinner removeFromSuperview];
+            }];
+        }];
+    }
+    
+    return nil;
 }
 
 @end
