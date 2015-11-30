@@ -14,5 +14,6 @@ pod 'Google'
 pod 'Google/SignIn'
 pod 'Firebase', '>= 2.4.3'
 pod 'GeoFire', '>= 1.1'
+pod 'FirebaseUI', '~> 0.3'
 end
 

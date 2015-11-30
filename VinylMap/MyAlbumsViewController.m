@@ -8,6 +8,7 @@
 
 #import "MyAlbumsViewController.h"
 #import "AlbumCollectionViewCell.h"
+#import <UIKit+AFNetworking.h>
 
 @interface MyAlbumsViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollection;
@@ -23,7 +24,16 @@
 //        forCellWithReuseIdentifier:@"albumCell"];
     self.myCollection.delegate = self;
     self.myCollection.dataSource = self;
-    [self populateAlbumsArray];
+//    [self populateAlbumsArray];
+    self.firebaseRef = [[Firebase alloc] initWithUrl:@"https://amber-torch-8635.firebaseio.com/users/Cat/collection"];
+    self.albums = [[NSMutableArray alloc] init];
+    [self.firebaseRef observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
+        [self.albums addObject:snapshot.value];
+        [self.myCollection reloadData];
+    }];
+    [self.firebaseRef observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        [self.myCollection reloadData];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -46,7 +56,9 @@
     srand48(time(0));
     [cell.albumLabel setText:self.albums[indexPath.row][@"title"]];
     [cell.artistLabel setText:self.albums[indexPath.row][@"artist"]];
-    [cell.albumArtView setImage:[UIImage imageNamed:self.albums[indexPath.row][@"artwork"]]];
+    NSURL *albumArtURL = [NSURL URLWithString:self.albums[indexPath.row][@"imageURL"]];
+
+    [cell.albumArtView setImageWithURL:albumArtURL];
     cell.albumArtView.backgroundColor = [UIColor colorWithRed:drand48() green:drand48() blue:drand48() alpha:drand48()];
     return cell;
 }
@@ -55,18 +67,5 @@
     return CGSizeMake(150, 200);
 }
 
--(void) populateAlbumsArray {
-    self.albums = [NSMutableArray new];
-    [self.albums addObject:@{@"title":@"Album 1", @"artist":@"Artist 1", @"artwork":@"Images/record.png"}];
-    [self.albums addObject:@{@"title":@"Album 2", @"artist":@"Artist 2", @"artwork":@"Images/record.png"}];
-    [self.albums addObject:@{@"title":@"Album 3", @"artist":@"Artist 3", @"artwork":@"Images/record.png"}];
-    [self.albums addObject:@{@"title":@"To Pimp a Butterfly", @"artist":@"Kendrick Lamar", @"artwork":@"Images/record.png"}];
-    [self.albums addObject:@{@"title":@"Album 5", @"artist":@"Artist 5", @"artwork":@"Images/record.png"}];
-    [self.albums addObject:@{@"title":@"Album 6", @"artist":@"Artist 6", @"artwork":@"Images/record.png"}];
-    [self.albums addObject:@{@"title":@"Album 7", @"artist":@"Artist 7", @"artwork":@"Images/record.png"}];
-    [self.albums addObject:@{@"title":@"Album 8", @"artist":@"Artist 8", @"artwork":@"Images/record.png"}];
-    [self.albums addObject:@{@"title":@"Album 9", @"artist":@"Artist 9", @"artwork":@"Images/record.png"}];
-    [self.albums addObject:@{@"title":@"Album 10", @"artist":@"Artist 10", @"artwork":@"Images/record.png"}];
-}
 
 @end
