@@ -12,11 +12,13 @@
 #import "VinylConstants.h"
 #import "AlbumTableViewCell.h"
 #import <UIKit+AFNetworking.h>
+#import "DiscogsAPI.h"
 
-@interface SearchViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface SearchViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, BarCodeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *searchField;
 @property (weak, nonatomic) IBOutlet UITableView *searchTableView;
 @property (nonatomic, strong) NSMutableArray *albumResults;
+@property (nonatomic, strong) BarcodeViewController *barcodeVC;
 
 @end
 
@@ -57,8 +59,30 @@
 }
 
 - (IBAction)barcodeButtonTapped:(id)sender {
-    BarcodeViewController *barcodeVC = [[BarcodeViewController alloc] init];
-    [self presentViewController:barcodeVC animated:YES completion:nil];
+    self.barcodeVC = [[BarcodeViewController alloc] init];
+    self.barcodeVC.delegate = self;
+    [self presentViewController:self.barcodeVC animated:YES completion:nil];
+}
+
+-(NSArray *)barcodeScanResult:(NSString *)barcode {
+    if([barcode isEqualToString:@"dismissed"])
+    {
+        [self.barcodeVC dismissViewControllerAnimated:NO completion:nil];
+    } else
+    {
+        [self.barcodeVC dismissViewControllerAnimated:NO completion:^{
+            NSLog(@"searching for %@",barcode);
+            UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            spinner.center = CGPointMake(160, 240);
+            spinner.tag = 12;
+            [self.view addSubview:spinner];
+            [spinner startAnimating];
+            [DiscogsAPI barcodeAPIsearch:barcode withCompletion:^(NSArray *arrayOfAlbums, bool isError) {
+                NSLog(@"%@",arrayOfAlbums);
+            }];
+        }];
+    }
+    return nil;
 }
 
 - (IBAction)cancelButtonTapped:(id)sender {
