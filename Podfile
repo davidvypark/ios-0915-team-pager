@@ -7,6 +7,7 @@ target 'VinylMap' do
 pod "MTBBarcodeScanner"
 pod 'Masonry'
 pod 'AFNetworking'
+pod 'AFOAuth2Manager'
 pod 'FBSDKCoreKit'
 pod 'FBSDKLoginKit'
 pod 'FBSDKShareKit'

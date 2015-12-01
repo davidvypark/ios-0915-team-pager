@@ -20,6 +20,8 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - AFOAuth2Manager (2.2.0):
+    - AFNetworking/NSURLConnection (~> 2.2)
   - Bolts (1.5.0):
     - Bolts/AppLinks (= 1.5.0)
     - Bolts/Tasks (= 1.5.0)
@@ -79,6 +81,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
+  - AFOAuth2Manager
   - FBSDKCoreKit
   - FBSDKLoginKit
   - FBSDKShareKit
@@ -92,6 +95,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
+  AFOAuth2Manager: 952eb62e8fd8022971e64c6e8fe28b9e999224af
   Bolts: 722ab9a4f8b50fc4ed1b9998a5a7a2b3f16d80b4
   FBSDKCoreKit: 66a935d17b6e00b6b64e604f2eb9b72c9ab7deb8
   FBSDKLoginKit: d893fcbb98d854496925e9ff73c67b896982d3c4

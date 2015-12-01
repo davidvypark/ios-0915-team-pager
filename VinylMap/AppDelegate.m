@@ -51,7 +51,7 @@
             NSLog(@"%@",authData); //AUTHDATA COMPLETE
             [UserObject sharedUser].firebaseAuthData = authData;
         } else{
-            NSLog(@"USER NOT LOGGED IN/AUTHENITCATED %@",authData);
+            NSLog(@"User logged out or not logged in");
         }
     }];
     

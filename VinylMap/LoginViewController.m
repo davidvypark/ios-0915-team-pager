@@ -17,12 +17,14 @@
 #import <Firebase/Firebase.h>
 #import <FirebaseUI.h>
 #import "VinylConstants.h"
-
+#import <AFOAuth2Manager.h>
 
 @interface LoginViewController () <FBSDKLoginButtonDelegate>
 @property (nonatomic, strong) FBSDKLoginButton *facebookLoginButton;
 @property (nonatomic, strong) UIButton *dismissViewControllerButton;
 @property (nonatomic, strong) UIButton *firebaseLoginButton;
+@property (nonatomic, strong) UIButton *firebaseLogoutButton;
+@property (nonatomic, strong) UIButton *discogsLoginButton;
 @property (nonatomic, strong) FirebaseLoginViewController *firebaseLoginVC;
 
 @end
@@ -68,6 +70,30 @@
         make.bottom.equalTo(self.view);
     }];
     
+    self.discogsLoginButton = [[UIButton alloc] init];
+    [self.discogsLoginButton setTitle:@"DISCOGS LOGIN" forState:UIControlStateNormal];
+    self.discogsLoginButton.tintColor = [UIColor grayColor];
+    self.discogsLoginButton.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:self.discogsLoginButton];
+    
+    [self.discogsLoginButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@40);
+        make.width.equalTo(self.view);
+        make.bottom.equalTo(self.dismissViewControllerButton.mas_top);
+    }];
+    
+    self.firebaseLogoutButton = [[UIButton alloc] init];
+    [self.firebaseLogoutButton setTitle:@"FIREBASE LOGOUT" forState:UIControlStateNormal];
+    self.firebaseLogoutButton.tintColor = [UIColor grayColor];
+    self.firebaseLogoutButton.backgroundColor = [UIColor lightGrayColor];
+    [self.view addSubview:self.firebaseLogoutButton];
+    
+    [self.firebaseLogoutButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@40);
+        make.width.equalTo(self.view);
+        make.bottom.equalTo(self.discogsLoginButton.mas_top);
+    }];
+    
     self.firebaseLoginButton = [[UIButton alloc] init];
     [self.firebaseLoginButton setTitle:@"FIREBASE LOGIN" forState:UIControlStateNormal];
     self.firebaseLoginButton.tintColor = [UIColor grayColor];
@@ -77,10 +103,12 @@
     [self.firebaseLoginButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@40);
         make.width.equalTo(self.view);
-        make.bottom.equalTo(self.dismissViewControllerButton.mas_top);
+        make.bottom.equalTo(self.firebaseLogoutButton.mas_top);
     }];
     
-    NSArray *arrayOfButtons = @[self.dismissViewControllerButton, self.firebaseLoginButton];
+    
+    
+    NSArray *arrayOfButtons = @[self.dismissViewControllerButton, self.firebaseLoginButton, self.firebaseLogoutButton, self.discogsLoginButton];
     for (id button in arrayOfButtons) {
         [button addTarget:self
                    action:@selector(buttonClicked:)
@@ -89,6 +117,51 @@
     
 }
 
+-(void)buttonClicked:(UIButton *)sendingButton
+{
+    
+    if([sendingButton isEqual:self.dismissViewControllerButton])
+    {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else if ([sendingButton isEqual:self.firebaseLoginButton])
+    {
+        [self firebaseLoginClicked];
+        
+    } else if ([sendingButton isEqual:self.firebaseLogoutButton])
+    {
+        [self logoutOfFirebase];
+    } else if ([sendingButton isEqual:self.discogsLoginButton])
+    {
+        [self discogsLoginButtonPressed];
+        
+    }
+    
+}
+
+
+#pragma mark - discogs login
+
+-(void)discogsLoginButtonPressed
+{
+    NSURL *baseURL = [NSURL URLWithString:@"https://api.discogs.com/"];
+    AFOAuth2Manager *OAuth2Manager = [[AFOAuth2Manager alloc] initWithBaseURL:baseURL
+                                                                     clientID:DISCOGS_CONSUMER_KEY
+                                                                       secret:DISCOGS_CONSUMER_SECRET];
+    NSDictionary *parameters;
+    
+    [OAuth2Manager authenticateUsingOAuthWithURLString:baseURL parameters:parameters success:^(AFOAuthCredential *credential) {
+        //success
+    } failure:^(NSError *error) {
+        //failure
+    }];
+    
+    
+    
+}
+
+
+
+#pragma mark - facebook
 
 -(void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error
 
@@ -104,22 +177,23 @@
 }
 
 
-
-
-
 -(void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton
 {
     
 }
 
-- (BOOL) loginButtonWillLogin:(FBSDKLoginButton *)loginButton
+- (BOOL)loginButtonWillLogin:(FBSDKLoginButton *)loginButton
 {
     
     return YES;
 }
 
+#pragma mark - firebase
+
+
 -(void)firebaseLoginClicked
 {
+    
     UIAlertController *alertController = [UIAlertController
                                           alertControllerWithTitle:@"Login"
                                           message:@"Please Login to VinylMap"
@@ -167,34 +241,22 @@
 -(void)loginToFirebase:(NSString *)username password:(NSString *)password
 {
     [[UserObject sharedUser].firebaseRoot authUser:username password:password withCompletionBlock:^(NSError *error, FAuthData *authData) {
-    if (error) {
-        // an error occurred while attempting login
-        NSLog(@"error %@",error);
-    } else {
-        // user is logged in, check authData for data
-        NSLog(@"logged in successfully");
-    }
-}];
+        if (error) {
+            // an error occurred while attempting login
+            NSLog(@"error %@",error);
+        } else {
+            // user is logged in, check authData for data
+            NSLog(@"logged in successfully");
+        }
+    }];
     
     
 }
 
--(void)buttonClicked:(UIButton *)sendingButton
-{
 
-    if([sendingButton isEqual:self.dismissViewControllerButton])
-    {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    } else if ([sendingButton isEqual:self.firebaseLoginButton])
-    {
-        [self firebaseLoginClicked];
-        
-    } else if (YES)
-    {
-        
-    }
-    
-    
+-(void)logoutOfFirebase
+{
+    [[UserObject sharedUser].firebaseRoot unauth];
 }
 
 
