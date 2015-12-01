@@ -17,6 +17,9 @@
 @property (nonatomic, strong) Firebase *firebaseRoot;
 @property (nonatomic, strong) Firebase *firebaseTestFolder;
 @property (nonatomic, strong) FAuthData *firebaseAuthData;
+@property (nonatomic, strong) NSString *discogsTokenSecret;
+@property (nonatomic, strong) NSString *discogsRequestToken;
+@property (nonatomic, strong) NSString *discogsOAuthVerifier;
 
 + (instancetype)sharedUser;
 

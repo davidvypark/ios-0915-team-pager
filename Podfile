@@ -8,6 +8,7 @@ pod "MTBBarcodeScanner"
 pod 'Masonry'
 pod 'AFNetworking'
 pod 'AFOAuth2Manager'
+pod 'AFOAuth1'
 pod 'FBSDKCoreKit'
 pod 'FBSDKLoginKit'
 pod 'FBSDKShareKit'

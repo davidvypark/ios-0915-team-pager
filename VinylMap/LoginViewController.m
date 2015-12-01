@@ -18,6 +18,8 @@
 #import <FirebaseUI.h>
 #import "VinylConstants.h"
 #import <AFOAuth2Manager.h>
+#import <AFNetworking.h>
+#import <KDURLRequestSerialization+OAuth.h>
 
 @interface LoginViewController () <FBSDKLoginButtonDelegate>
 @property (nonatomic, strong) FBSDKLoginButton *facebookLoginButton;
@@ -25,6 +27,7 @@
 @property (nonatomic, strong) UIButton *firebaseLoginButton;
 @property (nonatomic, strong) UIButton *firebaseLogoutButton;
 @property (nonatomic, strong) UIButton *discogsLoginButton;
+@property (nonatomic, strong) AFHTTPSessionManager *manager;
 @property (nonatomic, strong) FirebaseLoginViewController *firebaseLoginVC;
 
 @end
@@ -143,17 +146,53 @@
 
 -(void)discogsLoginButtonPressed
 {
-    NSURL *baseURL = [NSURL URLWithString:@"https://api.discogs.com/"];
-    AFOAuth2Manager *OAuth2Manager = [[AFOAuth2Manager alloc] initWithBaseURL:baseURL
-                                                                     clientID:DISCOGS_CONSUMER_KEY
-                                                                       secret:DISCOGS_CONSUMER_SECRET];
-    NSDictionary *parameters;
+    NSString *stringURL = @"https://api.discogs.com/oauth/request_token";
+    NSString *timeInterval = [NSString stringWithFormat:@"%ld", [@([[NSDate date] timeIntervalSince1970]) integerValue]];
+    NSDictionary *params = @{@"oauth_consumer_key" : DISCOGS_CONSUMER_KEY,
+                             @"oauth_signature" : [NSString stringWithFormat:@"%@&",DISCOGS_CONSUMER_SECRET],
+                             @"oauth_signature_method":@"PLAINTEXT",
+                             @"oauth_timestamp" : timeInterval,
+                             @"oauth_nonce" : @"jThVrMF",
+                             @"User-Agent" : @"uniqueVinylMaps",
+                             @"oauth_version" : @"1.0",
+                             @"oauth_callback" : @"vinyl-discogs-beeper://"
+                             };
     
-    [OAuth2Manager authenticateUsingOAuthWithURLString:baseURL parameters:parameters success:^(AFOAuthCredential *credential) {
-        //success
-    } failure:^(NSError *error) {
-        //failure
+    self.manager = [AFHTTPSessionManager manager];
+    
+    
+    KDHTTPRequestSerializer *reqSerializer = [KDHTTPRequestSerializer serializer];
+    [reqSerializer setUseOAuth:YES];
+    self.manager.requestSerializer = reqSerializer;
+    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    self.manager.responseSerializer.acceptableContentTypes = [self.manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    [self.manager GET:stringURL parameters:params success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSLog(@"%@", responseString);
+        responseString = [NSString stringWithFormat:@"%@?%@",stringURL,responseString]; //ADDED ORIGINAL URL TO USE QUEURY ITEMS
+        NSURL *responseURL = [NSURL URLWithString:responseString]; // CHANGED TO NSURL
+        NSURLComponents *urlComps = [NSURLComponents componentsWithURL:responseURL resolvingAgainstBaseURL:nil];
+        NSArray *urlParts = urlComps.queryItems;
+        
+        for (NSURLQueryItem *queryItem in urlParts) {
+            if([queryItem.name isEqualToString:@"oauth_token_secret"])
+            {
+                [UserObject sharedUser].discogsTokenSecret = queryItem.value;
+            } else if ([queryItem.name isEqualToString:@"oauth_token"])
+            {
+                [UserObject sharedUser].discogsRequestToken = queryItem.value;
+            }
+        }
+        NSString *authorizeStringURL = [NSString stringWithFormat:@"https://discogs.com/oauth/authorize?oauth_token=%@",[UserObject sharedUser].discogsRequestToken];
+        NSURL *authorizeURL = [NSURL URLWithString:authorizeStringURL];
+        [[UIApplication sharedApplication] openURL:authorizeURL];
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"%@", error);
     }];
+    
+    
+    
     
     
     
