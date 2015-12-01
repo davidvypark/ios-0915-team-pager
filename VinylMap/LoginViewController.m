@@ -20,6 +20,7 @@
 #import <AFOAuth2Manager.h>
 #import <AFNetworking.h>
 #import <KDURLRequestSerialization+OAuth.h>
+#import "DiscogsOAuthRequestSerializer.h"
 
 @interface LoginViewController () <FBSDKLoginButtonDelegate>
 @property (nonatomic, strong) FBSDKLoginButton *facebookLoginButton;
@@ -161,14 +162,12 @@
     self.manager = [AFHTTPSessionManager manager];
     
     
-    KDHTTPRequestSerializer *reqSerializer = [KDHTTPRequestSerializer serializer];
-    [reqSerializer setUseOAuth:YES];
+    DiscogsOAuthRequestSerializer *reqSerializer = [DiscogsOAuthRequestSerializer serializer];
     self.manager.requestSerializer = reqSerializer;
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     self.manager.responseSerializer.acceptableContentTypes = [self.manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
     [self.manager GET:stringURL parameters:params success:^(NSURLSessionDataTask *task, id responseObject) {
         NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        NSLog(@"%@", responseString);
         responseString = [NSString stringWithFormat:@"%@?%@",stringURL,responseString]; //ADDED ORIGINAL URL TO USE QUEURY ITEMS
         NSURL *responseURL = [NSURL URLWithString:responseString]; // CHANGED TO NSURL
         NSURLComponents *urlComps = [NSURLComponents componentsWithURL:responseURL resolvingAgainstBaseURL:nil];
@@ -178,9 +177,11 @@
             if([queryItem.name isEqualToString:@"oauth_token_secret"])
             {
                 [UserObject sharedUser].discogsTokenSecret = queryItem.value;
+                NSLog(@"OAuth Prelim Secret %@",queryItem.value);
             } else if ([queryItem.name isEqualToString:@"oauth_token"])
             {
                 [UserObject sharedUser].discogsRequestToken = queryItem.value;
+                NSLog(@"OAuth Prelim Token %@",queryItem.value);
             }
         }
         NSString *authorizeStringURL = [NSString stringWithFormat:@"https://discogs.com/oauth/authorize?oauth_token=%@",[UserObject sharedUser].discogsRequestToken];

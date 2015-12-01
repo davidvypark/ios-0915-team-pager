@@ -16,6 +16,7 @@
 #import <FirebaseUI/FirebaseUI.h>
 #import <AFNetworking.h>
 #import <KDURLRequestSerialization+OAuth.h>
+#import "DiscogsOAuthRequestSerializer.h"
 
 @interface AppDelegate  () <GIDSignInDelegate>
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
@@ -83,7 +84,6 @@
 {
     //MAKE THIS CONDITIONAL FOR FACEBOOK
     NSString *stringFromURL = [url absoluteString];
-    NSLog(@"%lu",(unsigned long)[stringFromURL rangeOfString:FACEBOOK_KEY].location);
     if ([stringFromURL rangeOfString:FACEBOOK_KEY].location != NSNotFound) // facebook
     {
         [[FBSDKApplicationDelegate sharedInstance] application:app
@@ -119,7 +119,6 @@
 -(void)handleDiscogsOAuthResponse
 {
     
-    
     NSString *stringURL = @"https://api.discogs.com/oauth/access_token";
     NSString *timeInterval = [NSString stringWithFormat:@"%ld", [@([[NSDate date] timeIntervalSince1970]) integerValue]];
     NSDictionary *params = @{@"oauth_consumer_key" : DISCOGS_CONSUMER_KEY,
@@ -136,15 +135,11 @@
     
     self.manager = [AFHTTPSessionManager manager];
     
-    KDHTTPRequestSerializer *reqSerializer = [KDHTTPRequestSerializer serializer];
-    [reqSerializer setUseOAuth:YES];
+    DiscogsOAuthRequestSerializer *reqSerializer = [DiscogsOAuthRequestSerializer serializer];
     self.manager.requestSerializer = reqSerializer;
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     self.manager.responseSerializer.acceptableContentTypes = [self.manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-    
-    //WHY IS THIS NOT WORKING?  WHY DO I EVEN NEED TO DO THIS WHEN I GET THE OAUTH SECRET IN THE FIRST STEP
-    
-    [self.manager POST:stringURL parameters:params success:^(NSURLSessionDataTask *task, id responseObject) {
+    [self.manager POST:stringURL parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSLog(@"%@", responseString);
         responseString = [NSString stringWithFormat:@"%@?%@",stringURL,responseString]; //ADDED ORIGINAL URL TO USE QUEURY ITEMS
@@ -155,10 +150,12 @@
         for (NSURLQueryItem *queryItem in urlParts) {
             if([queryItem.name isEqualToString:@"oauth_token_secret"])
             {
-                
+                [UserObject sharedUser].discogsTokenSecret = queryItem.value;
+                NSLog(@"OAuth Final Secret %@",queryItem.value);
             } else if ([queryItem.name isEqualToString:@"oauth_token"])
             {
-                
+                [UserObject sharedUser].discogsRequestToken = queryItem.value;
+                NSLog(@"OAuth Final Token %@",queryItem.value);
             }
         }
         
