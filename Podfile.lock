@@ -22,9 +22,6 @@ PODS:
     - AFNetworking (~> 2.2.0)
   - AFOAuth2Manager (2.2.0):
     - AFNetworking/NSURLConnection (~> 2.2)
-  - BDBOAuth1Manager (1.2.1):
-    - AFNetworking/NSURLConnection (~> 2.2.0)
-    - AFNetworking/NSURLSession (~> 2.2.0)
   - Bolts (1.5.0):
     - Bolts/AppLinks (= 1.5.0)
     - Bolts/Tasks (= 1.5.0)
@@ -103,7 +100,6 @@ SPEC CHECKSUMS:
   AFNetworking: caca0799b310f0c3bf1fc1af45145fc96972bcab
   AFOAuth1: dad9f255f58c32014fbcf784a417afd92789b7d9
   AFOAuth2Manager: 952eb62e8fd8022971e64c6e8fe28b9e999224af
-  BDBOAuth1Manager: 9a6e718b1abad6fbb5f551cab31179a9b026ac4a
   Bolts: 722ab9a4f8b50fc4ed1b9998a5a7a2b3f16d80b4
   ECSlidingViewController: 6485c14f23b4487e9946535421ca8f111f86cc53
   FBSDKCoreKit: 66a935d17b6e00b6b64e604f2eb9b72c9ab7deb8
