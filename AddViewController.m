@@ -10,12 +10,17 @@
 #import <GeoFire/GeoFire.h>
 #import <Firebase/Firebase.h>
 #import "VinylAnnotation.h"
+#import <UIKit+AFNetworking.h>
+#import <Mapkit/Mapkit.h>
+
 
 @interface AddViewController ()<MKMapViewDelegate, CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *addMapView;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (nonatomic, strong) GeoFire * geoFire;
 @property (nonatomic, strong) VinylAnnotation *user;
+@property (nonatomic, strong) NSString *currentUser;
+
 
 @end
 
@@ -30,6 +35,10 @@
     // Do any additional setup after loading the view.
     Firebase *geofireRef = [[Firebase alloc] initWithUrl:@"https://amber-torch-8635.firebaseio.com/geofire"];
     self.geoFire = [[GeoFire alloc] initWithFirebaseRef:geofireRef];
+    self.currentUser = @"Cat";
+    
+    
+
     
     
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
@@ -52,9 +61,9 @@
     CLLocationCoordinate2D selfCoord = self.addMapView.userLocation.location.coordinate;
     MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(selfCoord, 1000.0, 1000.0);
     [self.addMapView setRegion:startRegion animated:NO];
-     self.user = [[VinylAnnotation alloc] init];
-    self.user.coordinate = selfCoord;
-    self.user.title = @"Your location";
+    MKPointAnnotation *user = [[MKPointAnnotation alloc] init];
+    user.coordinate = selfCoord;
+    user.title = @"Your location";
     [self.addMapView addAnnotation:self.user];
     [self.locationManager stopUpdatingLocation];
     self.addMapView.showsUserLocation = NO;
@@ -62,7 +71,7 @@
 
 - (MKAnnotationView *) mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>) annotation
 {
-    MKPinAnnotationView *annView=[[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"pin"];
+    MKPinAnnotationView *annView=[[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"VinylAnnotation"];
     if ([annotation.title isEqualToString:@"Your location"]) {
         annView.pinTintColor = [UIColor blueColor];
     }
@@ -84,8 +93,26 @@
     
     VinylAnnotation *annotation = [[VinylAnnotation alloc] init];
     annotation.coordinate = touchMapCoordinate;
+                        
     [self.addMapView addAnnotation:annotation];
-    [self.geoFire setLocation:[[CLLocation alloc] initWithLatitude:annotation.coordinate.latitude longitude:annotation.coordinate.longitude] forKey:@"test1"];
+    __unsafe_unretained typeof(self) weakSelf = self;
+    [self.geoFire setLocation:[[CLLocation alloc] initWithLatitude:annotation.coordinate.latitude longitude:annotation.coordinate.longitude] forKey:self.ID withCompletionBlock:^(NSError *error) {
+        NSString *geofireAlbumURL = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/geofire/%@", weakSelf.ID];
+        Firebase *albumKey = [[Firebase alloc] initWithUrl:geofireAlbumURL];
+        if (error != nil) {
+            NSLog(@"An error occurred: %@", error);
+        }
+        else {
+            
+            [albumKey updateChildValues:@{@"owner" : weakSelf.currentUser}];
+        }
+    }];
+}
+
+- (IBAction)cancelButtonTapped:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
 }
 
 /*

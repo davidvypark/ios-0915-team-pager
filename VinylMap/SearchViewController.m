@@ -92,7 +92,7 @@
     CGPoint pos = [sender convertPoint:CGPointZero toView:self.searchTableView];
     NSIndexPath *indexPath = [self.searchTableView indexPathForRowAtPoint:pos];
     NSDictionary *result = self.albumResults[indexPath.row];
-    [album setValue:@{@"title": result[@"title"], @"imageURL": result[@"thumb"]}];
+    [album setValue:@{@"title": result[@"title"], @"imageURL": result[@"thumb"], @"ID": album.key}];
 }
 
 
@@ -126,7 +126,6 @@
     NSURL *albumArtURL = [NSURL URLWithString:result[@"thumb"]];
     [cell.albumView setImageWithURL:albumArtURL];
     
-//    self.cellIndexPath = indexPath;
     return cell;
 }
 

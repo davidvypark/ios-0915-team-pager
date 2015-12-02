@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="NQq-QJ-hDf">
-
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="NQq-QJ-hDf">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -149,7 +148,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dzL-wL-qUY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1744" y="1244"/>
+            <point key="canvasLocation" x="1372" y="1258"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="fQV-Ne-Xgw">
@@ -191,11 +190,7 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iEW-Aj-buL" id="BON-d7-5Mb">
-
-
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="69"/>
-
-
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="69.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="q1O-TV-rpG">
@@ -286,7 +281,57 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NU8-Ux-9Hk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1769" y="480"/>
+            <point key="canvasLocation" x="2107" y="1064"/>
+        </scene>
+        <!--Album Details View Controller-->
+        <scene sceneID="yih-Qj-8Pt">
+            <objects>
+                <viewController storyboardIdentifier="AlbumDetailsViewController" id="7jW-5w-AHI" customClass="AlbumDetailsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="etI-hf-hWB"/>
+                        <viewControllerLayoutGuide type="bottom" id="ztp-X6-zgW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Pha-5c-2o3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ib7-sK-vx7">
+                                <rect key="frame" x="132" y="402" width="70" height="30"/>
+                                <state key="normal" title="Sell/Trade"/>
+                                <connections>
+                                    <segue destination="ITq-5N-15f" kind="presentation" id="2wN-N7-mzn"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="84Y-GQ-xUK">
+                                <rect key="frame" x="138" y="491" width="54" height="30"/>
+                                <state key="normal" title="Wishlist"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Asking Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cu5-dh-2RC">
+                                <rect key="frame" x="120" y="448" width="95" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aOg-Dc-x5M">
+                                <rect key="frame" x="47" y="101" width="283" height="215"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Twg-cF-16p">
+                                <rect key="frame" x="120" y="344" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="albumNameLabel" destination="Twg-cF-16p" id="Ble-9W-Ypd"/>
+                        <outlet property="imageLabel" destination="aOg-Dc-x5M" id="z49-qn-Zwe"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vLz-fG-XVF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2637" y="394"/>
         </scene>
         <!--My Albums View Controller-->
         <scene sceneID="QPc-TP-s9R">
@@ -345,6 +390,7 @@
                                             <outlet property="albumArtView" destination="4Mv-OZ-3k5" id="PAa-vu-rgG"/>
                                             <outlet property="albumLabel" destination="a9B-yF-T1l" id="OaV-yU-sIY"/>
                                             <outlet property="artistLabel" destination="B7R-Q4-5s7" id="nqM-8U-eDV"/>
+                                            <segue destination="7jW-5w-AHI" kind="show" id="j5t-zj-E2h"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -374,7 +420,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J0f-ko-qPi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1769" y="-176"/>
+            <point key="canvasLocation" x="1931" y="402"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="e32-xB-zp2">
@@ -407,8 +453,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="sEF-jZ-iSA">
-                                <rect key="frame" x="0.0" y="64" width="414" height="385"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="sEF-jZ-iSA">
+                                <rect key="frame" x="0.0" y="64" width="600" height="360"/>
                                 <animations/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -423,9 +469,54 @@
                                     <action selector="returnToUserTapped:" destination="ITq-5N-15f" eventType="touchUpInside" id="lGD-uk-yJf"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Asking Price" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="39J-22-1Hk">
+                                <rect key="frame" x="20" y="465" width="147" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="OWZ-yE-riA">
+                                <rect key="frame" x="20" y="511" width="51" height="31"/>
+                            </switch>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="enj-GU-f0y">
+                                <rect key="frame" x="118" y="511" width="51" height="31"/>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sale" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mpV-tT-2d0">
+                                <rect key="frame" x="20" y="550" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Trade" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G7j-3w-j9S">
+                                <rect key="frame" x="116" y="550" width="44" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="89G-DT-DPc">
+                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                                <items>
+                                    <navigationItem title="Title" id="blE-qc-CsQ">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Ba9-R5-6Vt">
+                                            <connections>
+                                                <action selector="cancelButtonTapped:" destination="ITq-5N-15f" id="kyh-x6-039"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="D4c-5S-pPt"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="89G-DT-DPc" firstAttribute="centerX" secondItem="EI7-bh-NHw" secondAttribute="centerX" id="0dt-oa-vNz"/>
+                            <constraint firstItem="89G-DT-DPc" firstAttribute="top" secondItem="a2B-ay-8za" secondAttribute="bottom" id="8Fa-GN-5ut"/>
+                            <constraint firstItem="sEF-jZ-iSA" firstAttribute="height" secondItem="EI7-bh-NHw" secondAttribute="height" multiplier="0.6" id="EQL-CD-5vj"/>
+                            <constraint firstItem="sEF-jZ-iSA" firstAttribute="width" secondItem="EI7-bh-NHw" secondAttribute="width" id="Wac-WG-ify"/>
+                            <constraint firstItem="89G-DT-DPc" firstAttribute="width" secondItem="EI7-bh-NHw" secondAttribute="width" id="cOA-7e-Kbe"/>
+                            <constraint firstItem="sEF-jZ-iSA" firstAttribute="top" secondItem="89G-DT-DPc" secondAttribute="bottom" id="eB9-tP-PfG"/>
+                            <constraint firstItem="sEF-jZ-iSA" firstAttribute="centerX" secondItem="EI7-bh-NHw" secondAttribute="centerX" id="fgL-Db-f8e"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="addMapView" destination="sEF-jZ-iSA" id="sjb-vT-VBb"/>
@@ -438,7 +529,7 @@
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1085" y="1244"/>
+            <point key="canvasLocation" x="3307" y="382"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="4vD-Gs-ony">
@@ -457,16 +548,6 @@
                                 <animations/>
                                 <gestureRecognizers/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="20g-YY-8vP">
-                                <rect key="frame" x="107" y="480" width="46" height="30"/>
-                                <animations/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <segue destination="ITq-5N-15f" kind="show" id="LbG-jd-F05">
-                                        <nil key="action"/>
-                                    </segue>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fWo-XP-I7D">
                                 <rect key="frame" x="314" y="390" width="46" height="30"/>
                                 <animations/>
@@ -486,7 +567,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SuY-Wy-fX7" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="451" y="1244"/>
+            <point key="canvasLocation" x="727" y="1258"/>
         </scene>
         <!--Chat Messages View Controller-->
         <scene sceneID="9CH-7N-sre">
@@ -510,7 +591,7 @@
                                     <outlet property="delegate" destination="quf-bS-riB" id="AlI-yb-XrL"/>
                                 </connections>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dTE-Zp-ExA">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dTE-Zp-ExA">
                                 <rect key="frame" x="276" y="72" width="50" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="18"/>
@@ -559,7 +640,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1076" y="-186"/>
+            <point key="canvasLocation" x="1920" y="-282"/>
         </scene>
     </scenes>
 </document>

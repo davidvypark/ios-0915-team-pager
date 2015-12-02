@@ -9,6 +9,7 @@
 #import "MyAlbumsViewController.h"
 #import "AlbumCollectionViewCell.h"
 #import <UIKit+AFNetworking.h>
+#import "AlbumDetailsViewController.h"
 
 @interface MyAlbumsViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollection;
@@ -24,15 +25,16 @@
 //        forCellWithReuseIdentifier:@"albumCell"];
     self.myCollection.delegate = self;
     self.myCollection.dataSource = self;
-//    [self populateAlbumsArray];
     self.firebaseRef = [[Firebase alloc] initWithUrl:@"https://amber-torch-8635.firebaseio.com/users/Cat/collection"];
     self.albums = [[NSMutableArray alloc] init];
     [self.firebaseRef observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
         [self.albums addObject:snapshot.value];
         [self.myCollection reloadData];
+        NSLog(@"%@ %@", snapshot.key, snapshot.value);
     }];
     [self.firebaseRef observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
         [self.myCollection reloadData];
+        NSLog(@"%@ %@", snapshot.key, snapshot.value);
     }];
 }
 
@@ -66,6 +68,19 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     return CGSizeMake(150, 200);
 }
+
+
+ #pragma mark - Navigation
+
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+     AlbumDetailsViewController *desitinationVC = segue.destinationViewController;
+     NSIndexPath *indexPath = [self.myCollection indexPathForCell:sender];
+     NSDictionary *album = self.albums[indexPath.row];
+     desitinationVC.albumAutoId = album[@"ID"];
+     desitinationVC.albumName = album[@"title"];
+     desitinationVC.albumImageURL = album[@"imageURL"];
+     
+ }
 
 
 @end

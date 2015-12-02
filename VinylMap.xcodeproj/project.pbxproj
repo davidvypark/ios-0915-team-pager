@@ -37,6 +37,7 @@
 		BF61240F1C04FA7A00B045D6 /* VinylAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = BF61240C1C04FA7A00B045D6 /* VinylAnnotation.m */; };
 		BF6124121C05092A00B045D6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF6124111C05092A00B045D6 /* MapKit.framework */; };
 		BFC1BE4A1C0ACC35003DF47F /* ChatMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC1BE491C0ACC35003DF47F /* ChatMessagesViewController.m */; };
+		BFC1BE4D1C0CF8AF003DF47F /* AlbumDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC1BE4C1C0CF8AF003DF47F /* AlbumDetailsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -93,6 +94,8 @@
 		BF6124111C05092A00B045D6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		BFC1BE481C0ACC35003DF47F /* ChatMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessagesViewController.h; sourceTree = "<group>"; };
 		BFC1BE491C0ACC35003DF47F /* ChatMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessagesViewController.m; sourceTree = "<group>"; };
+		BFC1BE4B1C0CF8AE003DF47F /* AlbumDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumDetailsViewController.h; sourceTree = "<group>"; };
+		BFC1BE4C1C0CF8AF003DF47F /* AlbumDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumDetailsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +195,8 @@
 			children = (
 				2BF0EB3B1BFE7AA600EA03B1 /* AlbumsCollectionViewController.h */,
 				2BF0EB3C1BFE7AA600EA03B1 /* AlbumsCollectionViewController.m */,
+				BFC1BE4B1C0CF8AE003DF47F /* AlbumDetailsViewController.h */,
+				BFC1BE4C1C0CF8AF003DF47F /* AlbumDetailsViewController.m */,
 				2BF0EB471BFE84CC00EA03B1 /* AlbumsTableViewController.h */,
 				2BF0EB481BFE84CC00EA03B1 /* AlbumsTableViewController.m */,
 				2BF0EB3E1BFE813700EA03B1 /* AlbumCollectionViewCell.h */,
@@ -281,7 +286,7 @@
 				TargetAttributes = {
 					2B6016EC1BFCC978003DB81A = {
 						CreatedOnToolsVersion = 7.0.1;
-						DevelopmentTeam = 9696XGVX3N;
+						DevelopmentTeam = CC29FAZZGY;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
 								enabled = 1;
@@ -396,6 +401,7 @@
 				2B6016F21BFCC978003DB81A /* main.m in Sources */,
 				BF6124061C04F4BE00B045D6 /* VinylConstants.m in Sources */,
 				965333561BFE347D00BB4F7A /* DiscogsAPI.m in Sources */,
+				BFC1BE4D1C0CF8AF003DF47F /* AlbumDetailsViewController.m in Sources */,
 				2BF0EB401BFE813800EA03B1 /* AlbumCollectionViewCell.m in Sources */,
 				2BF0EB461BFE847F00EA03B1 /* MyAlbumsViewController.m in Sources */,
 				BF61240F1C04FA7A00B045D6 /* VinylAnnotation.m in Sources */,
@@ -511,7 +517,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = VinylMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.flatironschool.team-beeper.VinylMap";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.flatironschool.team-beeper.VinylMap.linda";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -527,7 +533,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = VinylMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.flatironschool.team-beeper.VinylMap";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.flatironschool.team-beeper.VinylMap.linda";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
