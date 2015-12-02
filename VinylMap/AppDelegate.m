@@ -13,8 +13,13 @@
 #import <Google/SignIn.h>
 #import "UserObject.h"
 #import "VinylConstants.h"
+#import <FirebaseUI/FirebaseUI.h>
+#import <AFNetworking.h>
+#import <KDURLRequestSerialization+OAuth.h>
+#import "DiscogsOAuthRequestSerializer.h"
 
-@interface AppDelegate () <GIDSignInDelegate>
+@interface AppDelegate  () <GIDSignInDelegate>
+@property (nonatomic, strong) AFHTTPSessionManager *manager;
 
 @end
 
@@ -23,14 +28,41 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [UserObject sharedUser];
     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions]; // THIS WAKES UP THE FACEBOOK DELEGATES
     [UserObject sharedUser].facebookUserID = [FBSDKAccessToken currentAccessToken].userID;
-    
-    [self setUpGoogle];
+    [self setUpFirebase];
     
     
     return YES;
 }
+
+
+
+-(void)setUpFirebase
+{
+    [UserObject sharedUser].firebaseRoot = [[Firebase alloc] initWithUrl:FIREBASE_URL];
+    [UserObject sharedUser].firebaseTestFolder = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@testing/",FIREBASE_URL]];
+    [[UserObject sharedUser].firebaseTestFolder observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        NSLog(@"TEST: %@ -> %@", snapshot.key, snapshot.value); //LOGS CHANGES IN TEST FOLDER
+    }];
+    
+    
+    //LISTEN FOR FIREBASE AUTH
+    [[UserObject sharedUser].firebaseRoot observeAuthEventWithBlock:^(FAuthData *authData) {
+        if(authData)
+        {
+            NSLog(@"%@",authData); //AUTHDATA COMPLETE
+            [UserObject sharedUser].firebaseAuthData = authData;
+        } else{
+            NSLog(@"User not logged in or just logged out");
+        }
+    }];
+    
+    
+}
+
+
 
 -(void)setUpGoogle
 {
@@ -48,6 +80,94 @@
     
 }
 
+-(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options
+{
+    //MAKE THIS CONDITIONAL FOR FACEBOOK
+    NSString *stringFromURL = [url absoluteString];
+    if ([stringFromURL rangeOfString:FACEBOOK_KEY].location != NSNotFound) // facebook
+    {
+        [[FBSDKApplicationDelegate sharedInstance] application:app
+                                                       openURL:url
+                                             sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+                                                    annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
+    } else if ([stringFromURL rangeOfString:@"vinyl-discogs-beeper"].location != NSNotFound)
+    {
+        [UserObject sharedUser].discogsOAuthVerifier = [self firstValueForQueryItemNamed:@"oauth_verifier" inURL:url];
+        NSLog(@"oauth verifier: %@",[UserObject sharedUser].discogsOAuthVerifier);
+        [self handleDiscogsOAuthResponse];
+    }
+    
+    
+    return YES;
+}
+
+
+-(NSString *)firstValueForQueryItemNamed:(NSString *)name inURL:(NSURL *)url
+{
+    NSURLComponents *urlComps = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:nil];
+    NSArray *queryItems = urlComps.queryItems;
+    
+    for(NSURLQueryItem *queryItem in queryItems) {
+        if([queryItem.name isEqualToString:name]) {
+            return queryItem.value;
+        }
+    }
+    
+    return nil;
+}
+
+-(void)handleDiscogsOAuthResponse
+{
+    
+    NSString *stringURL = @"https://api.discogs.com/oauth/access_token";
+    NSString *timeInterval = [NSString stringWithFormat:@"%ld", [@([[NSDate date] timeIntervalSince1970]) integerValue]];
+    NSDictionary *params = @{@"oauth_consumer_key" : DISCOGS_CONSUMER_KEY,
+                             @"oauth_signature" : [NSString stringWithFormat:@"%@&",DISCOGS_CONSUMER_SECRET],
+                             @"oauth_signature_method":@"PLAINTEXT",
+                             @"oauth_timestamp" : timeInterval,
+                             @"oauth_nonce" : @"jThArMF",
+                             @"oauth_verifier" : [UserObject sharedUser].discogsOAuthVerifier,
+                             @"oauth_token" : [UserObject sharedUser].discogsRequestToken,
+                             @"User-Agent" : @"uniqueVinylMaps",
+                             @"oauth_version" : @"1.0",
+                             @"oauth_callback" : @"vinyl-discogs-beeper://"
+                             };
+    
+    self.manager = [AFHTTPSessionManager manager];
+    
+    DiscogsOAuthRequestSerializer *reqSerializer = [DiscogsOAuthRequestSerializer serializer];
+    self.manager.requestSerializer = reqSerializer;
+    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    self.manager.responseSerializer.acceptableContentTypes = [self.manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    [self.manager POST:stringURL parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSLog(@"%@", responseString);
+        responseString = [NSString stringWithFormat:@"%@?%@",stringURL,responseString]; //ADDED ORIGINAL URL TO USE QUEURY ITEMS
+        NSURL *responseURL = [NSURL URLWithString:responseString]; // CHANGED TO NSURL
+        NSURLComponents *urlComps = [NSURLComponents componentsWithURL:responseURL resolvingAgainstBaseURL:nil];
+        NSArray *urlParts = urlComps.queryItems;
+        
+        for (NSURLQueryItem *queryItem in urlParts) {
+            if([queryItem.name isEqualToString:@"oauth_token_secret"])
+            {
+                [UserObject sharedUser].discogsTokenSecret = queryItem.value;
+                NSLog(@"OAuth Final Secret %@",queryItem.value);
+            } else if ([queryItem.name isEqualToString:@"oauth_token"])
+            {
+                [UserObject sharedUser].discogsRequestToken = queryItem.value;
+                NSLog(@"OAuth Final Token %@",queryItem.value);
+            }
+        }
+        
+        
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"%@", error);
+    }];
+    
+}
+
+
 -(UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
     if(self.restrictRotation)
@@ -55,28 +175,6 @@
     else
         return UIInterfaceOrientationMaskAll;
 }
-
--(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options
-{
-    //MAKE THIS CONDITIONAL FOR FACEBOOK
-    NSString *stringFromURL = [url absoluteString];
-    NSLog(@"%lu",(unsigned long)[stringFromURL rangeOfString:FACEBOOK_KEY].location);
-    if ([stringFromURL rangeOfString:FACEBOOK_KEY].location != NSNotFound) // facebook
-    {
-        [[FBSDKApplicationDelegate sharedInstance] application:app
-                                                       openURL:url
-                                             sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
-                                                    annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
-    } else
-    {
-        
-        
-    }
-    
-    
-    return YES;
-}
-
 
 
 

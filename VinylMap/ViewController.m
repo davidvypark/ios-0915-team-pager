@@ -47,6 +47,9 @@
     
 }
 
+- (IBAction)showHamburgerMenuPressed:(id)sender {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowHamburgerMenuNotification" object:nil];
+}
 
 
 - (IBAction)haarisButtonPressed:(id)sender {
