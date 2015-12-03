@@ -14,9 +14,9 @@
 		2B6016FD1BFCC978003DB81A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B6016FC1BFCC978003DB81A /* Assets.xcassets */; };
 		2B6017001BFCC978003DB81A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B6016FE1BFCC978003DB81A /* LaunchScreen.storyboard */; };
 		2B9C06241C0C900300060A19 /* AlbumCollectionDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9C06231C0C900300060A19 /* AlbumCollectionDataStore.m */; };
-		2B9C062A1C0E01C500060A19 /* AppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9C06291C0E01C500060A19 /* AppViewController.m */; settings = {ASSET_TAGS = (); }; };
-		2B9C062D1C0E1FD500060A19 /* HamburgerMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9C062C1C0E1FD500060A19 /* HamburgerMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
-		2B9C06301C0E336900060A19 /* MainContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9C062F1C0E336900060A19 /* MainContentViewController.m */; settings = {ASSET_TAGS = (); }; };
+		2B9C062A1C0E01C500060A19 /* AppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9C06291C0E01C500060A19 /* AppViewController.m */; };
+		2B9C062D1C0E1FD500060A19 /* HamburgerMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9C062C1C0E1FD500060A19 /* HamburgerMenuViewController.m */; };
+		2B9C06301C0E336900060A19 /* MainContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9C062F1C0E336900060A19 /* MainContentViewController.m */; };
 		2BF0EB3D1BFE7AA600EA03B1 /* AlbumsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB3C1BFE7AA600EA03B1 /* AlbumsCollectionViewController.m */; };
 		2BF0EB401BFE813800EA03B1 /* AlbumCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB3F1BFE813800EA03B1 /* AlbumCollectionViewCell.m */; };
 		2BF0EB431BFE843A00EA03B1 /* AlbumTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB421BFE843A00EA03B1 /* AlbumTableViewCell.m */; };
@@ -30,6 +30,8 @@
 		9653335C1BFE5A2C00BB4F7A /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9653335B1BFE5A2C00BB4F7A /* LoginViewController.m */; };
 		9653335F1BFE5B0F00BB4F7A /* UserObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9653335E1BFE5B0F00BB4F7A /* UserObject.m */; };
 		965B735B1C0E4AB200568BC9 /* DiscogsOAuthRequestSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 965B735A1C0E4AB200568BC9 /* DiscogsOAuthRequestSerializer.m */; };
+		968C48131C10DC120070B76C /* AccountCreationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 968C48111C10DC120070B76C /* AccountCreationViewController.m */; };
+		968C481A1C10F1C90070B76C /* UIButton+Discogs.m in Sources */ = {isa = PBXBuildFile; fileRef = 968C48191C10F1C90070B76C /* UIButton+Discogs.m */; };
 		969BDB931C0CA56C00B0293E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 969BDB921C0CA56C00B0293E /* Default-568h@2x.png */; };
 		96A90FDB1C0D0568003C7394 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96A90FDA1C0D0568003C7394 /* GoogleService-Info.plist */; };
 		96AF90991BFCE64B00BCFC96 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96AF90981BFCE64B00BCFC96 /* Main.storyboard */; };
@@ -87,6 +89,10 @@
 		9653335E1BFE5B0F00BB4F7A /* UserObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserObject.m; sourceTree = "<group>"; };
 		965B73591C0E4AB200568BC9 /* DiscogsOAuthRequestSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscogsOAuthRequestSerializer.h; sourceTree = "<group>"; };
 		965B735A1C0E4AB200568BC9 /* DiscogsOAuthRequestSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscogsOAuthRequestSerializer.m; sourceTree = "<group>"; };
+		968C48101C10DC120070B76C /* AccountCreationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountCreationViewController.h; sourceTree = "<group>"; };
+		968C48111C10DC120070B76C /* AccountCreationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountCreationViewController.m; sourceTree = "<group>"; };
+		968C48181C10F1C90070B76C /* UIButton+Discogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Discogs.h"; sourceTree = "<group>"; };
+		968C48191C10F1C90070B76C /* UIButton+Discogs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Discogs.m"; sourceTree = "<group>"; };
 		969BDB921C0CA56C00B0293E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		96A90FDA1C0D0568003C7394 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		96AF908F1BFCE1DA00BCFC96 /* VinylConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VinylConstants.h; sourceTree = "<group>"; };
@@ -240,9 +246,13 @@
 			children = (
 				9653335A1BFE5A2C00BB4F7A /* LoginViewController.h */,
 				9653335B1BFE5A2C00BB4F7A /* LoginViewController.m */,
+				968C48101C10DC120070B76C /* AccountCreationViewController.h */,
+				968C48111C10DC120070B76C /* AccountCreationViewController.m */,
 				96A90FDA1C0D0568003C7394 /* GoogleService-Info.plist */,
 				965B73591C0E4AB200568BC9 /* DiscogsOAuthRequestSerializer.h */,
 				965B735A1C0E4AB200568BC9 /* DiscogsOAuthRequestSerializer.m */,
+				968C48181C10F1C90070B76C /* UIButton+Discogs.h */,
+				968C48191C10F1C90070B76C /* UIButton+Discogs.m */,
 			);
 			name = "Login Files";
 			sourceTree = "<group>";
@@ -421,9 +431,11 @@
 				BFC1BE4D1C0CF8AF003DF47F /* AlbumDetailsViewController.m in Sources */,
 				2BF0EB401BFE813800EA03B1 /* AlbumCollectionViewCell.m in Sources */,
 				2BF0EB461BFE847F00EA03B1 /* MyAlbumsViewController.m in Sources */,
+				968C48131C10DC120070B76C /* AccountCreationViewController.m in Sources */,
 				2B9C062D1C0E1FD500060A19 /* HamburgerMenuViewController.m in Sources */,
 				BF61240F1C04FA7A00B045D6 /* VinylAnnotation.m in Sources */,
 				965B735B1C0E4AB200568BC9 /* DiscogsOAuthRequestSerializer.m in Sources */,
+				968C481A1C10F1C90070B76C /* UIButton+Discogs.m in Sources */,
 				BFC1BE4A1C0ACC35003DF47F /* ChatMessagesViewController.m in Sources */,
 				BF61240E1C04FA7A00B045D6 /* MapViewController.m in Sources */,
 				2BFEA0F91BFE2E9500C65717 /* SearchViewController.m in Sources */,

@@ -21,6 +21,7 @@
 #import <AFNetworking.h>
 #import <KDURLRequestSerialization+OAuth.h>
 #import "DiscogsOAuthRequestSerializer.h"
+#import "AccountCreationViewController.h"
 
 @interface LoginViewController () <FBSDKLoginButtonDelegate>
 @property (nonatomic, strong) FBSDKLoginButton *facebookLoginButton;
@@ -28,14 +29,19 @@
 @property (nonatomic, strong) UIButton *firebaseLoginButton;
 @property (nonatomic, strong) UIButton *firebaseLogoutButton;
 @property (nonatomic, strong) UIButton *discogsLoginButton;
+@property (nonatomic, strong) UIButton *createFirebaseAccount;
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
 @property (nonatomic, strong) FirebaseLoginViewController *firebaseLoginVC;
+@property (nonatomic, strong) AccountCreationViewController *createAccountVC;
 
 @end
 
 
 
 @implementation LoginViewController
+
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -110,9 +116,20 @@
         make.bottom.equalTo(self.firebaseLogoutButton.mas_top);
     }];
     
+    self.createFirebaseAccount = [[UIButton alloc] init];
+    [self.createFirebaseAccount setTitle:@"CREATE ACCOUNT" forState:UIControlStateNormal];
+    self.createFirebaseAccount.tintColor = [UIColor grayColor];
+    self.createFirebaseAccount.backgroundColor = [UIColor redColor];
+    [self.view addSubview:self.createFirebaseAccount];
+    
+    [self.createFirebaseAccount mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@40);
+        make.width.equalTo(self.view);
+        make.bottom.equalTo(self.firebaseLoginButton.mas_top);
+    }];
     
     
-    NSArray *arrayOfButtons = @[self.dismissViewControllerButton, self.firebaseLoginButton, self.firebaseLogoutButton, self.discogsLoginButton];
+    NSArray *arrayOfButtons = @[self.dismissViewControllerButton, self.firebaseLoginButton, self.firebaseLogoutButton, self.discogsLoginButton, self.createFirebaseAccount];
     for (id button in arrayOfButtons) {
         [button addTarget:self
                    action:@selector(buttonClicked:)
@@ -138,9 +155,26 @@
     {
         [self discogsLoginButtonPressed];
         
+    } else if ([sendingButton isEqual:self.createFirebaseAccount])
+    {
+        [self createFirebaseAccountNow];
+        
     }
     
 }
+
+#pragma mark - create account
+
+-(void)createFirebaseAccountNow
+{
+    self.createAccountVC = [[AccountCreationViewController alloc] init];
+    [self.createAccountVC setModalPresentationStyle:UIModalPresentationOverFullScreen];
+    [self presentViewController:self.createAccountVC animated:NO completion:nil];
+    
+    
+}
+
+
 
 
 #pragma mark - discogs login

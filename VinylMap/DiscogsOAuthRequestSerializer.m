@@ -47,19 +47,6 @@
 - (void)setOAuthorizationHeader:(NSMutableURLRequest *)request withParameters:(id)parameters
 {
     NSDictionary *params = parameters;
-    /*
-     NSDictionary *params = @{@"oauth_consumer_key" : DISCOGS_CONSUMER_KEY,
-     @"oauth_signature" : [NSString stringWithFormat:@"%@&",DISCOGS_CONSUMER_SECRET],
-     @"oauth_signature_method":@"PLAINTEXT",
-     @"oauth_timestamp" : timeInterval,
-     @"oauth_nonce" : @"jThArMF",
-     @"oauth_verifier" : [UserObject sharedUser].discogsOAuthVerifier,
-     @"oauth_token" : [UserObject sharedUser].discogsRequestToken,
-     @"User-Agent" : @"uniqueVinylMaps",
-     @"oauth_version" : @"1.0",
-     @"oauth_callback" : @"vinyl-discogs-beeper://"
-     };
-     */
     
     [request signRequestWithClientIdentifier:DISCOGS_CONSUMER_KEY
                                       secret:DISCOGS_CONSUMER_SECRET
