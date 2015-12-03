@@ -8,16 +8,14 @@ pod "MTBBarcodeScanner"
 pod 'Masonry'
 pod 'AFNetworking'
 pod 'AFOAuth2Manager'
-pod 'AFOAuth1'
 pod 'FBSDKCoreKit'
 pod 'FBSDKLoginKit'
+pod 'FirebaseUI', '~> 0.3'
 pod 'FBSDKShareKit'
 pod 'Google'
 pod 'Google/SignIn'
 pod 'Firebase', '>= 2.4.3'
-pod 'FirebaseUI', '~> 0.3'
 pod 'GeoFire', '>= 1.1'
-pod 'FirebaseUI', '~> 0.3'
 pod 'ECSlidingViewController'
 end
 

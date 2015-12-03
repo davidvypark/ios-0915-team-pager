@@ -1,25 +1,25 @@
 PODS:
-  - AFNetworking (2.2.4):
-    - AFNetworking/NSURLConnection (= 2.2.4)
-    - AFNetworking/NSURLSession (= 2.2.4)
-    - AFNetworking/Reachability (= 2.2.4)
-    - AFNetworking/Security (= 2.2.4)
-    - AFNetworking/Serialization (= 2.2.4)
-    - AFNetworking/UIKit (= 2.2.4)
-  - AFNetworking/NSURLConnection (2.2.4):
+  - AFNetworking (2.6.3):
+    - AFNetworking/NSURLConnection (= 2.6.3)
+    - AFNetworking/NSURLSession (= 2.6.3)
+    - AFNetworking/Reachability (= 2.6.3)
+    - AFNetworking/Security (= 2.6.3)
+    - AFNetworking/Serialization (= 2.6.3)
+    - AFNetworking/UIKit (= 2.6.3)
+  - AFNetworking/NSURLConnection (2.6.3):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.2.4):
-    - AFNetworking/NSURLConnection
-  - AFNetworking/Reachability (2.2.4)
-  - AFNetworking/Security (2.2.4)
-  - AFNetworking/Serialization (2.2.4)
-  - AFNetworking/UIKit (2.2.4):
+  - AFNetworking/NSURLSession (2.6.3):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.6.3)
+  - AFNetworking/Security (2.6.3)
+  - AFNetworking/Serialization (2.6.3)
+  - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - AFOAuth1 (0.0.1):
-    - AFNetworking (~> 2.2.0)
   - AFOAuth2Manager (2.2.0):
     - AFNetworking/NSURLConnection (~> 2.2)
   - Bolts (1.5.0):
@@ -43,11 +43,17 @@ PODS:
   - FBSDKShareKit (4.8.0):
     - FBSDKCoreKit
   - Firebase (2.4.3)
-  - FirebaseUI (0.3.0):
+  - FirebaseUI (0.3.1):
+    - Firebase (~> 2.2)
+    - FirebaseUI/Auth (= 0.3.1)
+    - FirebaseUI/Core (= 0.3.1)
+  - FirebaseUI/Auth (0.3.1):
     - FBSDKCoreKit
     - FBSDKLoginKit
     - Firebase (~> 2.2)
     - Google/SignIn
+  - FirebaseUI/Core (0.3.1):
+    - Firebase (~> 2.2)
   - GeoFire (1.1.2):
     - Firebase (~> 2.2)
   - Google (1.2.1):
@@ -82,7 +88,6 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
-  - AFOAuth1
   - AFOAuth2Manager
   - ECSlidingViewController
   - FBSDKCoreKit
@@ -97,8 +102,7 @@ DEPENDENCIES:
   - MTBBarcodeScanner
 
 SPEC CHECKSUMS:
-  AFNetworking: caca0799b310f0c3bf1fc1af45145fc96972bcab
-  AFOAuth1: dad9f255f58c32014fbcf784a417afd92789b7d9
+  AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   AFOAuth2Manager: 952eb62e8fd8022971e64c6e8fe28b9e999224af
   Bolts: 722ab9a4f8b50fc4ed1b9998a5a7a2b3f16d80b4
   ECSlidingViewController: 6485c14f23b4487e9946535421ca8f111f86cc53
@@ -106,7 +110,7 @@ SPEC CHECKSUMS:
   FBSDKLoginKit: d893fcbb98d854496925e9ff73c67b896982d3c4
   FBSDKShareKit: e7577ee3adf80fc04fb656dd133fbb522250672b
   Firebase: 48179995b561e2262c5d4060ecdffca45fbbff8b
-  FirebaseUI: dca01813ab1da356d65fe5b6cbcf9fbcc2949156
+  FirebaseUI: 62f01e067dcfc5c903d8b9cb7d77d03fa163c71a
   GeoFire: 03db4e390a4cf3ff97422f19eb71ab1aa7d947dd
   Google: fd33b5fa40fa3aaee5176de49c873a74e3d11dce
   GoogleAppUtilities: c01c6a5671e9da8b9d690fdaec5959d6c2aac699
