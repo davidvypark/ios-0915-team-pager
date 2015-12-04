@@ -8,6 +8,7 @@
 
 #import "AccountCreationViewController.h"
 #import <Masonry.h>
+#import "DiscogsButton.h"
 
 @interface AccountCreationViewController () <UITextFieldDelegate>
 
@@ -18,8 +19,8 @@
 @property (nonatomic, strong) UITextField *lastName;
 @property (nonatomic, strong) UISwitch *acceptTerms;
 
-@property (nonatomic, strong) UIButton *createAccountButon;
-@property (nonatomic, strong) UIButton *cancelButton;
+@property (nonatomic, strong) DiscogsButton *createAccountButon;
+@property (nonatomic, strong) DiscogsButton *cancelButton;
 @property (nonatomic, strong) UIImageView *logoImage;
 
 @property (nonatomic, assign) CGFloat textSize;
@@ -107,15 +108,15 @@
 
 -(void)setupButtons
 {
-    self.createAccountButon = [[UIButton alloc] init];
+    self.createAccountButon = [[DiscogsButton alloc] init];
     [self.createAccountButon setTitle:@"Submit" forState:UIControlStateNormal];
-    self.cancelButton = [[UIButton alloc] init];
+    self.cancelButton = [[DiscogsButton alloc] init];
     [self.cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
     
     NSArray *buttonArray = @[self.createAccountButon , self.cancelButton];
-    UIButton *previousButton;
+    DiscogsButton *previousButton;
     
-    for (UIButton *aButton in buttonArray)
+    for (DiscogsButton *aButton in buttonArray)
     {
         [self.view addSubview:aButton];
         
@@ -163,7 +164,7 @@
 
 #pragma mark - button was pressed
 
--(void)buttonWasPressed:(UIButton *)sender
+-(void)buttonWasPressed:(DiscogsButton *)sender
 {
     if ([sender isEqual:self.createAccountButon])
     {

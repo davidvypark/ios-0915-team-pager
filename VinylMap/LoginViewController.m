@@ -22,15 +22,15 @@
 #import <KDURLRequestSerialization+OAuth.h>
 #import "DiscogsOAuthRequestSerializer.h"
 #import "AccountCreationViewController.h"
-//#import "UIButton+Discogs.h"
+#import "DiscogsButton.h"
 
 @interface LoginViewController () <FBSDKLoginButtonDelegate>
 @property (nonatomic, strong) FBSDKLoginButton *facebookLoginButton;
-@property (nonatomic, strong) UIButton *dismissViewControllerButton;
-@property (nonatomic, strong) UIButton *firebaseLoginButton;
-@property (nonatomic, strong) UIButton *firebaseLogoutButton;
-@property (nonatomic, strong) UIButton *discogsLoginButton;
-@property (nonatomic, strong) UIButton *createFirebaseAccount;
+@property (nonatomic, strong) DiscogsButton *dismissViewControllerButton;
+@property (nonatomic, strong) DiscogsButton *firebaseLoginButton;
+@property (nonatomic, strong) DiscogsButton *firebaseLogoutButton;
+@property (nonatomic, strong) DiscogsButton *discogsLoginButton;
+@property (nonatomic, strong) DiscogsButton *createFirebaseAccount;
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
 @property (nonatomic, strong) FirebaseLoginViewController *firebaseLoginVC;
 @property (nonatomic, strong) AccountCreationViewController *createAccountVC;
@@ -70,10 +70,8 @@
     }];
     
     
-    self.dismissViewControllerButton = [[UIButton alloc] init];
+    self.dismissViewControllerButton = [[DiscogsButton alloc] init];
     [self.dismissViewControllerButton setTitle:@"Dismiss VC" forState:UIControlStateNormal];
-//    self.dismissViewControllerButton.tintColor = [UIColor grayColor];
-//    self.dismissViewControllerButton.backgroundColor = [UIColor darkGrayColor];
     [self.view addSubview:self.dismissViewControllerButton];
     [self.dismissViewControllerButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@40);
@@ -81,7 +79,7 @@
         make.bottom.equalTo(self.view);
     }];
     
-    self.discogsLoginButton = [[UIButton alloc] init];
+    self.discogsLoginButton = [[DiscogsButton alloc] init];
     [self.discogsLoginButton setTitle:@"DISCOGS LOGIN" forState:UIControlStateNormal];
     self.discogsLoginButton.tintColor = [UIColor grayColor];
     self.discogsLoginButton.backgroundColor = [UIColor blackColor];
@@ -93,7 +91,7 @@
         make.bottom.equalTo(self.dismissViewControllerButton.mas_top);
     }];
     
-    self.firebaseLogoutButton = [[UIButton alloc] init];
+    self.firebaseLogoutButton = [[DiscogsButton alloc] init];
     [self.firebaseLogoutButton setTitle:@"FIREBASE LOGOUT" forState:UIControlStateNormal];
     self.firebaseLogoutButton.tintColor = [UIColor grayColor];
     self.firebaseLogoutButton.backgroundColor = [UIColor lightGrayColor];
@@ -105,7 +103,7 @@
         make.bottom.equalTo(self.discogsLoginButton.mas_top);
     }];
     
-    self.firebaseLoginButton = [[UIButton alloc] init];
+    self.firebaseLoginButton = [[DiscogsButton alloc] init];
     [self.firebaseLoginButton setTitle:@"FIREBASE LOGIN" forState:UIControlStateNormal];
     self.firebaseLoginButton.tintColor = [UIColor grayColor];
     self.firebaseLoginButton.backgroundColor = [UIColor blackColor];
@@ -117,7 +115,7 @@
         make.bottom.equalTo(self.firebaseLogoutButton.mas_top);
     }];
     
-    self.createFirebaseAccount = [[UIButton alloc] init];
+    self.createFirebaseAccount = [[DiscogsButton alloc] init];
     [self.createFirebaseAccount setTitle:@"CREATE ACCOUNT" forState:UIControlStateNormal];
     self.createFirebaseAccount.tintColor = [UIColor grayColor];
     self.createFirebaseAccount.backgroundColor = [UIColor redColor];
@@ -139,7 +137,7 @@
     
 }
 
--(void)buttonClicked:(UIButton *)sendingButton
+-(void)buttonClicked:(DiscogsButton *)sendingButton
 {
     
     if([sendingButton isEqual:self.dismissViewControllerButton])

@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIButton (Discogs)
+@interface DiscogsButton: UIButton
+@property (nonatomic, strong) UIColor *buttonColor;
+
+
 
 @end
