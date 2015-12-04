@@ -15,4 +15,5 @@
 @property (nonatomic, strong) NSString *albumName;
 @property (nonatomic, strong) NSString *albumAutoId;
 @property (nonatomic, strong) NSString *albumImageURL;
+@property (nonatomic, strong) NSString *resourceURL;
 @end
