@@ -57,7 +57,11 @@
         NSDictionary *responseDictionary = (NSDictionary *)responseObject;
         NSArray *resultsArray = responseDictionary[@"results"];
         [self.albumResults removeAllObjects];
-        [self.albumResults addObjectsFromArray:resultsArray];
+        for (NSDictionary *result in resultsArray) {
+            if ([result[@"format"] containsObject:@"Vinyl"]) {
+                [self.albumResults addObject:result];
+            }
+        }
         [self.searchTableView reloadData];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"Request failed with error %@", error);
