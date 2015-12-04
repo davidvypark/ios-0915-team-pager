@@ -247,7 +247,7 @@
                                style:UIAlertActionStyleDestructive
                                handler:^(UIAlertAction *action)
                                {
-                                   NSLog(@"OK action");
+                                   
                                }];
     
     [alertController addAction:okAction];
