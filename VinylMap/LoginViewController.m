@@ -24,7 +24,7 @@
 #import "AccountCreationViewController.h"
 #import "DiscogsButton.h"
 
-@interface LoginViewController () <FBSDKLoginButtonDelegate>
+@interface LoginViewController () <FBSDKLoginButtonDelegate, AccountCreationViewControllerDelegate>
 @property (nonatomic, strong) FBSDKLoginButton *facebookLoginButton;
 @property (nonatomic, strong) DiscogsButton *dismissViewControllerButton;
 @property (nonatomic, strong) DiscogsButton *firebaseLoginButton;
@@ -40,8 +40,6 @@
 
 
 @implementation LoginViewController
-
-
 
 
 - (void)viewDidLoad {
@@ -64,75 +62,89 @@
     [self.view addSubview:self.facebookLoginButton];
     self.facebookLoginButton.readPermissions = @[@"public_profile", @"email", @"user_friends"];
     self.facebookLoginButton.delegate = self;
-    [self.facebookLoginButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.and.right.equalTo(self.view);
-        make.bottomMargin.equalTo(self.view).multipliedBy(0.66);
-    }];
-    
+//    [self.facebookLoginButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.and.right.equalTo(self.view);
+//        make.bottomMargin.equalTo(self.view).multipliedBy(0.66);
+//    }];
     
     self.dismissViewControllerButton = [[DiscogsButton alloc] init];
     [self.dismissViewControllerButton setTitle:@"Dismiss VC" forState:UIControlStateNormal];
     [self.view addSubview:self.dismissViewControllerButton];
-    [self.dismissViewControllerButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@40);
-        make.width.equalTo(self.view);
-        make.bottom.equalTo(self.view);
-    }];
+//    [self.dismissViewControllerButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.height.equalTo(@40);
+//        make.width.equalTo(self.view);
+//        make.bottom.equalTo(self.view);
+//    }];
     
     self.discogsLoginButton = [[DiscogsButton alloc] init];
     [self.discogsLoginButton setTitle:@"DISCOGS LOGIN" forState:UIControlStateNormal];
-    self.discogsLoginButton.tintColor = [UIColor grayColor];
-    self.discogsLoginButton.backgroundColor = [UIColor blackColor];
     [self.view addSubview:self.discogsLoginButton];
     
-    [self.discogsLoginButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@40);
-        make.width.equalTo(self.view);
-        make.bottom.equalTo(self.dismissViewControllerButton.mas_top);
-    }];
+//    [self.discogsLoginButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.height.equalTo(@40);
+//        make.width.equalTo(self.view);
+//        make.bottom.equalTo(self.dismissViewControllerButton.mas_top);
+//    }];
     
     self.firebaseLogoutButton = [[DiscogsButton alloc] init];
     [self.firebaseLogoutButton setTitle:@"FIREBASE LOGOUT" forState:UIControlStateNormal];
-    self.firebaseLogoutButton.tintColor = [UIColor grayColor];
-    self.firebaseLogoutButton.backgroundColor = [UIColor lightGrayColor];
     [self.view addSubview:self.firebaseLogoutButton];
     
-    [self.firebaseLogoutButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@40);
-        make.width.equalTo(self.view);
-        make.bottom.equalTo(self.discogsLoginButton.mas_top);
-    }];
+//    [self.firebaseLogoutButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.height.equalTo(@40);
+//        make.width.equalTo(self.view);
+//        make.bottom.equalTo(self.discogsLoginButton.mas_top);
+//    }];
     
     self.firebaseLoginButton = [[DiscogsButton alloc] init];
     [self.firebaseLoginButton setTitle:@"FIREBASE LOGIN" forState:UIControlStateNormal];
-    self.firebaseLoginButton.tintColor = [UIColor grayColor];
-    self.firebaseLoginButton.backgroundColor = [UIColor blackColor];
     [self.view addSubview:self.firebaseLoginButton];
     
-    [self.firebaseLoginButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@40);
-        make.width.equalTo(self.view);
-        make.bottom.equalTo(self.firebaseLogoutButton.mas_top);
-    }];
+//    [self.firebaseLoginButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.height.equalTo(@40);
+//        make.width.equalTo(self.view);
+//        make.bottom.equalTo(self.firebaseLogoutButton.mas_top);
+//    }];
     
     self.createFirebaseAccount = [[DiscogsButton alloc] init];
     [self.createFirebaseAccount setTitle:@"CREATE ACCOUNT" forState:UIControlStateNormal];
-    self.createFirebaseAccount.tintColor = [UIColor grayColor];
-    self.createFirebaseAccount.backgroundColor = [UIColor redColor];
     [self.view addSubview:self.createFirebaseAccount];
+//    
+//    [self.createFirebaseAccount mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.height.equalTo(@40);
+//        make.width.equalTo(self.view);
+//        make.bottom.equalTo(self.firebaseLoginButton.mas_top);
+//    }];
     
-    [self.createFirebaseAccount mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@40);
-        make.width.equalTo(self.view);
-        make.bottom.equalTo(self.firebaseLoginButton.mas_top);
-    }];
     
-    
-    NSArray *arrayOfButtons = @[self.dismissViewControllerButton, self.firebaseLoginButton, self.firebaseLogoutButton, self.discogsLoginButton, self.createFirebaseAccount];
-    for (id button in arrayOfButtons) {
+    NSArray *arrayOfButtons = @[self.dismissViewControllerButton, self.firebaseLoginButton, self.firebaseLogoutButton, self.discogsLoginButton, self.createFirebaseAccount, self.facebookLoginButton];
+    DiscogsButton *previousButton;
+    for (DiscogsButton *button in arrayOfButtons) {
         [button addTarget:self
                    action:@selector(buttonClicked:)
          forControlEvents:UIControlEventTouchUpInside];
+        
+        if(previousButton)
+        {
+            [button mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.height.equalTo(@40);
+                make.width.equalTo(self.view);
+                make.bottom.equalTo(previousButton.mas_top);
+            }];
+
+        } else
+        {
+            UITabBarController *tabBarController = [UITabBarController new];
+            CGFloat tabBarHeight = tabBarController.tabBar.frame.size.height;
+            [button mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.height.equalTo(@40);
+                make.width.equalTo(self.view);
+                make.bottom.equalTo(self.view).offset(-tabBarHeight);
+            }];
+            
+        }
+        
+        previousButton = button;
     }
     
 }
@@ -224,8 +236,6 @@
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@", error);
     }];
-    
-    
     
     
     
@@ -322,8 +332,6 @@
             NSLog(@"logged in successfully");
         }
     }];
-    
-    
 }
 
 
@@ -360,6 +368,14 @@
     
     
     
+}
+
+#pragma mark - account creation
+
+-(NSArray *)createAccountResult:(NSString *)result
+{
+    //NO DELEGATE CALLED
+    return @[];
 }
 
 

@@ -9,6 +9,7 @@
 #import "AccountCreationViewController.h"
 #import <Masonry.h>
 #import "DiscogsButton.h"
+#import "UserObject.h"
 
 @interface AccountCreationViewController () <UITextFieldDelegate>
 
@@ -83,6 +84,7 @@
         CGFloat grayNESS = 0.9;
         textField.backgroundColor = [[UIColor alloc] initWithRed:grayNESS green:grayNESS blue:grayNESS alpha:1];
         textField.borderStyle = UITextBorderStyleRoundedRect;
+        
         [textField mas_makeConstraints:^(MASConstraintMaker *make) {
             make.width.equalTo(self.view).multipliedBy(self.itemWidth);
             make.height.equalTo(@(self.textSize));
@@ -95,7 +97,6 @@
             {
                 make.top.equalTo(self.logoImage.mas_bottom).offset(self.textSize * self.separation);
             }
-            
             
         }];
         
@@ -171,6 +172,7 @@
         NSMutableArray *responseArray = [self checkIfInfoIsCorrect];
         if([responseArray[0] isEqual:@(1)])
         {
+            [self createNewUser];
             
         } else
         {
@@ -186,7 +188,50 @@
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
+#pragma mark - create new user
 
+-(bool)createNewUser
+{
+    [[UserObject sharedUser].firebaseRoot createUser:self.emailAddressField.text password:self.passwordField.text withValueCompletionBlock:^(NSError *error, NSDictionary *result) {
+        if (error) {
+            // Something went wrong. :(
+            NSLog(@"%@",error);
+        } else {
+            // Authentication just completed successfully :)
+            // The logged in user's unique identifier
+            [[UserObject sharedUser].firebaseRoot authUser:self.emailAddressField.text password:self.passwordField.text withCompletionBlock:^(NSError *error, FAuthData *authData) {
+                if (error) {
+                    // an error occurred while attempting login
+                    NSLog(@"log in error after creating user %@",error);
+                } else {
+                    // user is logged in, check authData for data
+                    NSLog(@"logging in after creating user");
+                    // Create a new user dictionary accessing the user's info
+                    // provided by the authData parameter
+                    NSDictionary *newUser = @{
+                                              @"provider": authData.provider,
+                                              @"email" : self.emailAddressField.text,
+                                              @"password" : self.passwordField.text,
+                                              @"firstName" : self.firstName.text,
+                                              @"lastName" : self.lastName.text
+                                              };
+                    
+                    // Create a child path with a key set to the uid underneath the "users" node
+                    // This creates a URL path like the following:
+                    //  - https://<YOUR-FIREBASE-APP>.firebaseio.com/users/<uid>
+                    
+//                    [[[[UserObject sharedUser].firebaseRoot childByAppendingPath:@"users"]
+//                      childByAppendingPath:authData.uid] setValue:newUser];
+                }
+            }];
+            NSLog(@"%@",result);
+        }
+    }];
+    
+    
+    
+    return YES;
+}
 
 #pragma mark - dealing with contents
 

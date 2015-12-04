@@ -13,7 +13,7 @@
 
 @required
 
--(NSArray *)loginResult:(NSString *)result;
+-(NSArray *)createAccountResult:(NSString *)result;
 
 @end
 
