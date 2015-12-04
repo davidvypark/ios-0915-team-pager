@@ -44,6 +44,16 @@
     
     
     self.albumNameLabel.text = self.albumName;
+    self.ownerLabel.text = self.albumOwner;
+    self.askingPriceLabel.text = self.albumPrice;
+    if (self.isBuyer) {
+        self.sellTradeButton.hidden = YES;
+        self.wishlistButton.enabled = YES;
+        self.messageButton.hidden = NO;
+        self.askingPriceLabel.hidden = NO;
+        self.ownerLabel.hidden = NO;
+    }
+   
 }
 
 - (void)didReceiveMemoryWarning {

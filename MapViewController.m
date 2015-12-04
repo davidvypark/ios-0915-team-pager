@@ -12,7 +12,7 @@
 #import "VinylAnnotation.h"
 #import <UIKit+AFNetworking.h>
 #import "AlbumDetailsViewController.h"
-
+#import "CurrentUserDataStore.h"
 
 
 @interface MapViewController () <MKMapViewDelegate, CLLocationManagerDelegate>
@@ -21,6 +21,7 @@
 @property (nonatomic, strong) GeoFire * geoFire;
 @property (nonatomic, strong) GFRegionQuery *regionQuery;
 @property (nonatomic, strong) NSMutableDictionary *vinylAnnotations;
+@property (nonatomic, strong) CurrentUserDataStore *currentUserInfo;
 //@property (nonatomic, strong) AlbumDetailsViewController *detailsOfSaleItem;
 
 
@@ -31,6 +32,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.currentUserInfo = [CurrentUserDataStore sharedDataStore];
     self.locationManager = [[CLLocationManager alloc]init];
     self.mapView.delegate = self;
     self.locationManager.delegate = self;
@@ -190,12 +192,13 @@
     detailsOfSaleItem.albumAutoId = annView.annotationKey;
     NSString *detailsOfSaleItemFirebaseURL = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection/%@", annView.owner, annView.annotationKey];
     Firebase *detailsOfSaleItemFirebase = [[Firebase alloc] initWithUrl:detailsOfSaleItemFirebaseURL];
+   
+    
     [detailsOfSaleItemFirebase observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
         detailsOfSaleItem.albumName = snapshot.value[@"title"];
         detailsOfSaleItem.albumImageURL = snapshot.value[@"imageURL"];
-//        if (<#condition#>) {
-//            <#statements#>
-//        }
+        detailsOfSaleItem.isBuyer = YES;
+        detailsOfSaleItem.albumOwner = annView.owner;
         [self.navigationController pushViewController:detailsOfSaleItem animated:YES];
     
     }]; }
