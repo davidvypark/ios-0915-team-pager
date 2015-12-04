@@ -183,7 +183,7 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iEW-Aj-buL" id="BON-d7-5Mb">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="69"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="69.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="q1O-TV-rpG">
@@ -289,33 +289,42 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ib7-sK-vx7">
-                                <rect key="frame" x="132" y="402" width="70" height="30"/>
-                                <animations/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ib7-sK-vx7">
+                                <rect key="frame" x="265" y="427.5" width="70" height="30"/>
                                 <state key="normal" title="Sell/Trade"/>
                                 <connections>
                                     <segue destination="ITq-5N-15f" kind="presentation" id="2wN-N7-mzn"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="84Y-GQ-xUK">
-                                <rect key="frame" x="138" y="491" width="54" height="30"/>
-                                <animations/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="84Y-GQ-xUK">
+                                <rect key="frame" x="273" y="489" width="54" height="30"/>
                                 <state key="normal" title="Wishlist"/>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Asking Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cu5-dh-2RC">
-                                <rect key="frame" x="120" y="448" width="95" height="21"/>
-                                <animations/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aOg-Dc-x5M">
+                                <rect key="frame" x="150" y="89" width="300" height="300"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="Cep-GC-ccq"/>
+                                    <constraint firstAttribute="height" constant="300" id="I0B-rm-NSh"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="752" text="Album Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Twg-cF-16p">
+                                <rect key="frame" x="251" y="399" width="98.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aOg-Dc-x5M">
-                                <rect key="frame" x="47" y="101" width="283" height="215"/>
-                                <animations/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Twg-cF-16p">
-                                <rect key="frame" x="120" y="344" width="42" height="21"/>
-                                <animations/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r0b-0Y-cgS">
+                                <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                <state key="normal" title="✉"/>
+                            </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Asking Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cu5-dh-2RC">
+                                <rect key="frame" x="252.5" y="460.5" width="95" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Owner" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1KX-CS-bae">
+                                <rect key="frame" x="263" y="514" width="75.5" height="28.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -323,10 +332,28 @@
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Ib7-sK-vx7" firstAttribute="top" secondItem="Twg-cF-16p" secondAttribute="bottom" constant="8" id="4cS-nv-hRU"/>
+                            <constraint firstItem="aOg-Dc-x5M" firstAttribute="centerY" secondItem="Pha-5c-2o3" secondAttribute="centerY" multiplier="0.8" constant="-1" id="BHh-NR-bZt"/>
+                            <constraint firstAttribute="bottom" secondItem="cu5-dh-2RC" secondAttribute="bottom" constant="119" id="DhV-Ai-E95"/>
+                            <constraint firstItem="cu5-dh-2RC" firstAttribute="top" secondItem="Ib7-sK-vx7" secondAttribute="bottom" constant="3" id="Epx-R3-Jvn"/>
+                            <constraint firstItem="cu5-dh-2RC" firstAttribute="centerX" secondItem="aOg-Dc-x5M" secondAttribute="centerX" id="GHZ-Nh-ksq"/>
+                            <constraint firstItem="Twg-cF-16p" firstAttribute="top" secondItem="aOg-Dc-x5M" secondAttribute="bottom" constant="10" id="NUW-dL-1Eq"/>
+                            <constraint firstItem="84Y-GQ-xUK" firstAttribute="top" secondItem="cu5-dh-2RC" secondAttribute="bottom" constant="8" id="OXc-8A-Y13"/>
+                            <constraint firstItem="cu5-dh-2RC" firstAttribute="centerX" secondItem="Twg-cF-16p" secondAttribute="centerX" id="OZZ-RV-sMV"/>
+                            <constraint firstItem="aOg-Dc-x5M" firstAttribute="centerX" secondItem="Pha-5c-2o3" secondAttribute="centerX" id="QMk-oD-E2y"/>
+                            <constraint firstItem="cu5-dh-2RC" firstAttribute="centerX" secondItem="Ib7-sK-vx7" secondAttribute="centerX" id="cwQ-nJ-KKG"/>
+                            <constraint firstItem="cu5-dh-2RC" firstAttribute="centerX" secondItem="84Y-GQ-xUK" secondAttribute="centerX" id="wPU-Uf-xpm"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="albumNameLabel" destination="Twg-cF-16p" id="Ble-9W-Ypd"/>
+                        <outlet property="askingPriceLabel" destination="cu5-dh-2RC" id="zLL-Q8-Fly"/>
                         <outlet property="imageLabel" destination="aOg-Dc-x5M" id="z49-qn-Zwe"/>
+                        <outlet property="messageButton" destination="r0b-0Y-cgS" id="4xK-82-ZNf"/>
+                        <outlet property="ownerLabel" destination="1KX-CS-bae" id="VFs-aj-yJz"/>
+                        <outlet property="sellTradeButton" destination="Ib7-sK-vx7" id="cE4-Ws-MN7"/>
+                        <outlet property="wishlistButton" destination="84Y-GQ-xUK" id="wc8-HM-Puz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vLz-fG-XVF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -531,7 +558,11 @@
                                                 <action selector="cancelButtonTapped:" destination="ITq-5N-15f" id="kyh-x6-039"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="D4c-5S-pPt"/>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="D4c-5S-pPt">
+                                            <connections>
+                                                <action selector="saveButtonTapped:" destination="ITq-5N-15f" id="9XX-gg-tJo"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -677,7 +708,7 @@
         <scene sceneID="Y1u-mL-GWj">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GqO-VT-pSo" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="My Collection" id="xEU-Ir-NaJ"/>
+                    <tabBarItem key="tabBarItem" title="My Collection" image="Images/collection.png" id="xEU-Ir-NaJ"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ai7-8Z-fV8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -697,7 +728,7 @@
         <scene sceneID="MG3-oe-riQ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="pTf-hd-fwh" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Map" id="uem-1d-HbH"/>
+                    <tabBarItem key="tabBarItem" title="Map" image="Images/map.png" id="uem-1d-HbH"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="doI-5K-JNO">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -713,11 +744,11 @@
             </objects>
             <point key="canvasLocation" x="-1693" y="816"/>
         </scene>
-        <!--Search-->
+        <!--Navigation Controller-->
         <scene sceneID="aEm-3Q-CEb">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="oKU-2c-5mf" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Search" id="2Ki-Vr-VcF"/>
+                    <tabBarItem key="tabBarItem" systemItem="search" id="2Ki-Vr-VcF"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="CFt-M9-bIC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -737,7 +768,7 @@
         <scene sceneID="yFo-N0-ayo">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cDq-m6-6Kb" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Messages" id="9Nb-4c-44h"/>
+                    <tabBarItem key="tabBarItem" title="Messages" image="Images/messages.png" id="9Nb-4c-44h"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="8MZ-H3-I9J">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -757,7 +788,7 @@
         <scene sceneID="8Pu-6D-b7e">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jcd-eO-KmW" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" id="SFc-Hf-UUS"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="Images/settings.png" id="SFc-Hf-UUS"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Thn-Ji-AMA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -774,4 +805,10 @@
             <point key="canvasLocation" x="-1693" y="2192"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Images/collection.png" width="16" height="16"/>
+        <image name="Images/map.png" width="16" height="16"/>
+        <image name="Images/messages.png" width="16" height="16"/>
+        <image name="Images/settings.png" width="16" height="16"/>
+    </resources>
 </document>

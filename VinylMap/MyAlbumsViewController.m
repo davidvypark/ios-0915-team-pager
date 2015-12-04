@@ -72,13 +72,13 @@
  #pragma mark - Navigation
 
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-     AlbumDetailsViewController *desitinationVC = segue.destinationViewController;
+     AlbumDetailsViewController *destinationVC = segue.destinationViewController;
      NSIndexPath *indexPath = [self.myCollection indexPathForCell:sender];
      NSDictionary *album = self.albums[indexPath.row];
-     desitinationVC.albumAutoId = album[@"ID"];
-     desitinationVC.albumName = album[@"title"];
-     desitinationVC.albumImageURL = album[@"imageURL"];
-     
+     destinationVC.albumAutoId = album[@"ID"];
+     destinationVC.albumName = album[@"title"];
+     destinationVC.albumImageURL = album[@"imageURL"];
+     destinationVC.resourceURL = album[@"resource_url"];
  }
 
 

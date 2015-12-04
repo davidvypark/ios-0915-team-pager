@@ -9,6 +9,8 @@
 #import "AlbumDetailsViewController.h"
 #import "AddViewController.h"
 #import <UIKit+AFNetworking.h>
+#import "VinylConstants.h"
+#import <AFNetworking.h>
 
 
 @interface AlbumDetailsViewController ()
@@ -21,9 +23,37 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    NSURL *albumArtURL = [NSURL URLWithString:self.albumImageURL];
-    [self.imageLabel setImageWithURL:albumArtURL];
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    NSLog(@"%@", self.resourceURL);
+    NSString *resourceURL = [NSString stringWithFormat:@"%@?key=%@&secret=%@",  self.resourceURL, DISCOGS_CONSUMER_KEY, DISCOGS_CONSUMER_SECRET];
+    [manager GET:resourceURL parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+        NSDictionary *responseDictionary = (NSDictionary *)responseObject;
+        NSArray *images = responseDictionary[@"images"];
+        NSDictionary *firstImage = images.firstObject;
+        NSString *bigAlbumArt = firstImage[@"uri"];
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            NSURL *bigAlbumArtURL = [NSURL URLWithString:bigAlbumArt];
+            [self.imageLabel setImageWithURL:bigAlbumArtURL];
+        }];
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"Request failed with error %@", error);
+    }];
+    
+    
     self.albumNameLabel.text = self.albumName;
+    self.ownerLabel.text = self.albumOwner;
+    self.askingPriceLabel.text = self.albumPrice;
+    if (self.isBuyer) {
+        self.sellTradeButton.hidden = YES;
+        self.wishlistButton.enabled = YES;
+        self.messageButton.hidden = NO;
+        self.askingPriceLabel.hidden = NO;
+        self.ownerLabel.hidden = NO;
+    }
+   
 }
 
 - (void)didReceiveMemoryWarning {
