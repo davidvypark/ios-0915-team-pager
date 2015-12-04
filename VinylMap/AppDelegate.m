@@ -13,7 +13,7 @@
 #import <Google/SignIn.h>
 #import "UserObject.h"
 #import "VinylConstants.h"
-#import <FirebaseUI/FirebaseUI.h>
+#import <FirebaseUI/FirebaseAppDelegate.h>
 #import <AFNetworking.h>
 #import <KDURLRequestSerialization+OAuth.h>
 #import "DiscogsOAuthRequestSerializer.h"

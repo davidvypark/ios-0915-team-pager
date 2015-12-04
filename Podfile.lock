@@ -43,11 +43,17 @@ PODS:
   - FBSDKShareKit (4.8.0):
     - FBSDKCoreKit
   - Firebase (2.4.3)
-  - FirebaseUI (0.3.0):
+  - FirebaseUI (0.3.1):
+    - Firebase (~> 2.2)
+    - FirebaseUI/Auth (= 0.3.1)
+    - FirebaseUI/Core (= 0.3.1)
+  - FirebaseUI/Auth (0.3.1):
     - FBSDKCoreKit
     - FBSDKLoginKit
     - Firebase (~> 2.2)
     - Google/SignIn
+  - FirebaseUI/Core (0.3.1):
+    - Firebase (~> 2.2)
   - GeoFire (1.1.2):
     - Firebase (~> 2.2)
   - Google (1.2.1):
@@ -106,7 +112,7 @@ SPEC CHECKSUMS:
   FBSDKLoginKit: d893fcbb98d854496925e9ff73c67b896982d3c4
   FBSDKShareKit: e7577ee3adf80fc04fb656dd133fbb522250672b
   Firebase: 48179995b561e2262c5d4060ecdffca45fbbff8b
-  FirebaseUI: dca01813ab1da356d65fe5b6cbcf9fbcc2949156
+  FirebaseUI: 62f01e067dcfc5c903d8b9cb7d77d03fa163c71a
   GeoFire: 03db4e390a4cf3ff97422f19eb71ab1aa7d947dd
   Google: fd33b5fa40fa3aaee5176de49c873a74e3d11dce
   GoogleAppUtilities: c01c6a5671e9da8b9d690fdaec5959d6c2aac699

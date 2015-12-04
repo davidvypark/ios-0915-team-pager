@@ -15,7 +15,7 @@
 #import <Google/Core.h>
 #import <Google/SignIn.h>
 #import <Firebase/Firebase.h>
-#import <FirebaseUI.h>
+#import <FirebaseUI/FirebaseLoginViewController.h>
 #import "VinylConstants.h"
 #import <AFOAuth2Manager.h>
 #import <AFNetworking.h>

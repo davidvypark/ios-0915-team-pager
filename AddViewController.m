@@ -18,8 +18,9 @@
 @property (weak, nonatomic) IBOutlet MKMapView *addMapView;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (nonatomic, strong) GeoFire * geoFire;
-@property (nonatomic, strong) VinylAnnotation *user;
+@property (nonatomic, strong) MKPointAnnotation *user;
 @property (nonatomic, strong) NSString *currentUser;
+@property (nonatomic, strong) VinylAnnotation *albumLocation;
 
 
 @end
@@ -61,19 +62,22 @@
     CLLocationCoordinate2D selfCoord = self.addMapView.userLocation.location.coordinate;
     MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(selfCoord, 1000.0, 1000.0);
     [self.addMapView setRegion:startRegion animated:NO];
-    MKPointAnnotation *user = [[MKPointAnnotation alloc] init];
-    user.coordinate = selfCoord;
-    user.title = @"Your location";
+    self.user = [[MKPointAnnotation alloc] init];
+    self.user.coordinate = selfCoord;
+    self.user.title = @"Your location";
     [self.addMapView addAnnotation:self.user];
+    [self.addMapView selectAnnotation:self.user animated:YES];
     [self.locationManager stopUpdatingLocation];
     self.addMapView.showsUserLocation = NO;
 }
 
 - (MKAnnotationView *) mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>) annotation
+
 {
     MKPinAnnotationView *annView=[[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"VinylAnnotation"];
     if ([annotation.title isEqualToString:@"Your location"]) {
         annView.pinTintColor = [UIColor blueColor];
+        annView.canShowCallout = YES;
     }
     return annView;
 }
@@ -84,19 +88,29 @@
     self.addMapView.showsUserLocation = YES;
 }
 
+
+
 - (IBAction)handleLongPress:(UILongPressGestureRecognizer *)sender {
     if (sender.state != UIGestureRecognizerStateBegan)
         return;
     sender.minimumPressDuration = 2.0;
     CGPoint touchPoint = [sender locationInView:self.addMapView];
     CLLocationCoordinate2D touchMapCoordinate = [self.addMapView convertPoint:touchPoint toCoordinateFromView:self.addMapView];
+    self.albumLocation = [[VinylAnnotation alloc] init];
+    self.albumLocation.coordinate = touchMapCoordinate;
+    NSMutableArray * annotationsToRemove = [self.addMapView.annotations mutableCopy];
+    [annotationsToRemove removeObject:self.user];
+    [self.addMapView removeAnnotations:annotationsToRemove];
+    [self.addMapView addAnnotation:self.albumLocation];
     
-    VinylAnnotation *annotation = [[VinylAnnotation alloc] init];
-    annotation.coordinate = touchMapCoordinate;
-                        
-    [self.addMapView addAnnotation:annotation];
+
+    
+    }
+
+- (IBAction)saveButtonTapped:(id)sender {
+    
     __unsafe_unretained typeof(self) weakSelf = self;
-    [self.geoFire setLocation:[[CLLocation alloc] initWithLatitude:annotation.coordinate.latitude longitude:annotation.coordinate.longitude] forKey:self.ID withCompletionBlock:^(NSError *error) {
+    [self.geoFire setLocation:[[CLLocation alloc] initWithLatitude:self.albumLocation.coordinate.latitude longitude:self.albumLocation.coordinate.longitude] forKey:self.ID withCompletionBlock:^(NSError *error) {
         NSString *geofireAlbumURL = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/geofire/%@", weakSelf.ID];
         Firebase *albumKey = [[Firebase alloc] initWithUrl:geofireAlbumURL];
         if (error != nil) {
