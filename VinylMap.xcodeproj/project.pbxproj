@@ -188,8 +188,6 @@
 				968C481E1C1200080070B76C /* UIFiles */,
 				2BF0EB541BFF9D0700EA03B1 /* Images */,
 				2B6016FC1BFCC978003DB81A /* Assets.xcassets */,
-				9653335D1BFE5B0F00BB4F7A /* UserObject.h */,
-				9653335E1BFE5B0F00BB4F7A /* UserObject.m */,
 				2B6016FE1BFCC978003DB81A /* LaunchScreen.storyboard */,
 				2B6016F01BFCC978003DB81A /* Supporting Files */,
 				2B6017011BFCC978003DB81A /* Info.plist */,
@@ -255,6 +253,8 @@
 				96A90FDA1C0D0568003C7394 /* GoogleService-Info.plist */,
 				965B73591C0E4AB200568BC9 /* DiscogsOAuthRequestSerializer.h */,
 				965B735A1C0E4AB200568BC9 /* DiscogsOAuthRequestSerializer.m */,
+				9653335D1BFE5B0F00BB4F7A /* UserObject.h */,
+				9653335E1BFE5B0F00BB4F7A /* UserObject.m */,
 			);
 			name = "Login Files";
 			sourceTree = "<group>";

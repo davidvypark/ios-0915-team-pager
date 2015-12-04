@@ -179,6 +179,7 @@
 -(void)createFirebaseAccountNow
 {
     self.createAccountVC = [[AccountCreationViewController alloc] init];
+    self.createAccountVC.delegate = self;
     [self.createAccountVC setModalPresentationStyle:UIModalPresentationOverFullScreen];
     [self presentViewController:self.createAccountVC animated:NO completion:nil];
     
@@ -372,10 +373,9 @@
 
 #pragma mark - account creation
 
--(NSArray *)createAccountResult:(NSString *)result
+-(void)createAccountResult:(NSDictionary *)result
 {
-    //NO DELEGATE CALLED
-    return @[];
+    [self loginToFirebase:result[@"email"] password:result[@"password"]];
 }
 
 

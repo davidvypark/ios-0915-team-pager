@@ -55,7 +55,12 @@
             NSLog(@"%@",authData); //AUTHDATA COMPLETE
             [UserObject sharedUser].firebaseAuthData = authData;
         } else{
-            NSLog(@"User not logged in or just logged out");
+            __block NSString *errorMessage = @"User just logged out";
+            static dispatch_once_t onceToken;
+            dispatch_once(&onceToken, ^{
+                errorMessage = @"App start = user not logged in";
+            });
+            NSLog(@"%@",errorMessage);
         }
     }];
     

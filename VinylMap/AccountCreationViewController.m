@@ -179,7 +179,7 @@
             [responseArray removeObjectAtIndex:0];
             NSString *responseString = [responseArray componentsJoinedByString:@"\n"];
             NSLog(@"%@",responseString);
-            [self displayeAlertForBadEntry:responseString];
+            [self displayeErrorAlert:responseString title:@"Please fix errors"];
             
         }
         
@@ -196,35 +196,38 @@
         if (error) {
             // Something went wrong. :(
             NSLog(@"%@",error);
+            
+            switch(error.code) {
+                case FAuthenticationErrorEmailTaken:
+                    [self displayeErrorAlert:@"Account already active taken" title:@"Error"];
+                    break;
+                default:
+                    break;
+            }
+            
+            
         } else {
             // Authentication just completed successfully :)
             // The logged in user's unique identifier
-            [[UserObject sharedUser].firebaseRoot authUser:self.emailAddressField.text password:self.passwordField.text withCompletionBlock:^(NSError *error, FAuthData *authData) {
-                if (error) {
-                    // an error occurred while attempting login
-                    NSLog(@"log in error after creating user %@",error);
-                } else {
-                    // user is logged in, check authData for data
-                    NSLog(@"logging in after creating user");
-                    // Create a new user dictionary accessing the user's info
-                    // provided by the authData parameter
-                    NSDictionary *newUser = @{
-                                              @"provider": authData.provider,
-                                              @"email" : self.emailAddressField.text,
-                                              @"password" : self.passwordField.text,
-                                              @"firstName" : self.firstName.text,
-                                              @"lastName" : self.lastName.text
-                                              };
-                    
-                    // Create a child path with a key set to the uid underneath the "users" node
-                    // This creates a URL path like the following:
-                    //  - https://<YOUR-FIREBASE-APP>.firebaseio.com/users/<uid>
-                    
-//                    [[[[UserObject sharedUser].firebaseRoot childByAppendingPath:@"users"]
-//                      childByAppendingPath:authData.uid] setValue:newUser];
-                }
+            // user is logged in, check authData for data
+            NSLog(@"logging in after creating user");
+            
+            // provided by user login text fields
+            NSMutableDictionary *newUser = [@{
+                                      @"provider": result[@"uid"],
+                                      @"email" : self.emailAddressField.text,
+                                      @"firstName" : self.firstName.text,
+                                      @"lastName" : self.lastName.text
+                                      } mutableCopy];
+            
+            // Create a child path with a key set to the uid underneath the "users" node
+            [[[[UserObject sharedUser].firebaseRoot childByAppendingPath:@"users"]
+              childByAppendingPath:result[@"uid"]] setValue:newUser];
+            [newUser setObject:self.passwordField.text forKeyedSubscript:@"password"];
+            [self dismissViewControllerAnimated:YES completion:^{
+               [self.delegate createAccountResult:[NSDictionary dictionaryWithDictionary:newUser]];
             }];
-            NSLog(@"%@",result);
+            
         }
     }];
     
@@ -281,11 +284,11 @@
     return responseArray;
 }
 
--(void)displayeAlertForBadEntry:(NSString *) response
+-(void)displayeErrorAlert:(NSString *)body title:(NSString *)title
 {
     UIAlertController *alertController = [UIAlertController
-                                          alertControllerWithTitle:@"Please fix errors"
-                                          message: response
+                                          alertControllerWithTitle:title
+                                          message: body
                                           preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *okAction = [UIAlertAction
@@ -318,8 +321,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-    
-    
     
 }
 
