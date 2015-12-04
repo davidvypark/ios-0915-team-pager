@@ -46,7 +46,6 @@
 
 - (void)setOAuthorizationHeader:(NSMutableURLRequest *)request withParameters:(id)parameters
 {
-    NSDictionary *params = parameters;
     
     [request signRequestWithClientIdentifier:DISCOGS_CONSUMER_KEY
                                       secret:DISCOGS_CONSUMER_SECRET

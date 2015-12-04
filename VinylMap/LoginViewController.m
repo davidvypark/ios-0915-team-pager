@@ -22,6 +22,7 @@
 #import <KDURLRequestSerialization+OAuth.h>
 #import "DiscogsOAuthRequestSerializer.h"
 #import "AccountCreationViewController.h"
+//#import "UIButton+Discogs.h"
 
 @interface LoginViewController () <FBSDKLoginButtonDelegate>
 @property (nonatomic, strong) FBSDKLoginButton *facebookLoginButton;
@@ -71,8 +72,8 @@
     
     self.dismissViewControllerButton = [[UIButton alloc] init];
     [self.dismissViewControllerButton setTitle:@"Dismiss VC" forState:UIControlStateNormal];
-    self.dismissViewControllerButton.tintColor = [UIColor grayColor];
-    self.dismissViewControllerButton.backgroundColor = [UIColor darkGrayColor];
+//    self.dismissViewControllerButton.tintColor = [UIColor grayColor];
+//    self.dismissViewControllerButton.backgroundColor = [UIColor darkGrayColor];
     [self.view addSubview:self.dismissViewControllerButton];
     [self.dismissViewControllerButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@40);
