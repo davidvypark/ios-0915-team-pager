@@ -62,59 +62,29 @@
     [self.view addSubview:self.facebookLoginButton];
     self.facebookLoginButton.readPermissions = @[@"public_profile", @"email", @"user_friends"];
     self.facebookLoginButton.delegate = self;
-//    [self.facebookLoginButton mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.and.right.equalTo(self.view);
-//        make.bottomMargin.equalTo(self.view).multipliedBy(0.66);
-//    }];
     
     self.dismissViewControllerButton = [[DiscogsButton alloc] init];
     [self.dismissViewControllerButton setTitle:@"Dismiss VC" forState:UIControlStateNormal];
     [self.view addSubview:self.dismissViewControllerButton];
-//    [self.dismissViewControllerButton mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.height.equalTo(@40);
-//        make.width.equalTo(self.view);
-//        make.bottom.equalTo(self.view);
-//    }];
     
     self.discogsLoginButton = [[DiscogsButton alloc] init];
     [self.discogsLoginButton setTitle:@"DISCOGS LOGIN" forState:UIControlStateNormal];
     [self.view addSubview:self.discogsLoginButton];
     
-//    [self.discogsLoginButton mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.height.equalTo(@40);
-//        make.width.equalTo(self.view);
-//        make.bottom.equalTo(self.dismissViewControllerButton.mas_top);
-//    }];
     
     self.firebaseLogoutButton = [[DiscogsButton alloc] init];
     [self.firebaseLogoutButton setTitle:@"FIREBASE LOGOUT" forState:UIControlStateNormal];
     [self.view addSubview:self.firebaseLogoutButton];
     
-//    [self.firebaseLogoutButton mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.height.equalTo(@40);
-//        make.width.equalTo(self.view);
-//        make.bottom.equalTo(self.discogsLoginButton.mas_top);
-//    }];
     
     self.firebaseLoginButton = [[DiscogsButton alloc] init];
     [self.firebaseLoginButton setTitle:@"FIREBASE LOGIN" forState:UIControlStateNormal];
     [self.view addSubview:self.firebaseLoginButton];
     
-//    [self.firebaseLoginButton mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.height.equalTo(@40);
-//        make.width.equalTo(self.view);
-//        make.bottom.equalTo(self.firebaseLogoutButton.mas_top);
-//    }];
     
     self.createFirebaseAccount = [[DiscogsButton alloc] init];
     [self.createFirebaseAccount setTitle:@"CREATE ACCOUNT" forState:UIControlStateNormal];
     [self.view addSubview:self.createFirebaseAccount];
-//    
-//    [self.createFirebaseAccount mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.height.equalTo(@40);
-//        make.width.equalTo(self.view);
-//        make.bottom.equalTo(self.firebaseLoginButton.mas_top);
-//    }];
     
     
     NSArray *arrayOfButtons = @[self.dismissViewControllerButton, self.firebaseLoginButton, self.firebaseLogoutButton, self.discogsLoginButton, self.createFirebaseAccount, self.facebookLoginButton];

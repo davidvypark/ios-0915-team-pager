@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UITextField *confirmPassword;
 @property (nonatomic, strong) UITextField *firstName;
 @property (nonatomic, strong) UITextField *lastName;
+@property (nonatomic, strong) UITextField *displayName;
 @property (nonatomic, strong) UISwitch *acceptTerms;
 
 @property (nonatomic, strong) DiscogsButton *createAccountButon;
@@ -69,6 +70,8 @@
     self.lastName.placeholder = @"last name";
     self.emailAddressField = [[UITextField alloc] init];
     self.emailAddressField.placeholder = @"email address";
+    self.displayName = [[UITextField alloc] init];
+    self.displayName.placeholder = @"display name";
     self.passwordField = [[UITextField alloc] init];
     self.passwordField.placeholder = @"password";
     self.passwordField.secureTextEntry = YES;
@@ -77,7 +80,7 @@
     self.confirmPassword.secureTextEntry = YES;
 
     
-    NSArray *textFieldArray = @[self.firstName , self.lastName , self.emailAddressField , self.passwordField , self.confirmPassword];
+    NSArray *textFieldArray = @[self.firstName , self.lastName , self.emailAddressField , self.displayName, self.passwordField , self.confirmPassword];
     UITextField *previousField;
     for (UITextField *textField in textFieldArray) {
         [self.view addSubview:textField];
@@ -216,6 +219,7 @@
             NSMutableDictionary *newUser = [@{
                                       @"provider": result[@"uid"],
                                       @"email" : self.emailAddressField.text,
+                                      @"displayName" : self.displayName.text,
                                       @"firstName" : self.firstName.text,
                                       @"lastName" : self.lastName.text
                                       } mutableCopy];
@@ -243,6 +247,7 @@
     bool emailOkay = [self validateEmail:self.emailAddressField.text];
     bool passwordsEqual = [self.passwordField.text isEqualToString:self.confirmPassword.text];
     bool passwordOkay = 0;
+    bool displayNameOkay = self.displayName.text.length > 3;
     
     if(passwordsEqual)
     {
@@ -253,11 +258,9 @@
     bool isLastName = ![self.lastName.text isEqualToString:@""];
     
     
-    NSLog(@"email: %u , password: %u, firstname: %u, lastname: %u \n all: %u",emailOkay,passwordOkay,isFirstName,isLastName,emailOkay && passwordOkay && isFirstName && isLastName);
-    
     NSMutableArray *responseArray = [[NSMutableArray alloc] init];
     
-    [responseArray addObject:@(emailOkay && passwordOkay && isFirstName && isLastName)];
+    [responseArray addObject:@(emailOkay && displayNameOkay && passwordOkay && isFirstName && isLastName)];
     
     if (!isFirstName)
     {
@@ -271,13 +274,17 @@
     {
         [responseArray addObject:@"Enter a valid email"];
     }
+    if (!displayNameOkay)
+    {
+        [responseArray addObject:@"Display name be 4 or more characters"];
+    }
     if (!passwordsEqual)
     {
         [responseArray addObject:@"Passwords do not match"];
     }
     if (self.passwordField.text.length <= 5)
     {
-        [responseArray addObject:@"Password must be 6 characters or more"];
+        [responseArray addObject:@"Password must be 6 or more characters"];
     }
     
     
