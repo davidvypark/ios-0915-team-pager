@@ -25,8 +25,6 @@
     UITabBarController *tabBarController = (UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController ;
     
     [tabBarController setDelegate:self];
-//    [self.myCollection registerNib:[UINib nibWithNibName:@"CustomAlbumCell" bundle:[NSBundle mainBundle]]
-//        forCellWithReuseIdentifier:@"albumCell"];
     self.myCollection.delegate = self;
     self.myCollection.dataSource = self;
     NSString *currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;

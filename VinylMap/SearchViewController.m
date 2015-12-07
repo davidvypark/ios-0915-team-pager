@@ -44,10 +44,6 @@
     self.firebase = [[Firebase alloc] initWithUrl:firebaseRefUrl];
 }
 
--(void)textFieldDidEndEditing:(UITextField *)textField {
-    
-}
-
 -(BOOL) textFieldShouldReturn:(UITextField *)textField {
     
     [textField resignFirstResponder];
@@ -100,6 +96,7 @@
     NSIndexPath *indexPath = [self.searchTableView indexPathForRowAtPoint:pos];
     NSDictionary *result = self.albumResults[indexPath.row];
     [album setValue:@{@"title": result[@"title"], @"imageURL": result[@"thumb"], @"ID": album.key, @"resource_url": result[@"resource_url"]}];
+    [self.searchTableView reloadData];
 }
 
 
@@ -108,7 +105,6 @@
     NSMutableString *albumInfo = [NSMutableString new];
     NSDictionary *result = self.albumResults[indexPath.row];
     NSArray *recordLabels = result[@"label"];
-    NSLog(@"the record label is a %@ with a value of %@", [result[@"label"] class], result[@"label"]);
 
     NSString *recordLabel;
     if (!recordLabels.firstObject) {
@@ -117,7 +113,6 @@
     else {
         recordLabel = recordLabels.firstObject;
     }
-    NSLog(@"the release year is a %@ with a value of %@", [result[@"year"] class], result[@"year"]);
     NSString *releaseYear;
     if (!result[@"year"]) {
         releaseYear = @"";
