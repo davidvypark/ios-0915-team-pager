@@ -1,4 +1,3 @@
-   //
 //  UserObject.m
 //  VinylMap
 //

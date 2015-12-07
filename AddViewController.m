@@ -21,6 +21,11 @@
 @property (nonatomic, strong) MKPointAnnotation *user;
 @property (nonatomic, strong) NSString *currentUser;
 @property (nonatomic, strong) VinylAnnotation *albumLocation;
+@property (weak, nonatomic) IBOutlet UITextField *priceLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *sellSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *tradeSwitch;
+@property (nonatomic) BOOL forSale;
+@property (nonatomic) BOOL forTrade;
 
 
 @end
@@ -108,21 +113,68 @@
     }
 
 - (IBAction)saveButtonTapped:(id)sender {
-    
-    __unsafe_unretained typeof(self) weakSelf = self;
-    [self.geoFire setLocation:[[CLLocation alloc] initWithLatitude:self.albumLocation.coordinate.latitude longitude:self.albumLocation.coordinate.longitude] forKey:self.ID withCompletionBlock:^(NSError *error) {
-        NSString *geofireAlbumURL = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/geofire/%@", weakSelf.ID];
-        Firebase *albumKey = [[Firebase alloc] initWithUrl:geofireAlbumURL];
-        if (error != nil) {
-            NSLog(@"An error occurred: %@", error);
-        }
-        else {
-            
-            [albumKey updateChildValues:@{@"owner" : weakSelf.currentUser}];
-        }
-    }];
-}
 
+
+
+    UIAlertAction *okAction = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"OK", @"OK action")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction *action)
+                               {
+                                   NSLog(@"OK action");
+                               }];
+
+
+
+    
+
+    
+    if (![self.sellSwitch isOn] && ![self.tradeSwitch isOn]) {
+        UIAlertController *switchAlertController = [UIAlertController
+                                                    alertControllerWithTitle:@"Please select at least one"
+                                                    message:@"Item must be sold or traded"
+                                                    preferredStyle:UIAlertControllerStyleAlert];
+        [switchAlertController addAction:okAction];
+        [self presentViewController:switchAlertController animated:YES completion:nil];
+    }
+    
+    else if (!self.albumLocation) {
+        UIAlertController *locationAlertController = [UIAlertController
+                                                      alertControllerWithTitle:@"Item location required"
+                                                      message:@"Please specify the item's location"
+                                                      preferredStyle:UIAlertControllerStyleAlert];
+            [locationAlertController addAction:okAction];
+        [self presentViewController:locationAlertController animated:YES completion:nil];
+    }
+
+    else if (([self.sellSwitch isOn] || [self.tradeSwitch isOn]) && self.albumLocation) {
+        if ([self.sellSwitch isOn]  && self.priceLabel.text.length == 0) {
+            UIAlertController *priceAlertController = [UIAlertController
+                                                       alertControllerWithTitle:@"Enter a price"
+                                                       message:@"A price must be entered"
+                                                       preferredStyle:UIAlertControllerStyleAlert];
+                [priceAlertController addAction:okAction];
+                [self presentViewController:priceAlertController animated:YES completion:nil];
+            }
+        else {
+            __unsafe_unretained typeof(self) weakSelf = self;
+            [self.geoFire setLocation:[[CLLocation alloc] initWithLatitude:self.albumLocation.coordinate.latitude longitude:self.albumLocation.coordinate.longitude] forKey:self.ID withCompletionBlock:^(NSError *error) {
+                NSString *geofireAlbumURL = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/geofire/%@", weakSelf.ID];
+                Firebase *albumKey = [[Firebase alloc] initWithUrl:geofireAlbumURL];
+                weakSelf.forSale = [weakSelf.sellSwitch isOn];
+                weakSelf.forTrade = [weakSelf.tradeSwitch isOn];
+                if (error != nil) {
+                    NSLog(@"An error occurred: %@", error);
+                }
+                else {
+                    
+                    [albumKey updateChildValues:@{@"owner" : weakSelf.currentUser, @"price" : weakSelf.priceLabel.text, @"sale" : [NSNumber numberWithBool:weakSelf.sellSwitch] , @"trade": [NSNumber numberWithBool:weakSelf.tradeSwitch]} ];
+                    [weakSelf dismissViewControllerAnimated:YES completion:nil];
+                }
+            }];}
+    }
+    
+}
 - (IBAction)cancelButtonTapped:(id)sender {
     [self dismissViewControllerAnimated:YES completion:^{
         

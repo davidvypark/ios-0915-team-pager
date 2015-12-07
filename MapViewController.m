@@ -12,7 +12,6 @@
 #import "VinylAnnotation.h"
 #import <UIKit+AFNetworking.h>
 #import "AlbumDetailsViewController.h"
-#import "CurrentUserDataStore.h"
 
 
 @interface MapViewController () <MKMapViewDelegate, CLLocationManagerDelegate>
@@ -21,7 +20,7 @@
 @property (nonatomic, strong) GeoFire * geoFire;
 @property (nonatomic, strong) GFRegionQuery *regionQuery;
 @property (nonatomic, strong) NSMutableDictionary *vinylAnnotations;
-@property (nonatomic, strong) CurrentUserDataStore *currentUserInfo;
+
 //@property (nonatomic, strong) AlbumDetailsViewController *detailsOfSaleItem;
 
 
@@ -32,7 +31,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.currentUserInfo = [CurrentUserDataStore sharedDataStore];
     self.locationManager = [[CLLocationManager alloc]init];
     self.mapView.delegate = self;
     self.locationManager.delegate = self;
@@ -53,6 +51,11 @@
     self.vinylAnnotations = [NSMutableDictionary dictionary];
     
 }
+
+- (void)viewDidAppear {
+[self updateOrSetupRegionQuery];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -196,9 +199,10 @@
     
     [detailsOfSaleItemFirebase observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
         detailsOfSaleItem.albumName = snapshot.value[@"title"];
-        detailsOfSaleItem.albumImageURL = snapshot.value[@"imageURL"];
+        detailsOfSaleItem.resourceURL = snapshot.value[@"resource_url"];
         detailsOfSaleItem.isBuyer = YES;
         detailsOfSaleItem.albumOwner = annView.owner;
+        
         [self.navigationController pushViewController:detailsOfSaleItem animated:YES];
     
     }]; }

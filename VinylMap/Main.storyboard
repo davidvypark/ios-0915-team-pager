@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="a4g-6U-oqw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="a4g-6U-oqw">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -285,7 +285,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ib7-sK-vx7">
-                                <rect key="frame" x="265" y="427.5" width="70" height="30"/>
+                                <rect key="frame" x="265" y="428" width="70" height="30"/>
                                 <state key="normal" title="Sell/Trade"/>
                                 <connections>
                                     <segue destination="ITq-5N-15f" kind="presentation" id="2wN-N7-mzn"/>
@@ -303,27 +303,27 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="752" text="Album Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Twg-cF-16p">
-                                <rect key="frame" x="251" y="399" width="98.5" height="20.5"/>
+                                <rect key="frame" x="251" y="399" width="99" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r0b-0Y-cgS">
-                                <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
-                                <state key="normal" title="✉"/>
-                            </button>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Asking Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cu5-dh-2RC">
-                                <rect key="frame" x="252.5" y="460.5" width="95" height="20.5"/>
+                                <rect key="frame" x="253" y="461" width="95" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Owner" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1KX-CS-bae">
-                                <rect key="frame" x="263" y="514" width="75.5" height="28.5"/>
+                                <rect key="frame" x="258" y="522" width="76" height="29"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r0b-0Y-cgS">
+                                <rect key="frame" x="341" y="522" width="30" height="30"/>
+                                <state key="normal" title="✉"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -498,43 +498,43 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="sEF-jZ-iSA">
-                                <rect key="frame" x="0.0" y="64" width="600" height="360"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                                 <animations/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="3IN-lc-2pI" appends="YES" id="IzP-cj-pcH"/>
                                 </connections>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GJA-9O-xTc">
-                                <rect key="frame" x="322" y="409" width="46" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GJA-9O-xTc">
+                                <rect key="frame" x="534" y="534" width="46" height="30"/>
                                 <animations/>
                                 <state key="normal" title="Return"/>
                                 <connections>
                                     <action selector="returnToUserTapped:" destination="ITq-5N-15f" eventType="touchUpInside" id="lGD-uk-yJf"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Asking Price" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="39J-22-1Hk">
-                                <rect key="frame" x="20" y="465" width="147" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="OWZ-yE-riA">
-                                <rect key="frame" x="20" y="511" width="51" height="31"/>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OWZ-yE-riA">
+                                <rect key="frame" x="18" y="533" width="51" height="31"/>
+                                <color key="onTintColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                             </switch>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="enj-GU-f0y">
-                                <rect key="frame" x="118" y="511" width="51" height="31"/>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="enj-GU-f0y">
+                                <rect key="frame" x="84" y="533" width="51" height="31"/>
+                                <color key="onTintColor" red="0.0" green="0.25098040699958801" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
                             </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sale" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mpV-tT-2d0">
-                                <rect key="frame" x="20" y="550" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sell" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mpV-tT-2d0">
+                                <rect key="frame" x="27" y="571" width="31" height="21"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
+                                <size key="shadowOffset" width="0.0" height="1"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Trade" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G7j-3w-j9S">
-                                <rect key="frame" x="116" y="550" width="44" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trade" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G7j-3w-j9S">
+                                <rect key="frame" x="84" y="571" width="48" height="21"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
+                                <size key="shadowOffset" width="0.0" height="1"/>
                             </label>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="89G-DT-DPc">
                                 <rect key="frame" x="0.0" y="20" width="600" height="44"/>
@@ -553,21 +553,41 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Price" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="39J-22-1Hk">
+                                <rect key="frame" x="167" y="534" width="54" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                            </textField>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="89G-DT-DPc" firstAttribute="centerX" secondItem="EI7-bh-NHw" secondAttribute="centerX" id="0dt-oa-vNz"/>
+                            <constraint firstItem="mpV-tT-2d0" firstAttribute="top" secondItem="OWZ-yE-riA" secondAttribute="bottom" constant="7" id="1BQ-fg-7Sv"/>
+                            <constraint firstItem="G7j-3w-j9S" firstAttribute="top" secondItem="sEF-jZ-iSA" secondAttribute="bottom" constant="-93" id="1f8-S1-TEM"/>
                             <constraint firstItem="89G-DT-DPc" firstAttribute="top" secondItem="a2B-ay-8za" secondAttribute="bottom" id="8Fa-GN-5ut"/>
-                            <constraint firstItem="sEF-jZ-iSA" firstAttribute="height" secondItem="EI7-bh-NHw" secondAttribute="height" multiplier="0.6" id="EQL-CD-5vj"/>
+                            <constraint firstItem="G7j-3w-j9S" firstAttribute="top" secondItem="enj-GU-f0y" secondAttribute="bottom" constant="7" id="CWh-BU-ewA"/>
+                            <constraint firstItem="sEF-jZ-iSA" firstAttribute="height" secondItem="EI7-bh-NHw" secondAttribute="height" id="EQL-CD-5vj"/>
+                            <constraint firstItem="sEF-jZ-iSA" firstAttribute="leading" secondItem="mpV-tT-2d0" secondAttribute="trailing" constant="-58" id="Qpr-XD-vwB"/>
+                            <constraint firstItem="39J-22-1Hk" firstAttribute="top" secondItem="sEF-jZ-iSA" secondAttribute="bottom" constant="-130" id="SWj-EX-GWM"/>
                             <constraint firstItem="sEF-jZ-iSA" firstAttribute="width" secondItem="EI7-bh-NHw" secondAttribute="width" id="Wac-WG-ify"/>
+                            <constraint firstItem="OWZ-yE-riA" firstAttribute="centerX" secondItem="mpV-tT-2d0" secondAttribute="centerX" id="WlR-N9-3em"/>
+                            <constraint firstItem="GJA-9O-xTc" firstAttribute="leading" secondItem="sEF-jZ-iSA" secondAttribute="trailing" constant="-66" id="alo-bX-NRy"/>
                             <constraint firstItem="89G-DT-DPc" firstAttribute="width" secondItem="EI7-bh-NHw" secondAttribute="width" id="cOA-7e-Kbe"/>
                             <constraint firstItem="sEF-jZ-iSA" firstAttribute="top" secondItem="89G-DT-DPc" secondAttribute="bottom" id="eB9-tP-PfG"/>
                             <constraint firstItem="sEF-jZ-iSA" firstAttribute="centerX" secondItem="EI7-bh-NHw" secondAttribute="centerX" id="fgL-Db-f8e"/>
+                            <constraint firstItem="enj-GU-f0y" firstAttribute="centerX" secondItem="G7j-3w-j9S" secondAttribute="centerX" id="n5z-EJ-b6U"/>
+                            <constraint firstItem="39J-22-1Hk" firstAttribute="leading" secondItem="enj-GU-f0y" secondAttribute="trailing" constant="33" id="sVO-O1-IdJ"/>
+                            <constraint firstItem="sEF-jZ-iSA" firstAttribute="leading" secondItem="G7j-3w-j9S" secondAttribute="trailing" constant="-132" id="sWb-mN-Iut"/>
+                            <constraint firstItem="GJA-9O-xTc" firstAttribute="top" secondItem="sEF-jZ-iSA" secondAttribute="bottom" constant="-130" id="t03-JW-7cm"/>
+                            <constraint firstItem="mpV-tT-2d0" firstAttribute="top" secondItem="sEF-jZ-iSA" secondAttribute="bottom" constant="-93" id="vTW-gb-uVn"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="addMapView" destination="sEF-jZ-iSA" id="sjb-vT-VBb"/>
+                        <outlet property="priceLabel" destination="39J-22-1Hk" id="hjL-pp-agL"/>
+                        <outlet property="sellSwitch" destination="OWZ-yE-riA" id="PaV-kt-1ZJ"/>
+                        <outlet property="tradeSwitch" destination="enj-GU-f0y" id="ur8-0P-LcG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wpd-kO-iZm" userLabel="First Responder" sceneMemberID="firstResponder"/>
