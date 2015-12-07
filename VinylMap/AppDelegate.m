@@ -17,6 +17,7 @@
 #import <AFNetworking.h>
 #import <KDURLRequestSerialization+OAuth.h>
 #import "DiscogsOAuthRequestSerializer.h"
+#import <AFOAuth2Manager.h>
 
 @interface AppDelegate  () <GIDSignInDelegate>
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
@@ -57,9 +58,18 @@
         if(authData)
         {
             NSLog(@"%@",authData); //AUTHDATA COMPLETE
-            [UserObject sharedUser].firebaseAuthData = authData;
+            NSLog(@"%@",[UserObject sharedUser].firebaseRoot.authData);
+//            NSDictionary *testDict = @{@"YES":@"YES"}; // USER SHOULD NOT BE ABLE TO WRITE TO OTHER USER DIRECTORIES OR READ THIS
+//            [[[[UserObject sharedUser].firebaseRoot childByAppendingPath:@"users"]
+//              childByAppendingPath:[UserObject sharedUser].firebaseAuthData.uid] setValue:testDict];
+            
         } else{
-            NSLog(@"User not logged in or just logged out");
+            __block NSString *errorMessage = @"User just logged out";
+            static dispatch_once_t onceToken;
+            dispatch_once(&onceToken, ^{
+                errorMessage = @"App start = user not logged in";
+            });
+            NSLog(@"%@",errorMessage);
         }
     }];
     
@@ -162,6 +172,7 @@
                 NSLog(@"OAuth Final Token %@",queryItem.value);
             }
         }
+        //STORE IN KEYCHAIN
         
         
         
@@ -172,6 +183,7 @@
 }
 
 
+
 -(UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
     if(self.restrictRotation)
@@ -179,7 +191,6 @@
     else
         return UIInterfaceOrientationMaskAll;
 }
-
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {

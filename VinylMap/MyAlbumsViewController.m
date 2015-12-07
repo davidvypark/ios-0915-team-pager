@@ -29,32 +29,23 @@
 //        forCellWithReuseIdentifier:@"albumCell"];
     self.myCollection.delegate = self;
     self.myCollection.dataSource = self;
-    if ([UserObject sharedUser].firebaseAuthData) {
-        NSString *currentUser = [UserObject sharedUser].firebaseAuthData.uid;
-        NSString *firebaseRefUrl = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection", currentUser];
-        self.firebaseRef = [[Firebase alloc] initWithUrl:firebaseRefUrl];
-        self.albums = [[NSMutableArray alloc] init];
-        [self.firebaseRef observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
-            [self.albums addObject:snapshot.value];
-            [self.myCollection reloadData];
-            NSLog(@"%@ %@", snapshot.key, snapshot.value);
-        }];
-        [self.firebaseRef observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
-            [self.myCollection reloadData];
-            NSLog(@"%@ %@", snapshot.key, snapshot.value);
-        }];
-    }
-    
-}
--(void)viewWillAppear{
-     [self.myCollection reloadData];
+    NSString *currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
+    NSString *firebaseRefUrl = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection", currentUser];
+    self.firebaseRef = [[Firebase alloc] initWithUrl:firebaseRefUrl];
+    self.albums = [[NSMutableArray alloc] init];
+    [self.firebaseRef observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
+        [self.albums addObject:snapshot.value];
+        [self.myCollection reloadData];
+    }];
+    [self.firebaseRef observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        [self.myCollection reloadData];
+    }];
 }
 
--(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)MyAlbumsViewController
-{
-    [MyAlbumsViewController viewWillAppear:YES];
-    
+- (IBAction)buttontapped:(id)sender {
+    [self.myCollection reloadData];
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -69,7 +60,6 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"The thing is getting called");
     
     AlbumCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"albumCell" forIndexPath:indexPath];
     srand48(time(0));

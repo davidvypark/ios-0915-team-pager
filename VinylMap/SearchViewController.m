@@ -39,7 +39,7 @@
     self.searchTableView.delegate = self;
     self.searchTableView.dataSource = self;
     self.albumResults = [NSMutableArray new];
-    NSString *currentUser = [UserObject sharedUser].firebaseAuthData.uid;
+    NSString *currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
     NSString *firebaseRefUrl = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection", currentUser];
     self.firebase = [[Firebase alloc] initWithUrl:firebaseRefUrl];
 }
