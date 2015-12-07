@@ -25,7 +25,7 @@
 #import "DiscogsButton.h"
 #import <SSKeychain.h>
 #import <SSKeychainQuery.h>
-
+#import "DiscogsAPI.h"
 
 
 @interface LoginViewController () <FBSDKLoginButtonDelegate, AccountCreationViewControllerDelegate, UITextFieldDelegate>
@@ -108,7 +108,6 @@
     [self setUpButtons];
     [self discogsLoginButtonAlive];
     [self updateFieldsIfLoggedIn];
-    NSLog(@"%@",[UserObject sharedUser].discogsTokenSecret);
 }
 
 
@@ -329,12 +328,12 @@
             if([queryItem.name isEqualToString:@"oauth_token_secret"])
             {
                 [UserObject sharedUser].prelimDiscogsTokenSecret = queryItem.value;
-                NSLog(@"OAuth Prelim Secret %@",queryItem.value);
+//                NSLog(@"OAuth Prelim Secret %@",queryItem.value);
             } else if ([queryItem.name isEqualToString:@"oauth_token"])
             {
                 [UserObject sharedUser].prelimDiscogsRequestToken = queryItem.value;
                 
-                NSLog(@"OAuth Prelim Token %@",queryItem.value);
+//                NSLog(@"OAuth Prelim Token %@",queryItem.value);
             }
         }
         NSString *authorizeStringURL = [NSString stringWithFormat:@"https://discogs.com/oauth/authorize?oauth_token=%@",[UserObject sharedUser].prelimDiscogsRequestToken];
@@ -356,7 +355,9 @@
 -(void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error
 
 {
+    
     NSLog(@"did complete with error %@",error);
+    
     NSSet *grantedPermissions = result.token.permissions;
     NSSet *declinedPermissions = result.token.declinedPermissions;
     NSString *userID = result.token.userID;
@@ -395,7 +396,7 @@
 
 -(void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton
 {
-    [[UserObject sharedUser].firebaseRoot unauth];
+    [self logoutOfFirebase];
     [self viewDidAppear:YES];
 }
 
@@ -439,7 +440,7 @@
 {
     [[UserObject sharedUser].firebaseRoot unauth];
     [FBSDKAccessToken setCurrentAccessToken:nil];
-    [self removeDiscogsKeychain];
+    [DiscogsAPI removeDiscogsKeychain];
     [self viewDidAppear:YES];
 }
 
@@ -487,30 +488,6 @@
     
 }
 
-#pragma mark - remove discogs from keychain
-
--(void)removeDiscogsKeychain
-{
-    NSError *error;
-    NSArray *accounts = [SSKeychain accountsForService:DISCOGS_KEYCHAIN error:&error];
-    if(error)
-    {
-        NSLog(@"%@",error);
-    } else
-    {
-        NSDictionary *firstAccount = accounts[0];
-        NSLog(@"%@",accounts[0]);
-        bool deletedPassword = [SSKeychain deletePasswordForService:DISCOGS_KEYCHAIN account:firstAccount[@"acct"] error:&error];
-        if(error)
-        {
-            NSLog(@"%@",error);
-        } else if (deletedPassword)
-        {
-            NSLog(@"Removed discogs from keychain");
-            
-        }
-    }
-}
 
 #pragma mark - display alert
 

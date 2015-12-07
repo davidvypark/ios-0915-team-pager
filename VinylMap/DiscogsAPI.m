@@ -70,7 +70,29 @@
     }
 }
 
-
++(void)removeDiscogsKeychain
+{
+    NSError *error;
+    NSArray *accounts = [SSKeychain accountsForService:DISCOGS_KEYCHAIN error:&error];
+    if(error)
+    {
+        NSLog(@"%@",error);
+    } else
+    {
+        NSDictionary *firstAccount = accounts[0];
+        NSLog(@"%@",accounts[0]);
+        bool deletedPassword = [SSKeychain deletePasswordForService:DISCOGS_KEYCHAIN account:firstAccount[@"acct"] error:&error];
+        if(error)
+        {
+            NSLog(@"%@",error);
+        } else if (deletedPassword)
+        {
+            NSLog(@"Removed discogs from keychain");
+            [UserObject sharedUser].discogsTokenSecret = nil;
+            
+        }
+    }
+}
 
 
 

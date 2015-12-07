@@ -15,6 +15,6 @@
 
 +(void)pullDiscogsTokenSecret;
 
-
++(void)removeDiscogsKeychain;
 
 @end
