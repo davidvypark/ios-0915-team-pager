@@ -91,6 +91,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.albumResults.count;
 }
+
 - (IBAction)addButtonTapped:(UIButton *)sender {
     Firebase *album = [self.firebase childByAutoId];
     CGPoint pos = [sender convertPoint:CGPointZero toView:self.searchTableView];
@@ -99,9 +100,14 @@
     Album *resultAlbum = [Album albumFromResultDictionary:result];
     [album setValue:@{@"artist": resultAlbum.artist,
                        @"title": resultAlbum.title,
+                     @"barcode": resultAlbum.barcode,
+                @"recordLabels": resultAlbum.recordLabels,
+                     @"country": resultAlbum.country,
+                 @"releaseYear": @(resultAlbum.releaseYear),
+              @"categoryNumber": resultAlbum.categoryNumber,
                     @"imageURL": resultAlbum.thumbnailURL,
                           @"ID": album.key,
-                @"resource_url": resultAlbum.resourceURL}];
+                 @"resourceURL": resultAlbum.resourceURL}];
     //[self.searchTableView reloadData];
 }
 
