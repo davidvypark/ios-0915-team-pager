@@ -15,12 +15,16 @@
 @property (nonatomic, strong) NSString *titleWithArtist;
 @property (nonatomic, strong) NSString *barcode;
 @property (nonatomic, strong) NSString *genre;
-@property (nonatomic, assign) NSString *albumID;
+@property (nonatomic, strong) NSString *albumID;
 @property (nonatomic, strong) NSArray *recordLabels;
 @property (nonatomic, strong) NSString *country;
 @property (nonatomic, strong) NSString *resourceURL;
 @property (nonatomic, assign) NSUInteger releaseYear;
+@property (nonatomic, strong) NSString *categoryNumber;
+@property (nonatomic, strong) NSString *thumbnailURL;
 @property (nonatomic, assign) BOOL isInCollection;
 @property (nonatomic, assign) BOOL isInWishlist;
+
++(Album *)albumFromResultDictionary: (NSDictionary *) dictionary;
 
 @end

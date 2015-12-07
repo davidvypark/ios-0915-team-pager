@@ -26,6 +26,8 @@
     album.resourceURL = dictionary[@"resource_url"];
     NSString *releaseYear = dictionary[@"year"];
     album.releaseYear = releaseYear.integerValue;
+    album.categoryNumber = dictionary[@"catno"];
+    album.thumbnailURL = dictionary[@"thumb"];
     return album;
 }
 

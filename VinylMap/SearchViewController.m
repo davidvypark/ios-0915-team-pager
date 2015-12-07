@@ -15,6 +15,7 @@
 #import <Firebase/Firebase.h>
 #import "DiscogsAPI.h"
 #import "UserObject.h"
+#import "Album.h"
 
 @interface SearchViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, BarCodeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *searchField;
@@ -95,8 +96,13 @@
     CGPoint pos = [sender convertPoint:CGPointZero toView:self.searchTableView];
     NSIndexPath *indexPath = [self.searchTableView indexPathForRowAtPoint:pos];
     NSDictionary *result = self.albumResults[indexPath.row];
-    [album setValue:@{@"title": result[@"title"], @"imageURL": result[@"thumb"], @"ID": album.key, @"resource_url": result[@"resource_url"]}];
-    [self.searchTableView reloadData];
+    Album *resultAlbum = [Album albumFromResultDictionary:result];
+    [album setValue:@{@"artist": resultAlbum.artist,
+                       @"title": resultAlbum.title,
+                    @"imageURL": resultAlbum.thumbnailURL,
+                          @"ID": album.key,
+                @"resource_url": resultAlbum.resourceURL}];
+    //[self.searchTableView reloadData];
 }
 
 
