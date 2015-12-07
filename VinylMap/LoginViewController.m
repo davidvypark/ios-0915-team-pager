@@ -23,7 +23,6 @@
 #import "DiscogsOAuthRequestSerializer.h"
 #import "AccountCreationViewController.h"
 #import "DiscogsButton.h"
-#import "KeychainItemWrapper.h"
 
 
 
@@ -305,8 +304,6 @@
             // user is logged in, check authData for data
 //            NSData *firebaseAuth = [NSKeyedArchiver archivedDataWithRootObject:authData];
 //            NSMutableDictionary *firebaseDictionary = [@{@"authData": authData} mutableCopy];
-            KeychainItemWrapper *firebaseKeychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"vinylMapFirebaseLogin" accessGroup:nil];
-            [firebaseKeychain setObject:authData forKey:@"firebaseAuth"];
             
             NSLog(@"logged in successfully");
         }
