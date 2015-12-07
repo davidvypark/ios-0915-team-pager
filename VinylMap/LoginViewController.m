@@ -108,6 +108,7 @@
     [self setUpButtons];
     [self discogsLoginButtonAlive];
     [self updateFieldsIfLoggedIn];
+    NSLog(@"%@",[UserObject sharedUser].discogsTokenSecret);
 }
 
 
@@ -165,13 +166,13 @@
         } else
         {
             self.firebaseLogoutButton = [[DiscogsButton alloc] init];
-            [self.firebaseLogoutButton setTitle:@"LOGOUT" forState:UIControlStateNormal];
+            [self.firebaseLogoutButton setTitle:@"Logout" forState:UIControlStateNormal];
             [self.view addSubview:self.firebaseLogoutButton];
             [self.arrayOfButtons addObject:self.firebaseLogoutButton];
         }
         
         self.discogsLoginButton = [[DiscogsButton alloc] init];
-        [self.discogsLoginButton setTitle:@"LINK DISCOGS ACCOUNT" forState:UIControlStateNormal];
+        [self.discogsLoginButton setTitle:@"Link Discogs account" forState:UIControlStateNormal];
         [self.view addSubview:self.discogsLoginButton];
         [self.arrayOfButtons addObject:self.discogsLoginButton];
         
@@ -179,10 +180,14 @@
     } else  //USER IS NOT LOGGED IN
     {
         self.firebaseLoginButton = [[DiscogsButton alloc] init];
-        [self.firebaseLoginButton setTitle:@"LOGIN" forState:UIControlStateNormal];
+        [self.firebaseLoginButton setTitle:@"Login" forState:UIControlStateNormal];
         [self.view addSubview:self.firebaseLoginButton];
         [self.arrayOfButtons addObject:self.firebaseLoginButton];
         
+        self.createFirebaseAccount = [[DiscogsButton alloc] init];
+        [self.createFirebaseAccount setTitle:@"Create new account" forState:UIControlStateNormal];
+        [self.view addSubview:self.createFirebaseAccount];
+        [self.arrayOfButtons addObject:self.createFirebaseAccount];
         
         self.facebookLoginButton = [[FBSDKLoginButton alloc] init];
         self.facebookLoginButton.accessibilityIdentifier = @"facebookLogin";
@@ -191,10 +196,6 @@
         self.facebookLoginButton.delegate = self;
         [self.arrayOfButtons addObject:self.facebookLoginButton];
         
-        self.createFirebaseAccount = [[DiscogsButton alloc] init];
-        [self.createFirebaseAccount setTitle:@"CREATE ACCOUNT" forState:UIControlStateNormal];
-        [self.view addSubview:self.createFirebaseAccount];
-        [self.arrayOfButtons addObject:self.createFirebaseAccount];
     }
     
 
@@ -236,14 +237,23 @@
 {
     if([UserObject sharedUser].firebaseRoot.authData)
     {
-        self.discogsLoginButton.userInteractionEnabled = YES;
-        self.discogsLoginButton.enabled = YES;
-        [self.discogsLoginButton setTitle:@"LINK DISCOGS ACCOUNT" forState:UIControlStateNormal];
+        if([UserObject sharedUser].discogsTokenSecret)
+        {
+            self.discogsLoginButton.userInteractionEnabled = NO;
+            self.discogsLoginButton.enabled = NO;
+            [self.discogsLoginButton setTitle:@"Discogs linked already" forState:UIControlStateNormal];
+        } else
+        {
+            self.discogsLoginButton.userInteractionEnabled = YES;
+            self.discogsLoginButton.enabled = YES;
+            [self.discogsLoginButton setTitle:@"Link Discogs account" forState:UIControlStateNormal];
+        }
+        
     } else
     {
         self.discogsLoginButton.userInteractionEnabled = NO;
         self.discogsLoginButton.enabled = NO;
-        [self.discogsLoginButton setTitle:@"MUST LOGIN TO LINK DISCOGS" forState:UIControlStateNormal];
+        [self.discogsLoginButton setTitle:@"Must login to link Discogs" forState:UIControlStateNormal];
     }
 }
 
@@ -315,27 +325,26 @@
         NSURL *responseURL = [NSURL URLWithString:responseString]; // CHANGED TO NSURL
         NSURLComponents *urlComps = [NSURLComponents componentsWithURL:responseURL resolvingAgainstBaseURL:nil];
         NSArray *urlParts = urlComps.queryItems;
-        
         for (NSURLQueryItem *queryItem in urlParts) {
             if([queryItem.name isEqualToString:@"oauth_token_secret"])
             {
-                [UserObject sharedUser].discogsTokenSecret = queryItem.value;
+                [UserObject sharedUser].prelimDiscogsTokenSecret = queryItem.value;
                 NSLog(@"OAuth Prelim Secret %@",queryItem.value);
             } else if ([queryItem.name isEqualToString:@"oauth_token"])
             {
-                [UserObject sharedUser].discogsRequestToken = queryItem.value;
+                [UserObject sharedUser].prelimDiscogsRequestToken = queryItem.value;
+                
                 NSLog(@"OAuth Prelim Token %@",queryItem.value);
             }
         }
-        NSString *authorizeStringURL = [NSString stringWithFormat:@"https://discogs.com/oauth/authorize?oauth_token=%@",[UserObject sharedUser].discogsRequestToken];
+        NSString *authorizeStringURL = [NSString stringWithFormat:@"https://discogs.com/oauth/authorize?oauth_token=%@",[UserObject sharedUser].prelimDiscogsRequestToken];
         NSURL *authorizeURL = [NSURL URLWithString:authorizeStringURL];
         [[UIApplication sharedApplication] openURL:authorizeURL];
+        [self viewDidAppear:YES];
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@", error);
     }];
-    
-    
     
     
 }
@@ -401,22 +410,26 @@
 
 -(void)firebaseLoginClicked
 {
-    [self loginToFirebase:self.emailAddressField.text password:self.passwordField.text];
+    [self loginToFirebase:self.emailAddressField.text password:self.passwordField.text withCompletion:^{
+        //
+    }];
 }
 
--(void)loginToFirebase:(NSString *)username password:(NSString *)password
+-(void)loginToFirebase:(NSString *)username password:(NSString *)password withCompletion:(void (^)())completionBlock
 {
     [[UserObject sharedUser].firebaseRoot authUser:username password:password withCompletionBlock:^(NSError *error, FAuthData *authData) {
         if (error) {
             NSLog(@"error %@",error);
-            
-            [self displayeErrorAlert:error.localizedDescription title:@"Error"];
+            NSString *errorString = error.localizedDescription;
+            NSRange range = [errorString rangeOfString:@") "];
+            [self displayErrorAlert:[errorString substringFromIndex:range.length + range.location] title:@"Error"];
             
         } else {
             // user is logged in, check authData for data
             [self discogsLoginButtonAlive];
             [FBSDKAccessToken setCurrentAccessToken:nil];
             [self viewDidAppear:YES];
+            completionBlock();
         }
     }];
 }
@@ -441,14 +454,11 @@
 - (IBAction)googleLoginPressed:(id)sender
 {
     
-    
-    
 }
 
 
 - (IBAction)discogsLoginPressed:(id)sender
 {
-    
     
     
 }
@@ -457,14 +467,24 @@
 {
     
     
-    
 }
 
 #pragma mark - account creation
 
 -(void)createAccountResult:(NSDictionary *)result
 {
-    [self loginToFirebase:result[@"email"] password:result[@"password"]];
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    spinner.center = CGPointMake(160, 240);
+    spinner.tag = 12;
+    [self.view addSubview:spinner];
+    [spinner startAnimating];
+    [self loginToFirebase:result[@"email"] password:result[@"password"] withCompletion:^{
+        [[[[UserObject sharedUser].firebaseRoot childByAppendingPath:@"users"]
+          childByAppendingPath:result[@"provider"]] setValue:result];
+        [spinner removeFromSuperview];
+    }];
+    
+    
 }
 
 #pragma mark - remove discogs from keychain
@@ -494,8 +514,8 @@
 
 #pragma mark - display alert
 
--(void)displayeErrorAlert:(NSString *)body
-                    title:(NSString *)title
+-(void)displayErrorAlert:(NSString *)body
+                   title:(NSString *)title
 {
     UIAlertController *alertController = [UIAlertController
                                           alertControllerWithTitle:title

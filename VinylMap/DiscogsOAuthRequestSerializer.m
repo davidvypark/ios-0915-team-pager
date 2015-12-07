@@ -49,8 +49,8 @@
     
     [request signRequestWithClientIdentifier:DISCOGS_CONSUMER_KEY
                                       secret:DISCOGS_CONSUMER_SECRET
-                             tokenIdentifier:[UserObject sharedUser].discogsRequestToken
-                                      secret:[UserObject sharedUser].discogsTokenSecret
+                             tokenIdentifier:[UserObject sharedUser].prelimDiscogsRequestToken
+                                      secret:[UserObject sharedUser].prelimDiscogsTokenSecret
                                     verifier:[UserObject sharedUser].discogsOAuthVerifier
                                  usingMethod:OAuthPlaintextSignatureMethod];
 }

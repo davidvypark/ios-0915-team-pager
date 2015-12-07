@@ -20,9 +20,13 @@
 @property (nonatomic, strong) Firebase *firebaseTestFolder;
 //@property (nonatomic, strong) FAuthData *firebaseAuthData;
 
-
+//final results
 @property (nonatomic, strong) NSString *discogsTokenSecret;
 @property (nonatomic, strong) NSString *discogsRequestToken;
+
+//first part of OAUTH1
+@property (nonatomic, strong) NSString *prelimDiscogsTokenSecret;
+@property (nonatomic, strong) NSString *prelimDiscogsRequestToken;
 @property (nonatomic, strong) NSString *discogsOAuthVerifier;
 
 + (instancetype)sharedUser;

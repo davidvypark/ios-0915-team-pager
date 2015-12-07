@@ -20,6 +20,7 @@
 #import <AFOAuth2Manager.h>
 #import <SSKeychain.h>
 #import <SSKeychainQuery.h>
+#import "DiscogsAPI.h"
 
 @interface AppDelegate  () <GIDSignInDelegate>
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
@@ -35,31 +36,11 @@
     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions]; // THIS WAKES UP THE FACEBOOK DELEGATES
     [UserObject sharedUser].facebookUserID = [FBSDKAccessToken currentAccessToken].userID;
     [self setUpFirebase];
-    [self pullDiscogsTokenSecret];
-    
+    [DiscogsAPI pullDiscogsTokenSecret];
     
     return YES;
 }
 
-
--(void)pullDiscogsTokenSecret
-{
-    NSError *error;
-    NSArray *accounts = [SSKeychain accountsForService:DISCOGS_KEYCHAIN error:&error];
-    NSDictionary *firstAccount = accounts[0];
-    if(error)
-    {
-        NSLog(@"%@",error);
-    } else
-    {
-        [UserObject sharedUser].discogsRequestToken = firstAccount[@"acct"];
-        [UserObject sharedUser].discogsTokenSecret = [SSKeychain passwordForService:DISCOGS_KEYCHAIN account:[UserObject sharedUser].discogsRequestToken error:&error];
-        if(error)
-        {
-            NSLog(@"%@",error);
-        }
-    }
-}
 
 
 -(void)setUpFirebase
@@ -148,22 +129,10 @@
 {
     
     NSString *stringURL = @"https://api.discogs.com/oauth/access_token";
-    NSString *timeInterval = [NSString stringWithFormat:@"%ld", [@([[NSDate date] timeIntervalSince1970]) integerValue]];
-    NSDictionary *params = @{@"oauth_consumer_key" : DISCOGS_CONSUMER_KEY,
-                             @"oauth_signature" : [NSString stringWithFormat:@"%@&",DISCOGS_CONSUMER_SECRET],
-                             @"oauth_signature_method":@"PLAINTEXT",
-                             @"oauth_timestamp" : timeInterval,
-                             @"oauth_nonce" : @"jThArMF",
-                             @"oauth_verifier" : [UserObject sharedUser].discogsOAuthVerifier,
-                             @"oauth_token" : [UserObject sharedUser].discogsRequestToken,
-                             @"User-Agent" : @"uniqueVinylMaps",
-                             @"oauth_version" : @"1.0",
-                             @"oauth_callback" : @"vinyl-discogs-beeper://"
-                             };
     
     self.manager = [AFHTTPSessionManager manager];
     
-    DiscogsOAuthRequestSerializer *reqSerializer = [DiscogsOAuthRequestSerializer serializer];
+    DiscogsOAuthRequestSerializer *reqSerializer = [DiscogsOAuthRequestSerializer serializer]; //PARAMETERS ARE IN REQUEST SERIALIZER
     self.manager.requestSerializer = reqSerializer;
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     self.manager.responseSerializer.acceptableContentTypes = [self.manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
