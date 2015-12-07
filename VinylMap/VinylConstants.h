@@ -10,6 +10,7 @@
 
 extern NSString *const DISCOGS_CONSUMER_KEY;
 extern NSString *const DISCOGS_CONSUMER_SECRET;
+extern NSString *const DISCOGS_KEYCHAIN;
 
 extern NSString *const DISCOGS_USERNAME;
 extern NSString *const DISCOGS_PASSWORD;

@@ -18,6 +18,8 @@
 #import <KDURLRequestSerialization+OAuth.h>
 #import "DiscogsOAuthRequestSerializer.h"
 #import <AFOAuth2Manager.h>
+#import <SSKeychain.h>
+#import <SSKeychainQuery.h>
 
 @interface AppDelegate  () <GIDSignInDelegate>
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
@@ -33,11 +35,31 @@
     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions]; // THIS WAKES UP THE FACEBOOK DELEGATES
     [UserObject sharedUser].facebookUserID = [FBSDKAccessToken currentAccessToken].userID;
     [self setUpFirebase];
+    [self pullDiscogsTokenSecret];
     
     
     return YES;
 }
 
+
+-(void)pullDiscogsTokenSecret
+{
+    NSError *error;
+    NSArray *accounts = [SSKeychain accountsForService:DISCOGS_KEYCHAIN error:&error];
+    NSDictionary *firstAccount = accounts[0];
+    if(error)
+    {
+        NSLog(@"%@",error);
+    } else
+    {
+        [UserObject sharedUser].discogsRequestToken = firstAccount[@"acct"];
+        [UserObject sharedUser].discogsTokenSecret = [SSKeychain passwordForService:DISCOGS_KEYCHAIN account:[UserObject sharedUser].discogsRequestToken error:&error];
+        if(error)
+        {
+            NSLog(@"%@",error);
+        }
+    }
+}
 
 
 -(void)setUpFirebase
@@ -53,11 +75,7 @@
     [[UserObject sharedUser].firebaseRoot observeAuthEventWithBlock:^(FAuthData *authData) {
         if(authData)
         {
-            NSLog(@"%@",authData); //AUTHDATA COMPLETE
-            NSLog(@"%@",[UserObject sharedUser].firebaseRoot.authData);
-//            NSDictionary *testDict = @{@"YES":@"YES"}; // USER SHOULD NOT BE ABLE TO WRITE TO OTHER USER DIRECTORIES OR READ THIS
-//            [[[[UserObject sharedUser].firebaseRoot childByAppendingPath:@"users"]
-//              childByAppendingPath:[UserObject sharedUser].firebaseAuthData.uid] setValue:testDict];
+            NSLog(@"%@",[UserObject sharedUser].firebaseRoot.authData); //AUTHDATA COMPLETE
             
         } else{
             __block NSString *errorMessage = @"User just logged out";
@@ -169,7 +187,14 @@
             }
         }
         //STORE IN KEYCHAIN
-        
+        NSError *error;
+        [SSKeychain setPassword:[UserObject sharedUser].discogsTokenSecret
+                     forService:DISCOGS_KEYCHAIN
+                        account:[UserObject sharedUser].discogsRequestToken error:&error];
+        if(error)
+        {
+            NSLog(@"%@",error);
+        }
         
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {

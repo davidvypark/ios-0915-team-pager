@@ -43,8 +43,6 @@
     [self setupLogoImage];
     [self setupTextFields];
     [self setupButtons];
-    
-    
 }
 
 
@@ -56,8 +54,8 @@
     [self.view addSubview:self.logoImage];
     [self.logoImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
-        make.top.equalTo(self.view).offset(self.textSize);
-        make.height.and.width.equalTo(@(self.textSize * 3));
+        make.top.equalTo(self.mas_topLayoutGuideBottom).offset(self.textSize);
+        make.height.and.width.equalTo(@(self.view.frame.size.width / 3));
     }];
 }
 
