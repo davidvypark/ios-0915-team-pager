@@ -33,6 +33,7 @@
 		968C48131C10DC120070B76C /* AccountCreationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 968C48111C10DC120070B76C /* AccountCreationViewController.m */; };
 		968C481A1C10F1C90070B76C /* DiscogsButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 968C48191C10F1C90070B76C /* DiscogsButton.m */; };
 		968C481D1C11FE0C0070B76C /* UIColor+ChangeIt.m in Sources */ = {isa = PBXBuildFile; fileRef = 968C481C1C11FE0C0070B76C /* UIColor+ChangeIt.m */; };
+		968F376F1C15E72F00887277 /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 968F376E1C15E72F00887277 /* KeychainItemWrapper.m */; };
 		969BDB931C0CA56C00B0293E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 969BDB921C0CA56C00B0293E /* Default-568h@2x.png */; };
 		96A90FDB1C0D0568003C7394 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96A90FDA1C0D0568003C7394 /* GoogleService-Info.plist */; };
 		96AF90991BFCE64B00BCFC96 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96AF90981BFCE64B00BCFC96 /* Main.storyboard */; };
@@ -97,6 +98,8 @@
 		968C48191C10F1C90070B76C /* DiscogsButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscogsButton.m; sourceTree = "<group>"; };
 		968C481B1C11FE0C0070B76C /* UIColor+ChangeIt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ChangeIt.h"; sourceTree = "<group>"; };
 		968C481C1C11FE0C0070B76C /* UIColor+ChangeIt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ChangeIt.m"; sourceTree = "<group>"; };
+		968F376D1C15E72F00887277 /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
+		968F376E1C15E72F00887277 /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
 		969BDB921C0CA56C00B0293E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		96A90FDA1C0D0568003C7394 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		96AF908F1BFCE1DA00BCFC96 /* VinylConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VinylConstants.h; sourceTree = "<group>"; };
@@ -260,6 +263,8 @@
 				965B735A1C0E4AB200568BC9 /* DiscogsOAuthRequestSerializer.m */,
 				9653335D1BFE5B0F00BB4F7A /* UserObject.h */,
 				9653335E1BFE5B0F00BB4F7A /* UserObject.m */,
+				968F376D1C15E72F00887277 /* KeychainItemWrapper.h */,
+				968F376E1C15E72F00887277 /* KeychainItemWrapper.m */,
 			);
 			name = "Login Files";
 			sourceTree = "<group>";
@@ -438,6 +443,7 @@
 				2B9C06301C0E336900060A19 /* MainContentViewController.m in Sources */,
 				2B9C062A1C0E01C500060A19 /* AppViewController.m in Sources */,
 				2B6016F51BFCC978003DB81A /* AppDelegate.m in Sources */,
+				968F376F1C15E72F00887277 /* KeychainItemWrapper.m in Sources */,
 				96AF909F1BFCEA1D00BCFC96 /* BarcodeViewController.m in Sources */,
 				BF61240D1C04FA7A00B045D6 /* AddViewController.m in Sources */,
 				2BF0EB3D1BFE7AA600EA03B1 /* AlbumsCollectionViewController.m in Sources */,

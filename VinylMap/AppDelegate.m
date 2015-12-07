@@ -17,6 +17,7 @@
 #import <AFNetworking.h>
 #import <KDURLRequestSerialization+OAuth.h>
 #import "DiscogsOAuthRequestSerializer.h"
+#import <AFOAuth2Manager.h>
 
 @interface AppDelegate  () <GIDSignInDelegate>
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
@@ -54,6 +55,7 @@
         {
             NSLog(@"%@",authData); //AUTHDATA COMPLETE
             [UserObject sharedUser].firebaseAuthData = authData;
+            
         } else{
             __block NSString *errorMessage = @"User just logged out";
             static dispatch_once_t onceToken;
