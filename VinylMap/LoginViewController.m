@@ -33,9 +33,12 @@
 @property (nonatomic, strong) DiscogsButton *firebaseLogoutButton;
 @property (nonatomic, strong) DiscogsButton *discogsLoginButton;
 @property (nonatomic, strong) DiscogsButton *createFirebaseAccount;
+
+
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
-@property (nonatomic, strong) FirebaseLoginViewController *firebaseLoginVC;
 @property (nonatomic, strong) AccountCreationViewController *createAccountVC;
+
+@property (nonatomic, strong) UITextView *textView;
 
 @end
 
@@ -48,13 +51,28 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setUpButtons];
+}
 
-    
-    
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self discogsLoginButtonAlive];
+    [self showLoginStatus];
 }
 
 
 #pragma mark - set up buttons
+
+-(void)showLoginStatus
+{
+    self.textView = [[UITextView alloc] init];
+    [self.view addSubview:self.textView];
+    [self.textView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.and.width.equalTo(self.view).offset(80);
+        make.height.equalTo(@(40));
+    }];
+    self.textView.text = [UserObject sharedUser].firebaseRoot.authData.uid;
+}
+
 
 -(void)setUpButtons
 {
@@ -70,26 +88,23 @@
     [self.view addSubview:self.dismissViewControllerButton];
     
     self.discogsLoginButton = [[DiscogsButton alloc] init];
-    [self.discogsLoginButton setTitle:@"DISCOGS LOGIN" forState:UIControlStateNormal];
+    [self.discogsLoginButton setTitle:@"LINK DISCOGS ACCOUNT" forState:UIControlStateNormal];
     [self.view addSubview:self.discogsLoginButton];
-    
-    
-    self.firebaseLogoutButton = [[DiscogsButton alloc] init];
-    [self.firebaseLogoutButton setTitle:@"FIREBASE LOGOUT" forState:UIControlStateNormal];
-    [self.view addSubview:self.firebaseLogoutButton];
-    
     
     self.firebaseLoginButton = [[DiscogsButton alloc] init];
     [self.firebaseLoginButton setTitle:@"FIREBASE LOGIN" forState:UIControlStateNormal];
     [self.view addSubview:self.firebaseLoginButton];
     
+    self.firebaseLogoutButton = [[DiscogsButton alloc] init];
+    [self.firebaseLogoutButton setTitle:@"FIREBASE LOGOUT" forState:UIControlStateNormal];
+    [self.view addSubview:self.firebaseLogoutButton];
     
     self.createFirebaseAccount = [[DiscogsButton alloc] init];
     [self.createFirebaseAccount setTitle:@"CREATE ACCOUNT" forState:UIControlStateNormal];
     [self.view addSubview:self.createFirebaseAccount];
     
     
-    NSArray *arrayOfButtons = @[self.dismissViewControllerButton, self.firebaseLoginButton, self.firebaseLogoutButton, self.discogsLoginButton, self.createFirebaseAccount, self.facebookLoginButton];
+    NSArray *arrayOfButtons = @[self.discogsLoginButton, self.firebaseLogoutButton, self.firebaseLoginButton, self.createFirebaseAccount, self.facebookLoginButton];
     DiscogsButton *previousButton;
     for (DiscogsButton *button in arrayOfButtons) {
         [button addTarget:self
@@ -118,6 +133,23 @@
         
         previousButton = button;
     }
+    
+}
+
+-(void)discogsLoginButtonAlive
+{
+    if([UserObject sharedUser].firebaseRoot.authData)
+    {
+        self.discogsLoginButton.userInteractionEnabled = YES;
+        self.discogsLoginButton.enabled = YES;
+        [self.discogsLoginButton setTitle:@"LINK DISCOGS ACCOUNT" forState:UIControlStateNormal];
+    } else
+    {
+        self.discogsLoginButton.userInteractionEnabled = NO;
+        self.discogsLoginButton.enabled = NO;
+        [self.discogsLoginButton setTitle:@"MUST LOGIN TO LINK DISCOGS" forState:UIControlStateNormal];
+    }
+    
     
 }
 
@@ -229,13 +261,38 @@
     NSString *tokenString = result.token.tokenString;
     NSLog(@"userID: %@ \n token: %@ \n permissions: %@ \n declined permissions: %@ \n",userID,tokenString,grantedPermissions,declinedPermissions);
     [UserObject sharedUser].facebookUserID = [FBSDKAccessToken currentAccessToken].userID;
+    [UserObject sharedUser].facebookToken = result.token.tokenString;
+    
+    [[UserObject sharedUser].firebaseRoot authWithOAuthProvider:@"facebook" token:result.token.tokenString withCompletionBlock:^(NSError *error, FAuthData *authData) {
+        if(error)
+        {
+            NSLog(@"%@",error);
+        } else
+        {
+            NSLog(@"Facebook Login Complete"); //AUTHDATA COMPLETE
+            NSDictionary *userProfile = authData.providerData[@"cachedUserProfile"];
+            NSMutableDictionary *facebookUser = [@{
+                                              @"provider": authData.provider,
+                                              @"email" : authData.providerData[@"email"],
+                                              @"displayName" : authData.providerData[@"displayName"],
+                                              @"firstName" : userProfile[@"first_name"],
+                                              @"lastName" : userProfile[@"last_name"],
+                                              @"profileImageURL": authData.providerData[@"profileImageURL"]
+                                              } mutableCopy];
+            
+            // Create a child path with a key set to the uid underneath the "users" node
+            [[[[UserObject sharedUser].firebaseRoot childByAppendingPath:@"users"]
+              childByAppendingPath:authData.uid] setValue:facebookUser];
+            [self discogsLoginButtonAlive];
+        }
+    }];
     
 }
 
 
 -(void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton
 {
-    
+    [self discogsLoginButtonAlive];
 }
 
 - (BOOL)loginButtonWillLogin:(FBSDKLoginButton *)loginButton
@@ -304,8 +361,7 @@
             // user is logged in, check authData for data
 //            NSData *firebaseAuth = [NSKeyedArchiver archivedDataWithRootObject:authData];
 //            NSMutableDictionary *firebaseDictionary = [@{@"authData": authData} mutableCopy];
-            
-            NSLog(@"logged in successfully");
+            [self discogsLoginButtonAlive];
         }
     }];
 }
@@ -314,6 +370,9 @@
 -(void)logoutOfFirebase
 {
     [[UserObject sharedUser].firebaseRoot unauth];
+    [self discogsLoginButtonAlive];
+    [FBSDKAccessToken setCurrentAccessToken:nil];
+    
 }
 
 

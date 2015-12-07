@@ -202,7 +202,19 @@
             
             switch(error.code) {
                 case FAuthenticationErrorEmailTaken:
-                    [self displayeErrorAlert:@"Account already active taken" title:@"Error"];
+                    [self displayeErrorAlert:@"The specified email address is already in use" title:@"Error"];
+                    break;
+                case FAuthenticationErrorInvalidEmail:
+                    [self displayeErrorAlert:@"Invalid email" title:@"Error"];
+                    break;
+                case FAuthenticationErrorInvalidPassword:
+                    [self displayeErrorAlert:@"Invalid password" title:@"Error"];
+                    break;
+                case FAuthenticationErrorNetworkError:
+                    [self displayeErrorAlert:@"Network error" title:@"Error"];
+                    break;
+                case FAuthenticationErrorInvalidCredentials:
+                    [self displayeErrorAlert:@"Invalid credentials" title:@"Error"];
                     break;
                 default:
                     break;
@@ -218,6 +230,7 @@
             // provided by user login text fields
             NSMutableDictionary *newUser = [@{
                                       @"provider": result[@"uid"],
+                                      @"password": self.passwordField.text,
                                       @"email" : self.emailAddressField.text,
                                       @"displayName" : self.displayName.text,
                                       @"firstName" : self.firstName.text,
@@ -227,7 +240,7 @@
             // Create a child path with a key set to the uid underneath the "users" node
             [[[[UserObject sharedUser].firebaseRoot childByAppendingPath:@"users"]
               childByAppendingPath:result[@"uid"]] setValue:newUser];
-            [newUser setObject:self.passwordField.text forKeyedSubscript:@"password"];
+//            [newUser setObject:self.passwordField.text forKeyedSubscript:@"password"];
             [self dismissViewControllerAnimated:YES completion:^{
                [self.delegate createAccountResult:[NSDictionary dictionaryWithDictionary:newUser]];
             }];
@@ -247,7 +260,7 @@
     bool emailOkay = [self validateEmail:self.emailAddressField.text];
     bool passwordsEqual = [self.passwordField.text isEqualToString:self.confirmPassword.text];
     bool passwordOkay = 0;
-    bool displayNameOkay = self.displayName.text.length > 3;
+    bool displayNameOkay = self.displayName.text.length >= 3;
     
     if(passwordsEqual)
     {
@@ -276,7 +289,7 @@
     }
     if (!displayNameOkay)
     {
-        [responseArray addObject:@"Display name be 4 or more characters"];
+        [responseArray addObject:@"Display name must be 3 or more characters"];
     }
     if (!passwordsEqual)
     {

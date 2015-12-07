@@ -95,45 +95,6 @@
                     <view key="view" contentMode="scaleToFill" id="yVC-bS-S75">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DfL-Pv-HvT">
-                                <rect key="frame" x="35" y="82" width="104" height="30"/>
-                                <animations/>
-                                <state key="normal" title="GOOGLE PLUS"/>
-                                <connections>
-                                    <action selector="googleLoginPressed:" destination="LZT-Gn-6Fh" eventType="touchUpInside" id="aBZ-g6-P0Z"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cqF-lg-F9i">
-                                <rect key="frame" x="71" y="140" width="79" height="30"/>
-                                <animations/>
-                                <state key="normal" title="FACEBOOK"/>
-                                <connections>
-                                    <action selector="facebookLoginPressed:" destination="LZT-Gn-6Fh" eventType="touchUpInside" id="3EC-Si-Xo9"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C0u-cB-koa">
-                                <rect key="frame" x="77" y="214" width="66" height="30"/>
-                                <animations/>
-                                <state key="normal" title="DISCOGS"/>
-                                <connections>
-                                    <action selector="discogsLoginPressed:" destination="LZT-Gn-6Fh" eventType="touchUpInside" id="Upe-Nb-9Dh"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SUy-1W-Ymt">
-                                <rect key="frame" x="77" y="285" width="68" height="30"/>
-                                <animations/>
-                                <state key="normal" title="FIREBASE"/>
-                                <connections>
-                                    <action selector="otherLoginPressed:" destination="LZT-Gn-6Fh" eventType="touchUpInside" id="9sU-mz-OYP"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eId-sn-BxP">
-                                <rect key="frame" x="334" y="188" width="128" height="30"/>
-                                <animations/>
-                                <state key="normal" title="Button"/>
-                            </button>
-                        </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -183,7 +144,7 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iEW-Aj-buL" id="BON-d7-5Mb">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="69.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="69"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="q1O-TV-rpG">
@@ -290,7 +251,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ib7-sK-vx7">
-                                <rect key="frame" x="265" y="427.5" width="70" height="30"/>
+                                <rect key="frame" x="265" y="428" width="70" height="30"/>
+                                <animations/>
                                 <state key="normal" title="Sell/Trade"/>
                                 <connections>
                                     <segue destination="ITq-5N-15f" kind="presentation" id="2wN-N7-mzn"/>
@@ -298,33 +260,39 @@
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="84Y-GQ-xUK">
                                 <rect key="frame" x="273" y="489" width="54" height="30"/>
+                                <animations/>
                                 <state key="normal" title="Wishlist"/>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aOg-Dc-x5M">
                                 <rect key="frame" x="150" y="89" width="300" height="300"/>
+                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="Cep-GC-ccq"/>
                                     <constraint firstAttribute="height" constant="300" id="I0B-rm-NSh"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="752" text="Album Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Twg-cF-16p">
-                                <rect key="frame" x="251" y="399" width="98.5" height="20.5"/>
+                                <rect key="frame" x="251" y="399" width="99" height="21"/>
+                                <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r0b-0Y-cgS">
                                 <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                <animations/>
                                 <state key="normal" title="✉"/>
                             </button>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Asking Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cu5-dh-2RC">
-                                <rect key="frame" x="252.5" y="460.5" width="95" height="20.5"/>
+                                <rect key="frame" x="253" y="461" width="95" height="20"/>
+                                <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Owner" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1KX-CS-bae">
-                                <rect key="frame" x="263" y="514" width="75.5" height="28.5"/>
+                                <rect key="frame" x="263" y="514" width="76" height="29"/>
+                                <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>

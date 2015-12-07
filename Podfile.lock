@@ -79,6 +79,7 @@ PODS:
     - GoogleSymbolUtilities (~> 1.0.0)
   - Masonry (0.6.3)
   - MTBBarcodeScanner (1.8.10)
+  - SSKeychain (1.2.3)
 
 DEPENDENCIES:
   - AFNetworking (= 2.2.4)
@@ -95,6 +96,7 @@ DEPENDENCIES:
   - Google/SignIn
   - Masonry
   - MTBBarcodeScanner
+  - SSKeychain
 
 SPEC CHECKSUMS:
   AFNetworking: caca0799b310f0c3bf1fc1af45145fc96972bcab
@@ -118,5 +120,6 @@ SPEC CHECKSUMS:
   GoogleUtilities: 8ed9134debe11719097881711464752900668f10
   Masonry: ff105a956abcd19a618b2028b121cb638d7a8e2f
   MTBBarcodeScanner: 20bdb750b6f7ef34d7fdf6bf7831a69b45a3d08f
+  SSKeychain: 3f42991739c6c60a9cf1bbd4dff6c0d3694bcf3d
 
 COCOAPODS: 0.39.0

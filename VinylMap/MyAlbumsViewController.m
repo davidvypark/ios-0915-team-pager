@@ -30,11 +30,9 @@
     [self.firebaseRef observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
         [self.albums addObject:snapshot.value];
         [self.myCollection reloadData];
-        NSLog(@"%@ %@", snapshot.key, snapshot.value);
     }];
     [self.firebaseRef observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
         [self.myCollection reloadData];
-        NSLog(@"%@ %@", snapshot.key, snapshot.value);
     }];
 }
 
