@@ -10,8 +10,9 @@
 #import "AlbumCollectionViewCell.h"
 #import <UIKit+AFNetworking.h>
 #import "AlbumDetailsViewController.h"
+#import "UserObject.h"
 
-@interface MyAlbumsViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface MyAlbumsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UITabBarControllerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollection;
 @property (nonatomic, strong) NSMutableArray *albums;
 
@@ -21,11 +22,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UITabBarController *tabBarController = (UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController ;
+    
+    [tabBarController setDelegate:self];
 //    [self.myCollection registerNib:[UINib nibWithNibName:@"CustomAlbumCell" bundle:[NSBundle mainBundle]]
 //        forCellWithReuseIdentifier:@"albumCell"];
     self.myCollection.delegate = self;
     self.myCollection.dataSource = self;
-    self.firebaseRef = [[Firebase alloc] initWithUrl:@"https://amber-torch-8635.firebaseio.com/users/Cat/collection"];
+    NSString *currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
+    NSString *firebaseRefUrl = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection", currentUser];
+    self.firebaseRef = [[Firebase alloc] initWithUrl:firebaseRefUrl];
     self.albums = [[NSMutableArray alloc] init];
     [self.firebaseRef observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
         [self.albums addObject:snapshot.value];
@@ -34,6 +40,10 @@
     [self.firebaseRef observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
         [self.myCollection reloadData];
     }];
+}
+
+- (IBAction)buttontapped:(id)sender {
+    [self.myCollection reloadData];
 }
 
 - (void)didReceiveMemoryWarning {

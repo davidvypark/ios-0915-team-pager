@@ -14,6 +14,7 @@
 #import <UIKit+AFNetworking.h>
 #import <Firebase/Firebase.h>
 #import "DiscogsAPI.h"
+#import "UserObject.h"
 
 @interface SearchViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, BarCodeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *searchField;
@@ -38,7 +39,9 @@
     self.searchTableView.delegate = self;
     self.searchTableView.dataSource = self;
     self.albumResults = [NSMutableArray new];
-    self.firebase = [[Firebase alloc] initWithUrl:@"https://amber-torch-8635.firebaseio.com/users/Cat/collection"];
+    NSString *currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
+    NSString *firebaseRefUrl = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection", currentUser];
+    self.firebase = [[Firebase alloc] initWithUrl:firebaseRefUrl];
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField {

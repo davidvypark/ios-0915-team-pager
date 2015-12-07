@@ -42,7 +42,11 @@
 }
 
 
-
+-(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
+{
+    [viewController viewWillAppear:YES];
+    
+}
 -(void)setUpFirebase
 {
     [UserObject sharedUser].firebaseRoot = [[Firebase alloc] initWithUrl:FIREBASE_URL];
