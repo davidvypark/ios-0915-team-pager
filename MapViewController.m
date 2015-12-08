@@ -181,14 +181,14 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     AlbumDetailsViewController *detailsOfSaleItem = [storyboard instantiateViewControllerWithIdentifier:@"AlbumDetailsViewController"];
 
-    detailsOfSaleItem.albumAutoId = annView.annotationKey;
+    
     NSString *detailsOfSaleItemFirebaseURL = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection/%@", annView.owner, annView.annotationKey];
     Firebase *detailsOfSaleItemFirebase = [[Firebase alloc] initWithUrl:detailsOfSaleItemFirebaseURL];
     
     
     [detailsOfSaleItemFirebase observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
-        detailsOfSaleItem.albumName = snapshot.value[@"title"];
-        detailsOfSaleItem.resourceURL = snapshot.value[@"resource_url"];
+        detailsOfSaleItem.albumDict = snapshot.value;
+        detailsOfSaleItem.albumDict[@"ID"] = annView.annotationKey;
         detailsOfSaleItem.isBuyer = YES;
         detailsOfSaleItem.albumOwner = annView.owner;
         }];

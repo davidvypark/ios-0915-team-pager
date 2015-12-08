@@ -92,10 +92,7 @@
      AlbumDetailsViewController *destinationVC = segue.destinationViewController;
      NSIndexPath *indexPath = [self.myCollection indexPathForCell:sender];
      NSDictionary *album = self.albums[indexPath.row];
-     destinationVC.albumAutoId = album[@"ID"];
-     destinationVC.albumName = album[@"title"];
-     destinationVC.albumImageURL = album[@"imageURL"];
-     destinationVC.resourceURL = album[@"resource_url"];
+     destinationVC.albumDict = [album mutableCopy];
  }
 
 

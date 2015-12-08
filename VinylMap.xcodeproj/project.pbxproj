@@ -14,11 +14,9 @@
 		2B6016FD1BFCC978003DB81A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B6016FC1BFCC978003DB81A /* Assets.xcassets */; };
 		2B6017001BFCC978003DB81A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B6016FE1BFCC978003DB81A /* LaunchScreen.storyboard */; };
 		2B9C06241C0C900300060A19 /* AlbumCollectionDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9C06231C0C900300060A19 /* AlbumCollectionDataStore.m */; };
-		2BF0EB3D1BFE7AA600EA03B1 /* AlbumsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB3C1BFE7AA600EA03B1 /* AlbumsCollectionViewController.m */; };
 		2BF0EB401BFE813800EA03B1 /* AlbumCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB3F1BFE813800EA03B1 /* AlbumCollectionViewCell.m */; };
 		2BF0EB431BFE843A00EA03B1 /* AlbumTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB421BFE843A00EA03B1 /* AlbumTableViewCell.m */; };
 		2BF0EB461BFE847F00EA03B1 /* MyAlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB451BFE847F00EA03B1 /* MyAlbumsViewController.m */; };
-		2BF0EB491BFE84CC00EA03B1 /* AlbumsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB481BFE84CC00EA03B1 /* AlbumsTableViewController.m */; };
 		2BF0EB551BFF9D0700EA03B1 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 2BF0EB541BFF9D0700EA03B1 /* Images */; };
 		2BF0EB5A1C039EF800EA03B1 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB591C039EF800EA03B1 /* Album.m */; };
 		2BFEA0F91BFE2E9500C65717 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFEA0F81BFE2E9500C65717 /* SearchViewController.m */; };
@@ -57,16 +55,12 @@
 		2B6017011BFCC978003DB81A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2B9C06221C0C900300060A19 /* AlbumCollectionDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumCollectionDataStore.h; sourceTree = "<group>"; };
 		2B9C06231C0C900300060A19 /* AlbumCollectionDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumCollectionDataStore.m; sourceTree = "<group>"; };
-		2BF0EB3B1BFE7AA600EA03B1 /* AlbumsCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumsCollectionViewController.h; sourceTree = "<group>"; };
-		2BF0EB3C1BFE7AA600EA03B1 /* AlbumsCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumsCollectionViewController.m; sourceTree = "<group>"; };
 		2BF0EB3E1BFE813700EA03B1 /* AlbumCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumCollectionViewCell.h; sourceTree = "<group>"; };
 		2BF0EB3F1BFE813800EA03B1 /* AlbumCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumCollectionViewCell.m; sourceTree = "<group>"; };
 		2BF0EB411BFE843A00EA03B1 /* AlbumTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumTableViewCell.h; sourceTree = "<group>"; };
 		2BF0EB421BFE843A00EA03B1 /* AlbumTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumTableViewCell.m; sourceTree = "<group>"; };
 		2BF0EB441BFE847F00EA03B1 /* MyAlbumsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAlbumsViewController.h; sourceTree = "<group>"; };
 		2BF0EB451BFE847F00EA03B1 /* MyAlbumsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAlbumsViewController.m; sourceTree = "<group>"; };
-		2BF0EB471BFE84CC00EA03B1 /* AlbumsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumsTableViewController.h; sourceTree = "<group>"; };
-		2BF0EB481BFE84CC00EA03B1 /* AlbumsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumsTableViewController.m; sourceTree = "<group>"; };
 		2BF0EB541BFF9D0700EA03B1 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
 		2BF0EB581C039EF800EA03B1 /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
 		2BF0EB591C039EF800EA03B1 /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
@@ -204,12 +198,8 @@
 		2BF0EB571C0355FF00EA03B1 /* Album Collection/Wishlist */ = {
 			isa = PBXGroup;
 			children = (
-				2BF0EB3B1BFE7AA600EA03B1 /* AlbumsCollectionViewController.h */,
-				2BF0EB3C1BFE7AA600EA03B1 /* AlbumsCollectionViewController.m */,
 				BFC1BE4B1C0CF8AE003DF47F /* AlbumDetailsViewController.h */,
 				BFC1BE4C1C0CF8AF003DF47F /* AlbumDetailsViewController.m */,
-				2BF0EB471BFE84CC00EA03B1 /* AlbumsTableViewController.h */,
-				2BF0EB481BFE84CC00EA03B1 /* AlbumsTableViewController.m */,
 				2BF0EB3E1BFE813700EA03B1 /* AlbumCollectionViewCell.h */,
 				2BF0EB3F1BFE813800EA03B1 /* AlbumCollectionViewCell.m */,
 				2BF0EB411BFE843A00EA03B1 /* AlbumTableViewCell.h */,
@@ -424,8 +414,6 @@
 				2B6016F51BFCC978003DB81A /* AppDelegate.m in Sources */,
 				96AF909F1BFCEA1D00BCFC96 /* BarcodeViewController.m in Sources */,
 				BF61240D1C04FA7A00B045D6 /* AddViewController.m in Sources */,
-				2BF0EB3D1BFE7AA600EA03B1 /* AlbumsCollectionViewController.m in Sources */,
-				2BF0EB491BFE84CC00EA03B1 /* AlbumsTableViewController.m in Sources */,
 				2B9C06241C0C900300060A19 /* AlbumCollectionDataStore.m in Sources */,
 				2BF0EB431BFE843A00EA03B1 /* AlbumTableViewCell.m in Sources */,
 				2B6016F21BFCC978003DB81A /* main.m in Sources */,
