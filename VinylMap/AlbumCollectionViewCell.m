@@ -9,40 +9,20 @@
 #import "AlbumCollectionViewCell.h"
 
 @implementation AlbumCollectionViewCell
-//-(void)awakeFromNib {
-//    
-//    NSLog(@"Getting called?");
-//}
-//
-//-(instancetype)initWithCoder:(NSCoder *)aDecoder {
-//    
-//   self =  [super initWithCoder:aDecoder];
-//    
-//    if (self) {
-//        
-//        [[NSBundle mainBundle] loadNibNamed:@"CustomAlbumCell" owner:self options:nil];
-//    }
-//    
-//    return self;
-//    
-//    
-//    
-//    
-//}
-//
-//
-//-(instancetype)initWithFrame:(CGRect)frame {
-//    
-//    self = [super initWithFrame:frame];
-//    
-//    if (self) {
-//        
-//        [[NSBundle mainBundle] loadNibNamed:@"CustomAlbumCell" owner:self options:nil];
-//    }
-//    
-//    return self;
-//    
-//    
-//}
+
+-(instancetype)initWithFrame:(CGRect)frame {
+    
+    self = [super initWithFrame:frame];
+    
+    if (self) {
+        
+        self.layer.cornerRadius = 10;
+
+    }
+    
+    return self;
+    
+    
+}
 
 @end

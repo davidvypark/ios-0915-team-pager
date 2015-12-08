@@ -11,6 +11,8 @@
 @interface AlbumTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *albumView;
-@property (weak, nonatomic) IBOutlet UILabel *albumInfoLabel;
+@property (weak, nonatomic) IBOutlet UILabel *artistAndTitle;
+@property (weak, nonatomic) IBOutlet UILabel *recordLabel;
+@property (weak, nonatomic) IBOutlet UILabel *year;
 
 @end

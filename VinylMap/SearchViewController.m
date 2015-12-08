@@ -133,9 +133,11 @@
         releaseYear = result[@"year"];
     }
     
-    [albumInfo appendFormat:@"%@\n%@\n%@", result[@"title"], recordLabel, releaseYear];
+    cell.artistAndTitle.text = result[@"title"];
+    cell.recordLabel.text = recordLabel;
+    cell.year.text = releaseYear;
     
-    cell.albumInfoLabel.text = albumInfo;
+    //cell.albumInfoLabel.text = albumInfo;
     
     NSURL *albumArtURL = [NSURL URLWithString:result[@"thumb"]];
     [cell.albumView setImageWithURL:albumArtURL];
