@@ -22,6 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     UITabBarController *tabBarController = (UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController ;
     
     [tabBarController setDelegate:self];
@@ -29,6 +30,7 @@
     self.myCollection.dataSource = self;
     self.tabBarController.delegate = self;
     [self setUpUserCollection];
+    self.store = [AlbumCollectionDataStore sharedDataStore];
 }
 
 - (void)setUpUserCollection {
@@ -37,10 +39,16 @@
     self.firebaseRef = [[Firebase alloc] initWithUrl:firebaseRefUrl];
     self.albums = [[NSMutableArray alloc] init];
     [self.firebaseRef observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
+        
+        NSLog(@"eventTypeChildAdded");
+        
         [self.albums addObject:snapshot.value];
+        self.store.albums = self.albums;
         [self.myCollection reloadData];
     }];
     [self.firebaseRef observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        
+        NSLog(@"observeSingleEventOfType");
         [self.myCollection reloadData];
     }];
 }

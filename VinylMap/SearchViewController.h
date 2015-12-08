@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AlbumCollectionDataStore.h"
 
 @interface SearchViewController : UIViewController
 
+@property (nonatomic, strong) AlbumCollectionDataStore *store;
 
 @end

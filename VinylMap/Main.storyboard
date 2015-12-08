@@ -216,6 +216,7 @@
                                         </tableViewCellContentView>
                                         <animations/>
                                         <connections>
+                                            <outlet property="addButton" destination="lXF-lq-Xib" id="Yeo-92-z8C"/>
                                             <outlet property="albumView" destination="q1O-TV-rpG" id="x0k-tU-lJQ"/>
                                             <outlet property="artistAndTitle" destination="Wb5-Tp-hfx" id="IGN-R5-8Hy"/>
                                             <outlet property="recordLabel" destination="gOO-fD-B3o" id="ovf-kM-f9r"/>

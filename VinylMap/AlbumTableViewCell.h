@@ -14,5 +14,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *artistAndTitle;
 @property (weak, nonatomic) IBOutlet UILabel *recordLabel;
 @property (weak, nonatomic) IBOutlet UILabel *year;
+@property (weak, nonatomic) IBOutlet UIButton *addButton;
 
 @end
