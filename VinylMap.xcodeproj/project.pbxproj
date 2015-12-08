@@ -41,6 +41,7 @@
 		BF6124121C05092A00B045D6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF6124111C05092A00B045D6 /* MapKit.framework */; };
 		BFC1BE4A1C0ACC35003DF47F /* ChatMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC1BE491C0ACC35003DF47F /* ChatMessagesViewController.m */; };
 		BFC1BE4D1C0CF8AF003DF47F /* AlbumDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC1BE4C1C0CF8AF003DF47F /* AlbumDetailsViewController.m */; };
+		BFF86C0C1C16393900F5F962 /* ChatroomsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF86C0B1C16393900F5F962 /* ChatroomsTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -106,6 +107,8 @@
 		BFC1BE491C0ACC35003DF47F /* ChatMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessagesViewController.m; sourceTree = "<group>"; };
 		BFC1BE4B1C0CF8AE003DF47F /* AlbumDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumDetailsViewController.h; sourceTree = "<group>"; };
 		BFC1BE4C1C0CF8AF003DF47F /* AlbumDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumDetailsViewController.m; sourceTree = "<group>"; };
+		BFF86C0A1C16393900F5F962 /* ChatroomsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatroomsTableViewController.h; sourceTree = "<group>"; };
+		BFF86C0B1C16393900F5F962 /* ChatroomsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatroomsTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -271,6 +274,8 @@
 		BFC1BE471C0ACBF0003DF47F /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				BFF86C0A1C16393900F5F962 /* ChatroomsTableViewController.h */,
+				BFF86C0B1C16393900F5F962 /* ChatroomsTableViewController.m */,
 				BFC1BE481C0ACC35003DF47F /* ChatMessagesViewController.h */,
 				BFC1BE491C0ACC35003DF47F /* ChatMessagesViewController.m */,
 			);
@@ -432,6 +437,7 @@
 				BF61240F1C04FA7A00B045D6 /* VinylAnnotation.m in Sources */,
 				965B735B1C0E4AB200568BC9 /* DiscogsOAuthRequestSerializer.m in Sources */,
 				968C481A1C10F1C90070B76C /* DiscogsButton.m in Sources */,
+				BFF86C0C1C16393900F5F962 /* ChatroomsTableViewController.m in Sources */,
 				BFC1BE4A1C0ACC35003DF47F /* ChatMessagesViewController.m in Sources */,
 				BF61240E1C04FA7A00B045D6 /* MapViewController.m in Sources */,
 				2BFEA0F91BFE2E9500C65717 /* SearchViewController.m in Sources */,

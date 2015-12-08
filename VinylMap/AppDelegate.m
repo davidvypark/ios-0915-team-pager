@@ -18,6 +18,9 @@
 #import <KDURLRequestSerialization+OAuth.h>
 #import "DiscogsOAuthRequestSerializer.h"
 #import <AFOAuth2Manager.h>
+#import <SSKeychain.h>
+#import <SSKeychainQuery.h>
+#import "DiscogsAPI.h"
 
 @interface AppDelegate  () <GIDSignInDelegate>
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
@@ -33,7 +36,7 @@
     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions]; // THIS WAKES UP THE FACEBOOK DELEGATES
     [UserObject sharedUser].facebookUserID = [FBSDKAccessToken currentAccessToken].userID;
     [self setUpFirebase];
-    
+    [DiscogsAPI pullDiscogsTokenSecret];
     
     return YES;
 }
@@ -57,11 +60,7 @@
     [[UserObject sharedUser].firebaseRoot observeAuthEventWithBlock:^(FAuthData *authData) {
         if(authData)
         {
-            NSLog(@"%@",authData); //AUTHDATA COMPLETE
-            NSLog(@"%@",[UserObject sharedUser].firebaseRoot.authData);
-//            NSDictionary *testDict = @{@"YES":@"YES"}; // USER SHOULD NOT BE ABLE TO WRITE TO OTHER USER DIRECTORIES OR READ THIS
-//            [[[[UserObject sharedUser].firebaseRoot childByAppendingPath:@"users"]
-//              childByAppendingPath:[UserObject sharedUser].firebaseAuthData.uid] setValue:testDict];
+            NSLog(@"%@",[UserObject sharedUser].firebaseRoot.authData); //AUTHDATA COMPLETE
             
         } else{
             __block NSString *errorMessage = @"User just logged out";
@@ -134,22 +133,10 @@
 {
     
     NSString *stringURL = @"https://api.discogs.com/oauth/access_token";
-    NSString *timeInterval = [NSString stringWithFormat:@"%ld", [@([[NSDate date] timeIntervalSince1970]) integerValue]];
-    NSDictionary *params = @{@"oauth_consumer_key" : DISCOGS_CONSUMER_KEY,
-                             @"oauth_signature" : [NSString stringWithFormat:@"%@&",DISCOGS_CONSUMER_SECRET],
-                             @"oauth_signature_method":@"PLAINTEXT",
-                             @"oauth_timestamp" : timeInterval,
-                             @"oauth_nonce" : @"jThArMF",
-                             @"oauth_verifier" : [UserObject sharedUser].discogsOAuthVerifier,
-                             @"oauth_token" : [UserObject sharedUser].discogsRequestToken,
-                             @"User-Agent" : @"uniqueVinylMaps",
-                             @"oauth_version" : @"1.0",
-                             @"oauth_callback" : @"vinyl-discogs-beeper://"
-                             };
     
     self.manager = [AFHTTPSessionManager manager];
     
-    DiscogsOAuthRequestSerializer *reqSerializer = [DiscogsOAuthRequestSerializer serializer];
+    DiscogsOAuthRequestSerializer *reqSerializer = [DiscogsOAuthRequestSerializer serializer]; //PARAMETERS ARE IN REQUEST SERIALIZER
     self.manager.requestSerializer = reqSerializer;
     self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     self.manager.responseSerializer.acceptableContentTypes = [self.manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
@@ -173,7 +160,14 @@
             }
         }
         //STORE IN KEYCHAIN
-        
+        NSError *error;
+        [SSKeychain setPassword:[UserObject sharedUser].discogsTokenSecret
+                     forService:DISCOGS_KEYCHAIN
+                        account:[UserObject sharedUser].discogsRequestToken error:&error];
+        if(error)
+        {
+            NSLog(@"%@",error);
+        }
         
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {

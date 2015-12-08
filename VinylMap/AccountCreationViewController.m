@@ -43,8 +43,6 @@
     [self setupLogoImage];
     [self setupTextFields];
     [self setupButtons];
-    
-    
 }
 
 
@@ -56,8 +54,8 @@
     [self.view addSubview:self.logoImage];
     [self.logoImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
-        make.top.equalTo(self.view).offset(self.textSize);
-        make.height.and.width.equalTo(@(self.textSize * 3));
+        make.top.equalTo(self.mas_topLayoutGuideBottom).offset(self.textSize);
+        make.height.and.width.equalTo(@(self.view.frame.size.width / 3));
     }];
 }
 
@@ -182,7 +180,7 @@
             [responseArray removeObjectAtIndex:0];
             NSString *responseString = [responseArray componentsJoinedByString:@"\n"];
             NSLog(@"%@",responseString);
-            [self displayeErrorAlert:responseString title:@"Please fix errors"];
+            [self displayErrorAlert:responseString title:@"Please fix errors"];
             
         }
         
@@ -202,19 +200,19 @@
             
             switch(error.code) {
                 case FAuthenticationErrorEmailTaken:
-                    [self displayeErrorAlert:@"The specified email address is already in use" title:@"Error"];
+                    [self displayErrorAlert:@"The specified email address is already in use" title:@"Error"];
                     break;
                 case FAuthenticationErrorInvalidEmail:
-                    [self displayeErrorAlert:@"Invalid email" title:@"Error"];
+                    [self displayErrorAlert:@"Invalid email" title:@"Error"];
                     break;
                 case FAuthenticationErrorInvalidPassword:
-                    [self displayeErrorAlert:@"Invalid password" title:@"Error"];
+                    [self displayErrorAlert:@"Invalid password" title:@"Error"];
                     break;
                 case FAuthenticationErrorNetworkError:
-                    [self displayeErrorAlert:@"Network error" title:@"Error"];
+                    [self displayErrorAlert:@"Network error" title:@"Error"];
                     break;
                 case FAuthenticationErrorInvalidCredentials:
-                    [self displayeErrorAlert:@"Invalid credentials" title:@"Error"];
+                    [self displayErrorAlert:@"Invalid credentials" title:@"Error"];
                     break;
                 default:
                     break;
@@ -238,8 +236,7 @@
                                       } mutableCopy];
             
             // Create a child path with a key set to the uid underneath the "users" node
-            [[[[UserObject sharedUser].firebaseRoot childByAppendingPath:@"users"]
-              childByAppendingPath:result[@"uid"]] setValue:newUser];
+
 //            [newUser setObject:self.passwordField.text forKeyedSubscript:@"password"];
             [self dismissViewControllerAnimated:YES completion:^{
                [self.delegate createAccountResult:[NSDictionary dictionaryWithDictionary:newUser]];
@@ -304,7 +301,7 @@
     return responseArray;
 }
 
--(void)displayeErrorAlert:(NSString *)body title:(NSString *)title
+-(void)displayErrorAlert:(NSString *)body title:(NSString *)title
 {
     UIAlertController *alertController = [UIAlertController
                                           alertControllerWithTitle:title

@@ -11,6 +11,7 @@
 #import <UIKit+AFNetworking.h>
 #import "VinylConstants.h"
 #import <AFNetworking.h>
+#import "ChatMessagesViewController.h"
 
 
 @interface AlbumDetailsViewController ()
@@ -41,10 +42,10 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"Request failed with error %@", error);
     }];
-    
+
     
     self.albumNameLabel.text = self.albumName;
-    self.ownerLabel.text = self.albumOwner;
+    self.ownerLabel.text = self.albumOwnerDisplayName;
     self.askingPriceLabel.text = self.albumPrice;
     if (self.isBuyer) {
         self.sellTradeButton.hidden = YES;
@@ -66,10 +67,18 @@
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    AddViewController *destinationVC = segue.destinationViewController;
-    destinationVC.ID = self.albumAutoId;
-    destinationVC.albumName = self.albumNameLabel.text;
-    destinationVC.albumURL = self.albumImageURL;
+    if ([[segue identifier] isEqualToString:@"addToMap"]) {
+        AddViewController *destinationVC = segue.destinationViewController;
+        destinationVC.ID = self.albumAutoId;
+        destinationVC.albumName = self.albumNameLabel.text;
+        destinationVC.albumURL = self.albumImageURL;
+    }
+    
+    else {
+        ChatMessagesViewController *destinationVC = segue.destinationViewController;
+        destinationVC.userToMessage = self.albumOwner;
+        destinationVC.userToMessageDisplayName = self.albumOwnerDisplayName;
+    }
 }
 
 

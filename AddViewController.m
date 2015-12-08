@@ -12,7 +12,7 @@
 #import "VinylAnnotation.h"
 #import <UIKit+AFNetworking.h>
 #import <Mapkit/Mapkit.h>
-
+#import "UserObject.h"
 
 @interface AddViewController ()<MKMapViewDelegate, CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *addMapView;
@@ -41,7 +41,7 @@
     // Do any additional setup after loading the view.
     Firebase *geofireRef = [[Firebase alloc] initWithUrl:@"https://amber-torch-8635.firebaseio.com/geofire"];
     self.geoFire = [[GeoFire alloc] initWithFirebaseRef:geofireRef];
-    self.currentUser = @"Cat";
+    self.currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
     
     
 
