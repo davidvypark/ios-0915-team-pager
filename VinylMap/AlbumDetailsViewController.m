@@ -27,8 +27,8 @@
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
-    NSLog(@"%@", self.resourceURL);
-    NSString *resourceURL = [NSString stringWithFormat:@"%@?key=%@&secret=%@",  self.resourceURL, DISCOGS_CONSUMER_KEY, DISCOGS_CONSUMER_SECRET];
+    NSLog(@"%@", self.albumDict[@"resourceURL"]);
+    NSString *resourceURL = [NSString stringWithFormat:@"%@?key=%@&secret=%@",  self.albumDict[@"resourceURL"], DISCOGS_CONSUMER_KEY, DISCOGS_CONSUMER_SECRET];
     [manager GET:resourceURL parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
         NSDictionary *responseDictionary = (NSDictionary *)responseObject;
         NSArray *images = responseDictionary[@"images"];
@@ -44,7 +44,7 @@
     }];
 
     
-    self.albumNameLabel.text = self.albumName;
+    self.albumNameLabel.text = [NSString stringWithFormat:@"%@ - %@", self.albumDict[@"artist"], self.albumDict[@"title"]];
     self.ownerLabel.text = self.albumOwnerDisplayName;
     self.askingPriceLabel.text = self.albumPrice;
     if (self.isBuyer) {
@@ -69,9 +69,9 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"addToMap"]) {
         AddViewController *destinationVC = segue.destinationViewController;
-        destinationVC.ID = self.albumAutoId;
+        destinationVC.ID = self.albumDict[@"ID"];
         destinationVC.albumName = self.albumNameLabel.text;
-        destinationVC.albumURL = self.albumImageURL;
+        destinationVC.albumURL = self.albumDict[@"thumb"];
     }
     
     else {
