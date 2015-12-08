@@ -22,10 +22,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UITabBarController *tabBarController = (UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController ;
+    
+    [tabBarController setDelegate:self];
     self.myCollection.delegate = self;
     self.myCollection.dataSource = self;
     self.tabBarController.delegate = self;
     [self setUpUserCollection];
+    self.store = [AlbumCollectionDataStore sharedDataStore];
 }
 
 - (void)setUpUserCollection {
@@ -34,10 +39,16 @@
     self.firebaseRef = [[Firebase alloc] initWithUrl:firebaseRefUrl];
     self.albums = [[NSMutableArray alloc] init];
     [self.firebaseRef observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
+        
+        NSLog(@"eventTypeChildAdded");
+        
         [self.albums addObject:snapshot.value];
+        self.store.albums = self.albums;
         [self.myCollection reloadData];
     }];
     [self.firebaseRef observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        
+        NSLog(@"observeSingleEventOfType");
         [self.myCollection reloadData];
     }];
 }
@@ -62,18 +73,16 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     AlbumCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"albumCell" forIndexPath:indexPath];
-    srand48(time(0));
     [cell.albumLabel setText:self.albums[indexPath.row][@"title"]];
     [cell.artistLabel setText:self.albums[indexPath.row][@"artist"]];
     NSURL *albumArtURL = [NSURL URLWithString:self.albums[indexPath.row][@"imageURL"]];
 
     [cell.albumArtView setImageWithURL:albumArtURL];
-    cell.albumArtView.backgroundColor = [UIColor colorWithRed:drand48() green:drand48() blue:drand48() alpha:drand48()];
     return cell;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake(150, 200);
+    return CGSizeMake(160, 210);
 }
 
 

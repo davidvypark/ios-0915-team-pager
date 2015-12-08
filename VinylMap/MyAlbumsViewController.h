@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import <Firebase/Firebase.h>
+#import "AlbumCollectionDataStore.h"
 
 @interface MyAlbumsViewController : UIViewController
 
 @property (strong, nonatomic) Firebase *firebaseRef;
+@property (strong, nonatomic) AlbumCollectionDataStore *store;
+
 - (void)setUpUserCollection;
 
 @end

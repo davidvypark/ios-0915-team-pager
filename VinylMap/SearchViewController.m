@@ -15,6 +15,7 @@
 #import <Firebase/Firebase.h>
 #import "DiscogsAPI.h"
 #import "UserObject.h"
+#import "Album.h"
 
 @interface SearchViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, BarCodeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *searchField;
@@ -42,10 +43,7 @@
     NSString *currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
     NSString *firebaseRefUrl = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection", currentUser];
     self.firebase = [[Firebase alloc] initWithUrl:firebaseRefUrl];
-}
-
--(void)textFieldDidEndEditing:(UITextField *)textField {
-    
+    self.store = [AlbumCollectionDataStore sharedDataStore];
 }
 
 -(BOOL) textFieldShouldReturn:(UITextField *)textField {
@@ -57,15 +55,36 @@
     
     NSString *discogsURL = [NSString stringWithFormat:@"https://api.discogs.com/database/search?q=%@&type=title&key=%@&secret=%@", searchKeyword, DISCOGS_CONSUMER_KEY, DISCOGS_CONSUMER_SECRET];
     [manager GET:discogsURL parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
-        NSDictionary *responseDictionary = (NSDictionary *)responseObject;
-        NSArray *resultsArray = responseDictionary[@"results"];
-        [self.albumResults removeAllObjects];
-        for (NSDictionary *result in resultsArray) {
-            if ([result[@"format"] containsObject:@"Vinyl"]) {
-                [self.albumResults addObject:result];
+        
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            
+            NSDictionary *responseDictionary = (NSDictionary *)responseObject;
+            NSArray *resultsArray = responseDictionary[@"results"];
+            [self.albumResults removeAllObjects];
+            
+            
+            NSMutableArray *holdingTheCategoryNumbers = [NSMutableArray new];
+            for (NSDictionary *album in self.store.albums) {
+                NSString *categoryNumber = album[@"categoryNumber"];
+                [holdingTheCategoryNumbers addObject: categoryNumber];
             }
-        }
-        [self.searchTableView reloadData];
+            
+            for (NSDictionary *result in resultsArray) {
+                NSMutableDictionary *mutableResult = [result mutableCopy];
+                mutableResult[@"hasBeenAdded"] = @"NO";
+
+                if ([result[@"format"] containsObject:@"Vinyl"]) {
+                    NSString *categoryNumberOfResult = result[@"catno"];
+                    
+                    if ([holdingTheCategoryNumbers containsObject:categoryNumberOfResult]) {
+                        mutableResult[@"hasBeenAdded"] = @"YES";
+                    }
+                    [self.albumResults addObject:mutableResult];
+                }
+            }
+            [self.searchTableView reloadData];
+        }];
+
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"Request failed with error %@", error);
     }];
@@ -94,12 +113,24 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.albumResults.count;
 }
+
 - (IBAction)addButtonTapped:(UIButton *)sender {
     Firebase *album = [self.firebase childByAutoId];
     CGPoint pos = [sender convertPoint:CGPointZero toView:self.searchTableView];
     NSIndexPath *indexPath = [self.searchTableView indexPathForRowAtPoint:pos];
     NSDictionary *result = self.albumResults[indexPath.row];
-    [album setValue:@{@"title": result[@"title"], @"imageURL": result[@"thumb"], @"ID": album.key, @"resource_url": result[@"resource_url"]}];
+    Album *resultAlbum = [Album albumFromResultDictionary:result];
+    [album setValue:@{@"artist": resultAlbum.artist,
+                       @"title": resultAlbum.title,
+                     @"barcode": resultAlbum.barcode,
+                @"recordLabels": resultAlbum.recordLabels,
+                     @"country": resultAlbum.country,
+                 @"releaseYear": @(resultAlbum.releaseYear),
+              @"categoryNumber": resultAlbum.categoryNumber,
+                    @"imageURL": resultAlbum.thumbnailURL,
+                          @"ID": album.key,
+                 @"resourceURL": resultAlbum.resourceURL}];
+    //[self.searchTableView reloadData];
 }
 
 
@@ -108,7 +139,6 @@
     NSMutableString *albumInfo = [NSMutableString new];
     NSDictionary *result = self.albumResults[indexPath.row];
     NSArray *recordLabels = result[@"label"];
-    NSLog(@"the record label is a %@ with a value of %@", [result[@"label"] class], result[@"label"]);
 
     NSString *recordLabel;
     if (!recordLabels.firstObject) {
@@ -117,7 +147,6 @@
     else {
         recordLabel = recordLabels.firstObject;
     }
-    NSLog(@"the release year is a %@ with a value of %@", [result[@"year"] class], result[@"year"]);
     NSString *releaseYear;
     if (!result[@"year"]) {
         releaseYear = @"";
@@ -126,13 +155,18 @@
         releaseYear = result[@"year"];
     }
     
-    [albumInfo appendFormat:@"%@\n%@\n%@", result[@"title"], recordLabel, releaseYear];
+    cell.artistAndTitle.text = result[@"title"];
+    cell.recordLabel.text = recordLabel;
+    cell.year.text = releaseYear;
     
-    cell.albumInfoLabel.text = albumInfo;
+    //cell.albumInfoLabel.text = albumInfo;
     
     NSURL *albumArtURL = [NSURL URLWithString:result[@"thumb"]];
     [cell.albumView setImageWithURL:albumArtURL];
-    
+    if ([result[@"hasBeenAdded"] isEqualToString:@"YES"]) {
+        [cell.addButton setTitle:@"✔︎" forState:UIControlStateNormal];
+        cell.addButton.enabled = NO;
+    }
     return cell;
 }
 

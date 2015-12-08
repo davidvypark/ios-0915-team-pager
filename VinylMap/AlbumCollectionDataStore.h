@@ -10,4 +10,8 @@
 
 @interface AlbumCollectionDataStore : NSObject
 
+@property (nonatomic, strong) NSArray *albums;
+
++ (instancetype)sharedDataStore;
+
 @end
