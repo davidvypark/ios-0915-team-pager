@@ -15,6 +15,8 @@
 
 @property (nonatomic, strong) NSString* name;
 @property (nonatomic, strong) NSMutableArray* chat;
+@property (nonatomic, strong) NSString *userToMessage;
+@property (nonatomic, strong) NSString *userToMessageDisplayName;
 @property (nonatomic, strong) Firebase* firebase;
 
 @property (weak, nonatomic) IBOutlet UITextField *textField;

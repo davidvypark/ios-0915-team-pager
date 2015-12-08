@@ -12,6 +12,6 @@
 @interface MyAlbumsViewController : UIViewController
 
 @property (strong, nonatomic) Firebase *firebaseRef;
-
+- (void)setUpUserCollection;
 
 @end

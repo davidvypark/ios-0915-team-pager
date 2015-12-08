@@ -9,6 +9,7 @@
 //
 
 #import "ChatMessagesViewController.h"
+#import "UserObject.h"
 
 
 #define chatroom @"https://amber-torch-8635.firebaseio.com/data/chatrooms"
@@ -16,8 +17,8 @@
 @interface ChatMessagesViewController ()
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *textFieldBottomContstraint;
 @property (nonatomic) double originalTextFieldBottomConstant;
-@property (nonatomic, strong) NSString *userToMessage;
 @property (nonatomic, strong) NSString *currentUser;
+@property (nonatomic, strong) NSString *currentUserDisplayName;
 
 
 @end
@@ -44,13 +45,14 @@
     self.firebase = [[Firebase alloc] initWithUrl:chatroom];
     
     
-    // Pick a random number between 1-1000 for our username.
-//    self.name = self.currentUser; FOR USE WHEN USER AUTHENTICATION IS SET UP
-    self.currentUser = @"Dog";
+    self.currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
+    NSString *displayName = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@", self.currentUser];
+    Firebase *displayNameFirebase = [[Firebase alloc] initWithUrl:displayName];
+    [displayNameFirebase observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        self.currentUserDisplayName = snapshot.value[@"displayName"];
+    }];
     
-//**  [nameField setTitle:self.userToMessage forState:UIControlStateNormal]; FOR USE WHEN USER AUTHENTICATION IS SET UP
-    self.userToMessage = @"Cat";
-    nameField.text = self.userToMessage;
+    nameField.text = self.userToMessageDisplayName;
     
     
     // This allows us to check if these were messages already stored on the server
@@ -58,7 +60,6 @@
     // This is so that we can batch together the initial messages' reloadData for a perf gain.
     __block BOOL initialAdds = YES;
     
-//**    Firebase *userChat = [self.firebase childByAppendingPath:self.currentUser]; FOR USE WHEN USER AUTHENTICATION IS SET UP
 
     NSString *messagesOfPeopleInChat = [NSString stringWithFormat:@"/%@%@", self.currentUser, self.userToMessage];
 
@@ -119,10 +120,10 @@
 
     Firebase *chatRoomMessages = [self.firebase childByAppendingPath:messageParticipants];
             Firebase *eachMessage = [chatRoomMessages childByAutoId];
-            [eachMessage setValue:@{@"name" : self.currentUser, @"text": aTextField.text, @"time": kFirebaseServerValueTimestamp}];
+            [eachMessage setValue:@{@"name" : self.currentUserDisplayName, @"text": aTextField.text, @"time": kFirebaseServerValueTimestamp}];
     Firebase *reverseChatRoomMessages = [self.firebase childByAppendingPath:reversemessageParticipants];
     Firebase *reverseEachMessage = [reverseChatRoomMessages childByAutoId];
-    [reverseEachMessage setValue:@{@"name" : self.currentUser, @"text": aTextField.text, @"time": kFirebaseServerValueTimestamp}];
+    [reverseEachMessage setValue:@{@"name" : self.currentUserDisplayName, @"text": aTextField.text, @"time": kFirebaseServerValueTimestamp}];
     [aTextField setText:@""];
 
     return NO;

@@ -255,7 +255,7 @@
                                 <animations/>
                                 <state key="normal" title="Sell/Trade"/>
                                 <connections>
-                                    <segue destination="ITq-5N-15f" kind="presentation" id="2wN-N7-mzn"/>
+                                    <segue destination="ITq-5N-15f" kind="presentation" identifier="addToMap" id="2wN-N7-mzn"/>
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="84Y-GQ-xUK">
@@ -286,7 +286,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Owner" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1KX-CS-bae">
-                                <rect key="frame" x="258" y="522" width="76" height="29"/>
+                                <rect key="frame" x="190" y="522" width="144" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -294,6 +294,9 @@
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r0b-0Y-cgS">
                                 <rect key="frame" x="341" y="522" width="30" height="30"/>
                                 <state key="normal" title="✉"/>
+                                <connections>
+                                    <segue destination="quf-bS-riB" kind="show" id="z4P-t6-q3t"/>
+                                </connections>
                             </button>
                         </subviews>
                         <animations/>
@@ -407,18 +410,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" id="cuZ-m7-p1y">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="NcR-b3-wFQ">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="zib-Pc-rAf">
-                                <rect key="frame" x="447" y="7" width="133" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                            </button>
-                            <connections>
-                                <action selector="buttontapped:" destination="IKb-7H-Nhk" id="SXi-cY-9ch"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="cuZ-m7-p1y"/>
                     <connections>
                         <outlet property="myCollection" destination="NAl-9B-dyO" id="cbI-uC-ruV"/>
                     </connections>
@@ -694,6 +686,38 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
+            <point key="canvasLocation" x="-333" y="1516"/>
+        </scene>
+        <!--Chatrooms Table View Controller-->
+        <scene sceneID="B59-8A-rUy">
+            <objects>
+                <tableViewController id="koM-MW-nIH" customClass="ChatroomsTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="dPv-HN-FX7">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="QXX-n1-SfQ">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QXX-n1-SfQ" id="gP9-cn-cqt">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="koM-MW-nIH" id="h8L-fc-omw"/>
+                            <outlet property="delegate" destination="koM-MW-nIH" id="YFI-yp-Q0W"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="Ndo-1Q-uDO"/>
+                    <connections>
+                        <segue destination="quf-bS-riB" kind="show" id="3li-tY-f7i"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bjX-6h-dVM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
             <point key="canvasLocation" x="-999" y="1516"/>
         </scene>
         <!--My Collection-->
@@ -769,7 +793,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="quf-bS-riB" kind="relationship" relationship="rootViewController" id="UyW-D2-S1D"/>
+                        <segue destination="koM-MW-nIH" kind="relationship" relationship="rootViewController" id="gmd-Mz-tPa"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8YX-nH-a0l" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -803,4 +827,7 @@
         <image name="Images/messages.png" width="16" height="16"/>
         <image name="Images/settings.png" width="16" height="16"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="z4P-t6-q3t"/>
+    </inferredMetricsTieBreakers>
 </document>

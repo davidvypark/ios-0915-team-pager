@@ -21,7 +21,6 @@
 @property (nonatomic, strong) GFRegionQuery *regionQuery;
 @property (nonatomic, strong) NSMutableDictionary *vinylAnnotations;
 
-//@property (nonatomic, strong) AlbumDetailsViewController *detailsOfSaleItem;
 
 
 
@@ -163,22 +162,12 @@
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
     if ([annotation isKindOfClass:[VinylAnnotation class]]) {
         
-        VinylAnnotation *myAnnotation = annotation;
         MKPinAnnotationView *pinView = (MKPinAnnotationView*) [mapView dequeueReusableAnnotationViewWithIdentifier:@"VinylAnnotation"];
-        NSString *firebaseLinkToOwnerUrl = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection/%@", myAnnotation.owner, myAnnotation.annotationKey];
         
         if (!pinView) {
             pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"VinylAnnotation"];
             pinView.canShowCallout = YES;
             pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-//            NSString *imageURL = [NSString stringWithFormat:firebaseLinkToOwnerUrl]
-            NSURL *imageURL = [NSURL URLWithString:@"https://api-img.discogs.com/rMdzTbr9uY5iKsDGqudGyBUGifc=/fit-in/150x150/filters:strip_icc():format(jpeg):mode_rgb()/discogs-images/R-597630-1297182362.jpeg.jpg"];
-            UIImageView *imageview = [[UIImageView alloc] init];
-            [imageview setImageWithURL:imageURL];
-            UIImage *actualImage = [[UIImage alloc] init];
-            actualImage = imageview.image;
-            pinView.image = [UIImage imageNamed:@"accommodations-pin.png"];
-
         }
         
         else pinView.annotation = annotation;
@@ -195,17 +184,22 @@
     detailsOfSaleItem.albumAutoId = annView.annotationKey;
     NSString *detailsOfSaleItemFirebaseURL = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection/%@", annView.owner, annView.annotationKey];
     Firebase *detailsOfSaleItemFirebase = [[Firebase alloc] initWithUrl:detailsOfSaleItemFirebaseURL];
-   
+    
     
     [detailsOfSaleItemFirebase observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
         detailsOfSaleItem.albumName = snapshot.value[@"title"];
         detailsOfSaleItem.resourceURL = snapshot.value[@"resource_url"];
         detailsOfSaleItem.isBuyer = YES;
         detailsOfSaleItem.albumOwner = annView.owner;
-        
-        [self.navigationController pushViewController:detailsOfSaleItem animated:YES];
+        }];
     
-    }]; }
+    NSString *saleItemOwnerDisplayName = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@", annView.owner];
+    Firebase *ownerDisplayName = [[Firebase alloc]initWithUrl:saleItemOwnerDisplayName];
+    [ownerDisplayName observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        detailsOfSaleItem.albumOwnerDisplayName = snapshot.value[@"displayName"];
+        [self.navigationController pushViewController:detailsOfSaleItem animated:YES];}];
+        }
+
 
 
 
