@@ -411,27 +411,35 @@
 
 -(void)firebaseLoginClicked
 {
-    [self loginToFirebase:self.emailAddressField.text password:self.passwordField.text withCompletion:^{
-        //
+    
+    [self loginToFirebase:self.emailAddressField.text password:self.passwordField.text withCompletion:^(bool loginResult) {
+        //completion
     }];
 }
 
--(void)loginToFirebase:(NSString *)username password:(NSString *)password withCompletion:(void (^)())completionBlock
+-(void)loginToFirebase:(NSString *)username password:(NSString *)password withCompletion:(void (^)(bool loginResult))completionBlock
 {
+    self.firebaseLoginButton.userInteractionEnabled = NO;
+    self.createFirebaseAccount.userInteractionEnabled = NO;
+    self.facebookLoginButton.userInteractionEnabled = NO;
+    
     [[UserObject sharedUser].firebaseRoot authUser:username password:password withCompletionBlock:^(NSError *error, FAuthData *authData) {
         if (error) {
             NSLog(@"error %@",error);
             NSString *errorString = error.localizedDescription;
             NSRange range = [errorString rangeOfString:@") "];
             [self displayErrorAlert:[errorString substringFromIndex:range.length + range.location] title:@"Error"];
-            
+            completionBlock(NO);
         } else {
             // user is logged in, check authData for data
             [self discogsLoginButtonAlive];
             [FBSDKAccessToken setCurrentAccessToken:nil];
             [self viewDidAppear:YES];
-            completionBlock();
+            completionBlock(YES);
         }
+        self.firebaseLoginButton.userInteractionEnabled = YES;
+        self.createFirebaseAccount.userInteractionEnabled = YES;
+        self.facebookLoginButton.userInteractionEnabled = YES;
     }];
 }
 
@@ -479,9 +487,11 @@
     spinner.tag = 12;
     [self.view addSubview:spinner];
     [spinner startAnimating];
-    [self loginToFirebase:result[@"email"] password:result[@"password"] withCompletion:^{
-        [[[[UserObject sharedUser].firebaseRoot childByAppendingPath:@"users"]
-          childByAppendingPath:result[@"provider"]] setValue:result];
+    [self loginToFirebase:result[@"email"] password:result[@"password"] withCompletion:^(bool loginResult) {
+        if(loginResult)
+        {
+            [[[[UserObject sharedUser].firebaseRoot childByAppendingPath:@"users"] childByAppendingPath:result[@"provider"]] setValue:result];
+        }
         [spinner removeFromSuperview];
     }];
     
