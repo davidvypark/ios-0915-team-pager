@@ -1,4 +1,3 @@
-   //
 //  UserObject.m
 //  VinylMap
 //
@@ -20,6 +19,7 @@
     
     return _sharedUser;
 }
+
 
 
 @end

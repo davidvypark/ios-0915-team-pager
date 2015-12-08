@@ -10,6 +10,9 @@
 #import <AFNetworking.h>
 #import "VinylConstants.h"
 #import "BarcodeViewController.h"
+#import <SSKeychain.h>
+#import <SSKeychainQuery.h>
+#import "UserObject.h"
 
 @interface DiscogsAPI ()
 
@@ -45,7 +48,51 @@
     
 }
 
++(void)pullDiscogsTokenSecret
+{
+    NSError *error;
+    NSArray *accounts = [SSKeychain accountsForService:DISCOGS_KEYCHAIN error:&error];
+    NSDictionary *firstAccount = accounts[0];
+    if(error)
+    {
+        NSLog(@"%@",error);
+    } else
+    {
+        [UserObject sharedUser].discogsRequestToken = firstAccount[@"acct"];
+        [UserObject sharedUser].discogsTokenSecret = [SSKeychain passwordForService:DISCOGS_KEYCHAIN
+                                                                            account:[UserObject sharedUser].discogsRequestToken
+                                                                              error:&error];
+        NSLog(@"discogs in keychain");
+        if(error)
+        {
+            NSLog(@"%@",error);
+        }
+    }
+}
 
++(void)removeDiscogsKeychain
+{
+    NSError *error;
+    NSArray *accounts = [SSKeychain accountsForService:DISCOGS_KEYCHAIN error:&error];
+    if(error)
+    {
+        NSLog(@"%@",error);
+    } else
+    {
+        NSDictionary *firstAccount = accounts[0];
+        NSLog(@"%@",accounts[0]);
+        bool deletedPassword = [SSKeychain deletePasswordForService:DISCOGS_KEYCHAIN account:firstAccount[@"acct"] error:&error];
+        if(error)
+        {
+            NSLog(@"%@",error);
+        } else if (deletedPassword)
+        {
+            NSLog(@"Removed discogs from keychain");
+            [UserObject sharedUser].discogsTokenSecret = nil;
+            
+        }
+    }
+}
 
 
 

@@ -10,6 +10,8 @@
 #import <GeoFire/GeoFire.h>
 #import <Firebase/Firebase.h>
 #import "VinylAnnotation.h"
+#import <UIKit+AFNetworking.h>
+#import "AlbumDetailsViewController.h"
 
 
 @interface MapViewController () <MKMapViewDelegate, CLLocationManagerDelegate>
@@ -18,6 +20,8 @@
 @property (nonatomic, strong) GeoFire * geoFire;
 @property (nonatomic, strong) GFRegionQuery *regionQuery;
 @property (nonatomic, strong) NSMutableDictionary *vinylAnnotations;
+
+//@property (nonatomic, strong) AlbumDetailsViewController *detailsOfSaleItem;
 
 
 
@@ -47,6 +51,11 @@
     self.vinylAnnotations = [NSMutableDictionary dictionary];
     
 }
+
+- (void)viewDidAppear {
+[self updateOrSetupRegionQuery];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -120,12 +129,24 @@
 
 - (void)setupListeners:(GFQuery *)query
 {
+
     [query observeEventType:GFEventTypeKeyEntered withBlock:^(NSString *key, CLLocation *location) {
-        VinylAnnotation *annotation = [[VinylAnnotation alloc] init];
-        annotation.coordinate = location.coordinate;
-        annotation.title = @"Testing";
-        [self.mapView addAnnotation:annotation];
-        self.vinylAnnotations[key] = annotation;
+        NSString *albumOwnerUrl = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/geofire/%@", key];
+        Firebase *albumOwner = [[Firebase alloc] initWithUrl:albumOwnerUrl];
+        __block NSString *ownerOfKey = [[NSString alloc]init];
+        __block VinylAnnotation *annotation = [[VinylAnnotation alloc] init];
+        [albumOwner observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+            NSLog(@"%@", snapshot.value[@"owner"]);
+            ownerOfKey = snapshot.value[@"owner"];
+            annotation.title = key;
+            annotation.coordinate = location.coordinate;
+            annotation.owner = ownerOfKey;
+            annotation.annotationKey = key;
+            [self.mapView addAnnotation:annotation];
+            self.vinylAnnotations[key] = annotation;
+
+        }];
+        
     }];
     [query observeEventType:GFEventTypeKeyExited withBlock:^(NSString *key, CLLocation *location) {
         VinylAnnotation *annotation = self.vinylAnnotations[key];
@@ -139,15 +160,53 @@
     }];
 }
 
+-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
+    if ([annotation isKindOfClass:[VinylAnnotation class]]) {
+        
+        VinylAnnotation *myAnnotation = annotation;
+        MKPinAnnotationView *pinView = (MKPinAnnotationView*) [mapView dequeueReusableAnnotationViewWithIdentifier:@"VinylAnnotation"];
+        NSString *firebaseLinkToOwnerUrl = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection/%@", myAnnotation.owner, myAnnotation.annotationKey];
+        
+        if (!pinView) {
+            pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"VinylAnnotation"];
+            pinView.canShowCallout = YES;
+            pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+//            NSString *imageURL = [NSString stringWithFormat:firebaseLinkToOwnerUrl]
+            NSURL *imageURL = [NSURL URLWithString:@"https://api-img.discogs.com/rMdzTbr9uY5iKsDGqudGyBUGifc=/fit-in/150x150/filters:strip_icc():format(jpeg):mode_rgb()/discogs-images/R-597630-1297182362.jpeg.jpg"];
+            UIImageView *imageview = [[UIImageView alloc] init];
+            [imageview setImageWithURL:imageURL];
+            UIImage *actualImage = [[UIImage alloc] init];
+            actualImage = imageview.image;
+            pinView.image = [UIImage imageNamed:@"accommodations-pin.png"];
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+        }
+        
+        else pinView.annotation = annotation;
+        return pinView;
+    }
+    return nil;
 }
-*/
+
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control{
+    VinylAnnotation *annView = view.annotation;
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    AlbumDetailsViewController *detailsOfSaleItem = [storyboard instantiateViewControllerWithIdentifier:@"AlbumDetailsViewController"];
+
+    detailsOfSaleItem.albumAutoId = annView.annotationKey;
+    NSString *detailsOfSaleItemFirebaseURL = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection/%@", annView.owner, annView.annotationKey];
+    Firebase *detailsOfSaleItemFirebase = [[Firebase alloc] initWithUrl:detailsOfSaleItemFirebaseURL];
+   
+    
+    [detailsOfSaleItemFirebase observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        detailsOfSaleItem.albumName = snapshot.value[@"title"];
+        detailsOfSaleItem.resourceURL = snapshot.value[@"resource_url"];
+        detailsOfSaleItem.isBuyer = YES;
+        detailsOfSaleItem.albumOwner = annView.owner;
+        
+        [self.navigationController pushViewController:detailsOfSaleItem animated:YES];
+    
+    }]; }
+
+
 
 @end

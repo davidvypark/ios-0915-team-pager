@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface AddViewController : UIViewController
+@property (nonatomic, strong) NSString *ID;
+@property (nonatomic, strong) NSString *albumName;
+@property (nonatomic, strong) NSString *albumURL;
 
 @end

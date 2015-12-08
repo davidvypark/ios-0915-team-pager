@@ -10,12 +10,23 @@
 #import <GeoFire/GeoFire.h>
 #import <Firebase/Firebase.h>
 #import "VinylAnnotation.h"
+#import <UIKit+AFNetworking.h>
+#import <Mapkit/Mapkit.h>
+
 
 @interface AddViewController ()<MKMapViewDelegate, CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *addMapView;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (nonatomic, strong) GeoFire * geoFire;
-@property (nonatomic, strong) VinylAnnotation *user;
+@property (nonatomic, strong) MKPointAnnotation *user;
+@property (nonatomic, strong) NSString *currentUser;
+@property (nonatomic, strong) VinylAnnotation *albumLocation;
+@property (weak, nonatomic) IBOutlet UITextField *priceLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *sellSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *tradeSwitch;
+@property (nonatomic) BOOL forSale;
+@property (nonatomic) BOOL forTrade;
+
 
 @end
 
@@ -30,6 +41,10 @@
     // Do any additional setup after loading the view.
     Firebase *geofireRef = [[Firebase alloc] initWithUrl:@"https://amber-torch-8635.firebaseio.com/geofire"];
     self.geoFire = [[GeoFire alloc] initWithFirebaseRef:geofireRef];
+    self.currentUser = @"Cat";
+    
+    
+
     
     
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
@@ -52,19 +67,22 @@
     CLLocationCoordinate2D selfCoord = self.addMapView.userLocation.location.coordinate;
     MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(selfCoord, 1000.0, 1000.0);
     [self.addMapView setRegion:startRegion animated:NO];
-     self.user = [[VinylAnnotation alloc] init];
+    self.user = [[MKPointAnnotation alloc] init];
     self.user.coordinate = selfCoord;
     self.user.title = @"Your location";
     [self.addMapView addAnnotation:self.user];
+    [self.addMapView selectAnnotation:self.user animated:YES];
     [self.locationManager stopUpdatingLocation];
     self.addMapView.showsUserLocation = NO;
 }
 
 - (MKAnnotationView *) mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>) annotation
+
 {
-    MKPinAnnotationView *annView=[[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"pin"];
+    MKPinAnnotationView *annView=[[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"VinylAnnotation"];
     if ([annotation.title isEqualToString:@"Your location"]) {
         annView.pinTintColor = [UIColor blueColor];
+        annView.canShowCallout = YES;
     }
     return annView;
 }
@@ -75,17 +93,92 @@
     self.addMapView.showsUserLocation = YES;
 }
 
+
+
 - (IBAction)handleLongPress:(UILongPressGestureRecognizer *)sender {
     if (sender.state != UIGestureRecognizerStateBegan)
         return;
     sender.minimumPressDuration = 2.0;
     CGPoint touchPoint = [sender locationInView:self.addMapView];
     CLLocationCoordinate2D touchMapCoordinate = [self.addMapView convertPoint:touchPoint toCoordinateFromView:self.addMapView];
+    self.albumLocation = [[VinylAnnotation alloc] init];
+    self.albumLocation.coordinate = touchMapCoordinate;
+    NSMutableArray * annotationsToRemove = [self.addMapView.annotations mutableCopy];
+    [annotationsToRemove removeObject:self.user];
+    [self.addMapView removeAnnotations:annotationsToRemove];
+    [self.addMapView addAnnotation:self.albumLocation];
     
-    VinylAnnotation *annotation = [[VinylAnnotation alloc] init];
-    annotation.coordinate = touchMapCoordinate;
-    [self.addMapView addAnnotation:annotation];
-    [self.geoFire setLocation:[[CLLocation alloc] initWithLatitude:annotation.coordinate.latitude longitude:annotation.coordinate.longitude] forKey:@"test1"];
+
+    
+    }
+
+- (IBAction)saveButtonTapped:(id)sender {
+
+
+
+    UIAlertAction *okAction = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"OK", @"OK action")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction *action)
+                               {
+                                   NSLog(@"OK action");
+                               }];
+
+
+
+    
+
+    
+    if (![self.sellSwitch isOn] && ![self.tradeSwitch isOn]) {
+        UIAlertController *switchAlertController = [UIAlertController
+                                                    alertControllerWithTitle:@"Please select at least one"
+                                                    message:@"Item must be sold or traded"
+                                                    preferredStyle:UIAlertControllerStyleAlert];
+        [switchAlertController addAction:okAction];
+        [self presentViewController:switchAlertController animated:YES completion:nil];
+    }
+    
+    else if (!self.albumLocation) {
+        UIAlertController *locationAlertController = [UIAlertController
+                                                      alertControllerWithTitle:@"Item location required"
+                                                      message:@"Please specify the item's location"
+                                                      preferredStyle:UIAlertControllerStyleAlert];
+            [locationAlertController addAction:okAction];
+        [self presentViewController:locationAlertController animated:YES completion:nil];
+    }
+
+    else if (([self.sellSwitch isOn] || [self.tradeSwitch isOn]) && self.albumLocation) {
+        if ([self.sellSwitch isOn]  && self.priceLabel.text.length == 0) {
+            UIAlertController *priceAlertController = [UIAlertController
+                                                       alertControllerWithTitle:@"Enter a price"
+                                                       message:@"A price must be entered"
+                                                       preferredStyle:UIAlertControllerStyleAlert];
+                [priceAlertController addAction:okAction];
+                [self presentViewController:priceAlertController animated:YES completion:nil];
+            }
+        else {
+            __unsafe_unretained typeof(self) weakSelf = self;
+            [self.geoFire setLocation:[[CLLocation alloc] initWithLatitude:self.albumLocation.coordinate.latitude longitude:self.albumLocation.coordinate.longitude] forKey:self.ID withCompletionBlock:^(NSError *error) {
+                NSString *geofireAlbumURL = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/geofire/%@", weakSelf.ID];
+                Firebase *albumKey = [[Firebase alloc] initWithUrl:geofireAlbumURL];
+                weakSelf.forSale = [weakSelf.sellSwitch isOn];
+                weakSelf.forTrade = [weakSelf.tradeSwitch isOn];
+                if (error != nil) {
+                    NSLog(@"An error occurred: %@", error);
+                }
+                else {
+                    
+                    [albumKey updateChildValues:@{@"owner" : weakSelf.currentUser, @"price" : weakSelf.priceLabel.text, @"sale" : [NSNumber numberWithBool:weakSelf.sellSwitch] , @"trade": [NSNumber numberWithBool:weakSelf.tradeSwitch]} ];
+                    [weakSelf dismissViewControllerAnimated:YES completion:nil];
+                }
+            }];}
+    }
+    
+}
+- (IBAction)cancelButtonTapped:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
 }
 
 /*

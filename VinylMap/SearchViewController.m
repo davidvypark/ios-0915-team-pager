@@ -12,11 +12,21 @@
 #import "VinylConstants.h"
 #import "AlbumTableViewCell.h"
 #import <UIKit+AFNetworking.h>
+#import <Firebase/Firebase.h>
+#import "DiscogsAPI.h"
+#import "UserObject.h"
 
-@interface SearchViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface SearchViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, BarCodeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *searchField;
 @property (weak, nonatomic) IBOutlet UITableView *searchTableView;
 @property (nonatomic, strong) NSMutableArray *albumResults;
+@property (nonatomic, strong) Firebase *firebase;
+@property (nonatomic, strong) NSMutableArray* collection;
+@property (strong, nonatomic) NSIndexPath *cellIndexPath;
+
+
+@property (nonatomic, strong) BarcodeViewController *barcodeVC;
+
 
 @end
 
@@ -29,6 +39,9 @@
     self.searchTableView.delegate = self;
     self.searchTableView.dataSource = self;
     self.albumResults = [NSMutableArray new];
+    NSString *currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
+    NSString *firebaseRefUrl = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection", currentUser];
+    self.firebase = [[Firebase alloc] initWithUrl:firebaseRefUrl];
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField {
@@ -47,7 +60,11 @@
         NSDictionary *responseDictionary = (NSDictionary *)responseObject;
         NSArray *resultsArray = responseDictionary[@"results"];
         [self.albumResults removeAllObjects];
-        [self.albumResults addObjectsFromArray:resultsArray];
+        for (NSDictionary *result in resultsArray) {
+            if ([result[@"format"] containsObject:@"Vinyl"]) {
+                [self.albumResults addObject:result];
+            }
+        }
         [self.searchTableView reloadData];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"Request failed with error %@", error);
@@ -56,10 +73,8 @@
     return YES;
 }
 
-- (IBAction)barcodeButtonTapped:(id)sender {
-    BarcodeViewController *barcodeVC = [[BarcodeViewController alloc] init];
-    [self presentViewController:barcodeVC animated:YES completion:nil];
-}
+
+
 
 - (IBAction)cancelButtonTapped:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -79,6 +94,14 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.albumResults.count;
 }
+- (IBAction)addButtonTapped:(UIButton *)sender {
+    Firebase *album = [self.firebase childByAutoId];
+    CGPoint pos = [sender convertPoint:CGPointZero toView:self.searchTableView];
+    NSIndexPath *indexPath = [self.searchTableView indexPathForRowAtPoint:pos];
+    NSDictionary *result = self.albumResults[indexPath.row];
+    [album setValue:@{@"title": result[@"title"], @"imageURL": result[@"thumb"], @"ID": album.key, @"resource_url": result[@"resource_url"]}];
+}
+
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AlbumTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"albumCell" forIndexPath:indexPath];
@@ -111,6 +134,38 @@
     [cell.albumView setImageWithURL:albumArtURL];
     
     return cell;
+}
+
+#pragma mark - barcode search
+- (IBAction)barcodeButtonTapped:(id)sender {
+    self.barcodeVC = [[BarcodeViewController alloc] init];
+    self.barcodeVC.delegate = self;
+    [self.barcodeVC setModalPresentationStyle:UIModalPresentationOverFullScreen];
+    [self presentViewController:self.barcodeVC animated:NO completion:nil];
+}
+
+-(NSArray *)barcodeScanResult:(NSString *)barcode {
+    
+    if([barcode isEqualToString:@"dismissed"])
+    {
+        [self.barcodeVC dismissViewControllerAnimated:NO completion:nil];
+    } else
+    {
+        [self.barcodeVC dismissViewControllerAnimated:NO completion:^{
+            NSLog(@"searching for %@",barcode);
+            UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            spinner.center = CGPointMake(160, 240);
+            spinner.tag = 12;
+            [self.view addSubview:spinner];
+            [spinner startAnimating];
+            [DiscogsAPI barcodeAPIsearch:barcode withCompletion:^(NSArray *arrayOfAlbums, bool isError) {
+                NSLog(@"%@",arrayOfAlbums);//RESULTS FROM DISCOGS API
+                [spinner removeFromSuperview];
+            }];
+        }];
+    }
+    
+    return nil;
 }
 
 @end

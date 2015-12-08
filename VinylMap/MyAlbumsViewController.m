@@ -8,8 +8,11 @@
 
 #import "MyAlbumsViewController.h"
 #import "AlbumCollectionViewCell.h"
+#import <UIKit+AFNetworking.h>
+#import "AlbumDetailsViewController.h"
+#import "UserObject.h"
 
-@interface MyAlbumsViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface MyAlbumsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UITabBarControllerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollection;
 @property (nonatomic, strong) NSMutableArray *albums;
 
@@ -19,11 +22,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UITabBarController *tabBarController = (UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController ;
+    
+    [tabBarController setDelegate:self];
 //    [self.myCollection registerNib:[UINib nibWithNibName:@"CustomAlbumCell" bundle:[NSBundle mainBundle]]
 //        forCellWithReuseIdentifier:@"albumCell"];
     self.myCollection.delegate = self;
     self.myCollection.dataSource = self;
-    [self populateAlbumsArray];
+    NSString *currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
+    NSString *firebaseRefUrl = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection", currentUser];
+    self.firebaseRef = [[Firebase alloc] initWithUrl:firebaseRefUrl];
+    self.albums = [[NSMutableArray alloc] init];
+    [self.firebaseRef observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
+        [self.albums addObject:snapshot.value];
+        [self.myCollection reloadData];
+    }];
+    [self.firebaseRef observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        [self.myCollection reloadData];
+    }];
+}
+
+- (IBAction)buttontapped:(id)sender {
+    [self.myCollection reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,13 +60,14 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"The thing is getting called");
     
     AlbumCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"albumCell" forIndexPath:indexPath];
     srand48(time(0));
     [cell.albumLabel setText:self.albums[indexPath.row][@"title"]];
     [cell.artistLabel setText:self.albums[indexPath.row][@"artist"]];
-    [cell.albumArtView setImage:[UIImage imageNamed:self.albums[indexPath.row][@"artwork"]]];
+    NSURL *albumArtURL = [NSURL URLWithString:self.albums[indexPath.row][@"imageURL"]];
+
+    [cell.albumArtView setImageWithURL:albumArtURL];
     cell.albumArtView.backgroundColor = [UIColor colorWithRed:drand48() green:drand48() blue:drand48() alpha:drand48()];
     return cell;
 }
@@ -55,18 +76,18 @@
     return CGSizeMake(150, 200);
 }
 
--(void) populateAlbumsArray {
-    self.albums = [NSMutableArray new];
-    [self.albums addObject:@{@"title":@"Album 1", @"artist":@"Artist 1", @"artwork":@"Images/record.png"}];
-    [self.albums addObject:@{@"title":@"Album 2", @"artist":@"Artist 2", @"artwork":@"Images/record.png"}];
-    [self.albums addObject:@{@"title":@"Album 3", @"artist":@"Artist 3", @"artwork":@"Images/record.png"}];
-    [self.albums addObject:@{@"title":@"To Pimp a Butterfly", @"artist":@"Kendrick Lamar", @"artwork":@"Images/record.png"}];
-    [self.albums addObject:@{@"title":@"Album 5", @"artist":@"Artist 5", @"artwork":@"Images/record.png"}];
-    [self.albums addObject:@{@"title":@"Album 6", @"artist":@"Artist 6", @"artwork":@"Images/record.png"}];
-    [self.albums addObject:@{@"title":@"Album 7", @"artist":@"Artist 7", @"artwork":@"Images/record.png"}];
-    [self.albums addObject:@{@"title":@"Album 8", @"artist":@"Artist 8", @"artwork":@"Images/record.png"}];
-    [self.albums addObject:@{@"title":@"Album 9", @"artist":@"Artist 9", @"artwork":@"Images/record.png"}];
-    [self.albums addObject:@{@"title":@"Album 10", @"artist":@"Artist 10", @"artwork":@"Images/record.png"}];
-}
+
+ #pragma mark - Navigation
+
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+     AlbumDetailsViewController *destinationVC = segue.destinationViewController;
+     NSIndexPath *indexPath = [self.myCollection indexPathForCell:sender];
+     NSDictionary *album = self.albums[indexPath.row];
+     destinationVC.albumAutoId = album[@"ID"];
+     destinationVC.albumName = album[@"title"];
+     destinationVC.albumImageURL = album[@"imageURL"];
+     destinationVC.resourceURL = album[@"resource_url"];
+ }
+
 
 @end

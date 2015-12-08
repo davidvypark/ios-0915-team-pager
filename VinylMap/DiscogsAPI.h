@@ -13,8 +13,8 @@
 +(void)barcodeAPIsearch:(NSString *)barcode
          withCompletion:(void (^)(NSArray *arrayOfAlbums, bool isError))completionBlock;
 
++(void)pullDiscogsTokenSecret;
 
-
-
++(void)removeDiscogsKeychain;
 
 @end
