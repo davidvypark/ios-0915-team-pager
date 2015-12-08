@@ -432,7 +432,6 @@
             completionBlock(NO);
         } else {
             // user is logged in, check authData for data
-            [self discogsLoginButtonAlive];
             [FBSDKAccessToken setCurrentAccessToken:nil];
             [self viewDidAppear:YES];
             completionBlock(YES);
@@ -480,22 +479,57 @@
 
 #pragma mark - account creation
 
--(void)createAccountResult:(NSDictionary *)result
+-(void)createAccountResult:(NSDictionary *)someResult
 {
-    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    spinner.center = CGPointMake(160, 240);
+    
+    __block NSDictionary *result = [someResult copy];
+    
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    spinner.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height*3/4);
     spinner.tag = 12;
+    spinner.color = [UIColor blackColor];
+    spinner.userInteractionEnabled = NO;
     [self.view addSubview:spinner];
     [spinner startAnimating];
+    NSString *pathString = [NSString stringWithFormat:@"users/%@",result[@"provider"]];
     [self loginToFirebase:result[@"email"] password:result[@"password"] withCompletion:^(bool loginResult) {
         if(loginResult)
         {
-            [[[[UserObject sharedUser].firebaseRoot childByAppendingPath:@"users"] childByAppendingPath:result[@"provider"]] setValue:result];
+            //DEBUGGING THE OVERWRITING
+            /*
+            for (NSUInteger i=0; i<2 ; i++)
+            {
+                if (i==1)
+                {
+                    __block NSMutableDictionary *mutableResult = [result mutableCopy];
+                    mutableResult[@"displayName"] = @"was able to rewrite";
+                    result = [NSDictionary dictionaryWithDictionary:mutableResult];
+                }
+                
+                [[[UserObject sharedUser].firebaseRoot childByAppendingPath:pathString] setValue:result withCompletionBlock:^(NSError *error, Firebase *ref) {
+                    if(error)
+                    {
+                        NSLog(@"error returned %@",error);
+                    } else
+                    {
+                        NSLog(@"wrote to /users/%@ \n%@",result[@"provider"],result);
+                    }
+                }];
+            }
+            */
+        [[[UserObject sharedUser].firebaseRoot childByAppendingPath:pathString] setValue:result withCompletionBlock:^(NSError *error, Firebase *ref) {
+            if(error)
+            {
+                NSLog(@"error returned %@",error);
+            } else
+            {
+                NSLog(@"wrote to /users/%@ \n%@",result[@"provider"],result);
+            }
+        }];
+            
         }
         [spinner removeFromSuperview];
     }];
-    
-    
 }
 
 

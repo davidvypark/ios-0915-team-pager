@@ -76,7 +76,16 @@
     self.confirmPassword = [[UITextField alloc] init];
     self.confirmPassword.placeholder = @"password";
     self.confirmPassword.secureTextEntry = YES;
-
+    
+    
+    //MAKES IT EASY TO DEBUG
+    self.firstName.text = @"debug firstname";
+    self.lastName.text = @"debug lastname";
+    self.displayName.text = @"debug displayname";
+    self.emailAddressField.text = [NSString stringWithFormat:@"%u@%u.com",arc4random()*9999999,arc4random()*9999999];
+    self.passwordField.text = @"password";
+    self.confirmPassword.text = @"password";
+    //REMOVE TURN THESE OFF
     
     NSArray *textFieldArray = @[self.firstName , self.lastName , self.emailAddressField , self.displayName, self.passwordField , self.confirmPassword];
     UITextField *previousField;
