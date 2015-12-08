@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="a4g-6U-oqw">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -378,18 +379,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="NAl-9B-dyO">
-                                <rect key="frame" x="0.0" y="40" width="600" height="520"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="495"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="30" minimumInteritemSpacing="10" id="MOH-bD-sbS">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="MOH-bD-sbS">
                                     <size key="itemSize" width="150" height="200"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="40" minY="40" maxX="40" maxY="40"/>
+                                    <inset key="sectionInset" minX="5" minY="5" maxX="5" maxY="5"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="albumCell" id="e7t-vj-a96" customClass="AlbumCollectionViewCell">
-                                        <rect key="frame" x="40" y="104" width="160" height="210"/>
+                                        <rect key="frame" x="5" y="69" width="160" height="210"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="160" height="210"/>
@@ -409,7 +410,7 @@
                                                     <color key="textColor" red="0.1019607843" green="0.20000000000000001" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Mv-OZ-3k5">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Mv-OZ-3k5">
                                                     <rect key="frame" x="5" y="5" width="150" height="150"/>
                                                     <animations/>
                                                 </imageView>
@@ -433,20 +434,12 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="BNt-ba-JNe" firstAttribute="top" secondItem="NAl-9B-dyO" secondAttribute="bottom" constant="100" id="45s-da-2BN"/>
-                            <constraint firstItem="NAl-9B-dyO" firstAttribute="centerY" secondItem="m0g-5G-OL7" secondAttribute="centerY" id="5Gg-eu-2Nh"/>
-                            <constraint firstItem="NAl-9B-dyO" firstAttribute="height" secondItem="m0g-5G-OL7" secondAttribute="height" constant="-80" id="SCr-EW-uYb"/>
+                            <constraint firstItem="BNt-ba-JNe" firstAttribute="top" secondItem="NAl-9B-dyO" secondAttribute="bottomMargin" id="7Cf-Ft-RdW"/>
+                            <constraint firstItem="NAl-9B-dyO" firstAttribute="top" secondItem="TlH-iK-CpT" secondAttribute="bottom" id="Ghx-hg-mdV"/>
                             <constraint firstItem="NAl-9B-dyO" firstAttribute="leading" secondItem="m0g-5G-OL7" secondAttribute="leadingMargin" constant="-20" id="Zam-LE-3hE"/>
                             <constraint firstAttribute="trailingMargin" secondItem="NAl-9B-dyO" secondAttribute="trailing" constant="-20" id="jpE-AA-E8E"/>
-                            <constraint firstItem="NAl-9B-dyO" firstAttribute="top" secondItem="TlH-iK-CpT" secondAttribute="bottom" constant="100" id="lvG-mx-z6a"/>
                             <constraint firstItem="NAl-9B-dyO" firstAttribute="centerX" secondItem="m0g-5G-OL7" secondAttribute="centerX" id="qV9-CN-xZc"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="lvG-mx-z6a"/>
-                                <exclude reference="45s-da-2BN"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="cuZ-m7-p1y"/>
                     <connections>
