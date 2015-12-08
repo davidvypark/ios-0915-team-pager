@@ -24,6 +24,7 @@
 @property (nonatomic, strong) NSString *resourceURL;
 
 @property (nonatomic, strong) NSString *albumOwner;
+@property (nonatomic, strong) NSString *albumOwnerDisplayName;
 @property (nonatomic, strong) NSString *albumPrice;
 @property (nonatomic) BOOL isBuyer;
 @end

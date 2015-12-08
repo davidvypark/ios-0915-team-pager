@@ -18,6 +18,7 @@
 
 @property (nonatomic, strong) Firebase *firebaseRoot;
 @property (nonatomic, strong) Firebase *firebaseTestFolder;
+@property (nonatomic, strong) NSString *displayName;
 //@property (nonatomic, strong) FAuthData *firebaseAuthData;
 
 //final results

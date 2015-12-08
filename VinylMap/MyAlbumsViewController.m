@@ -22,13 +22,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UITabBarController *tabBarController = (UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController ;
-    
-    [tabBarController setDelegate:self];
-//    [self.myCollection registerNib:[UINib nibWithNibName:@"CustomAlbumCell" bundle:[NSBundle mainBundle]]
-//        forCellWithReuseIdentifier:@"albumCell"];
     self.myCollection.delegate = self;
     self.myCollection.dataSource = self;
+    self.tabBarController.delegate = self;
+    [self setUpUserCollection];
+}
+
+- (void)setUpUserCollection {
     NSString *currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
     NSString *firebaseRefUrl = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection", currentUser];
     self.firebaseRef = [[Firebase alloc] initWithUrl:firebaseRefUrl];
@@ -42,8 +42,8 @@
     }];
 }
 
-- (IBAction)buttontapped:(id)sender {
-    [self.myCollection reloadData];
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    [self setUpUserCollection];
 }
 
 - (void)didReceiveMemoryWarning {
