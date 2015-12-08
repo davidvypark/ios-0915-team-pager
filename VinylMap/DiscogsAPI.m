@@ -17,7 +17,6 @@
 @interface DiscogsAPI ()
 
 
-
 @end
 
 
@@ -92,6 +91,14 @@
             
         }
     }
+}
+
+
++(void)importDiscogsAblums
+{
+    
+    
+    
 }
 
 

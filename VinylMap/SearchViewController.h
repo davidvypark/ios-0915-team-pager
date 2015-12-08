@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AlbumCollectionDataStore.h"
 
 @interface SearchViewController : UIViewController
 - (void)setupFirebase;
+@property (nonatomic, strong) AlbumCollectionDataStore *store;
+
 
 @end

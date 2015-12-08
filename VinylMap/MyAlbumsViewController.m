@@ -11,11 +11,16 @@
 #import <UIKit+AFNetworking.h>
 #import "AlbumDetailsViewController.h"
 #import "UserObject.h"
+#import <Masonry.h>
 
 @interface MyAlbumsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UITabBarControllerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollection;
 @property (nonatomic, strong) NSMutableArray *albums;
 @property (nonatomic, strong) NSString * currentUser;
+@property (nonatomic, assign) CGFloat screenWidth;
+@property (nonatomic, assign) CGFloat screenHeight;
+@property (nonatomic, assign) CGFloat squareSize;
+
 
 @end
 
@@ -23,11 +28,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.screenWidth = MIN(self.view.frame.size.width,self.view.frame.size.height);
+    self.squareSize = self.screenWidth * 0.45;
+    UITabBarController *tabBarController = (UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController ;
+    [tabBarController setDelegate:self];
     self.myCollection.delegate = self;
     self.myCollection.dataSource = self;
     self.tabBarController.delegate = self;
     if ([UserObject sharedUser].firebaseRoot.authData) {
         [self setUpUserCollection];
+        self.store = [AlbumCollectionDataStore sharedDataStore];
     }
     
 }
@@ -39,6 +49,7 @@
         self.albums = [[NSMutableArray alloc] init];
         [self.firebaseRef observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
             [self.albums addObject:snapshot.value];
+            self.store.albums = self.albums;
             [self.myCollection reloadData];
         }];
         [self.firebaseRef observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
@@ -72,18 +83,37 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     AlbumCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"albumCell" forIndexPath:indexPath];
-    srand48(time(0));
+//    AlbumCollectionViewCell *cell = [[AlbumCollectionViewCell alloc] initWithFrame:CGRectMake(0, 0, self.squareSize, self.squareSize)]
     [cell.albumLabel setText:self.albums[indexPath.row][@"title"]];
     [cell.artistLabel setText:self.albums[indexPath.row][@"artist"]];
     NSURL *albumArtURL = [NSURL URLWithString:self.albums[indexPath.row][@"imageURL"]];
-
-    [cell.albumArtView setImageWithURL:albumArtURL];
-    cell.albumArtView.backgroundColor = [UIColor colorWithRed:drand48() green:drand48() blue:drand48() alpha:drand48()];
+    UIImage *albumImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:albumArtURL]];
+    CGFloat imageWidth = albumImage.size.width;
+    albumImage = [UIImage imageWithCGImage:albumImage.CGImage scale:imageWidth/self.squareSize orientation:albumImage.imageOrientation];
+    NSLog(@"%1.1f",albumImage.size.width);
+    NSLog(@"%1.1f",self.squareSize);
+    [cell.albumArtView setImage:albumImage];
+    
     return cell;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake(150, 200);
+    
+    
+    return CGSizeMake(self.squareSize, self.squareSize + 40);
+}
+
+#pragma mark collection view cell paddings
+- (UIEdgeInsets)collectionView:(UICollectionView*)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    CGFloat insets = self.screenWidth - self.squareSize*2;
+    insets = insets/2;
+    return UIEdgeInsetsMake(0, insets, 0, insets); // top, left, bottom, right
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    
+    return 00;
 }
 
 
@@ -93,10 +123,7 @@
      AlbumDetailsViewController *destinationVC = segue.destinationViewController;
      NSIndexPath *indexPath = [self.myCollection indexPathForCell:sender];
      NSDictionary *album = self.albums[indexPath.row];
-     destinationVC.albumAutoId = album[@"ID"];
-     destinationVC.albumName = album[@"title"];
-     destinationVC.albumImageURL = album[@"imageURL"];
-     destinationVC.resourceURL = album[@"resource_url"];
+     destinationVC.albumDict = [album mutableCopy];
  }
 
 

@@ -10,4 +10,22 @@
 
 @implementation Album
 
++(Album *)albumFromResultDictionary: (NSDictionary *) dictionary {
+    Album *album = [Album new];
+    NSString *titleWithArtist = dictionary[@"title"];
+    NSArray *artistAndTitle = [titleWithArtist componentsSeparatedByString:@" - "];
+    album.artist = artistAndTitle.firstObject;
+    album.title = artistAndTitle.lastObject;
+    NSArray *barcodes = dictionary[@"barcode"];
+    //album.barcode = barcodes.firstObject;
+    album.recordLabels = dictionary[@"label"];
+    album.country = dictionary[@"country"];
+    album.resourceURL = dictionary[@"resource_url"];
+    NSString *releaseYear = dictionary[@"year"];
+    album.releaseYear = releaseYear.integerValue;
+    album.categoryNumber = dictionary[@"catno"];
+    album.thumbnailURL = dictionary[@"thumb"];
+    return album;
+}
+
 @end
