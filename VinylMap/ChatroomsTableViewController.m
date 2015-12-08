@@ -7,8 +7,12 @@
 //
 
 #import "ChatroomsTableViewController.h"
+#import "UserObject.h"
+#import "ChatMessagesViewController.h"
 
 @interface ChatroomsTableViewController ()
+@property (nonatomic, strong) NSString *currentUser;
+@property (nonatomic, strong) NSString *currentUserDisplayName;
 
 @end
 
@@ -16,12 +20,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.chatrooms = [[NSMutableArray alloc] init];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    self.currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
+    NSString *chatroom = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/chatrooms", self.currentUser];
+    Firebase *chatroomsFirebase = [[Firebase alloc] initWithUrl:chatroom];
+    NSString *query = [NSString stringWithFormat:@"%@/time", self.currentUser];
+    [[chatroomsFirebase queryOrderedByChild:query]
+     observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
+        [self.chatrooms addObject:snapshot.value];
+        [self.tableView reloadData];
+    }];
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -32,24 +42,23 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+    return self.chatrooms.count;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"chatroomsCell" forIndexPath:indexPath];
+    NSDictionary *chatUsers = [self.chatrooms objectAtIndex:indexPath.row];
+    cell.textLabel.text = chatUsers[@"display"];
+    cell.detailTextLabel.text = chatUsers[@"newest"];
     
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -85,14 +94,22 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    ChatMessagesViewController *destinationVC = segue.destinationViewController;
+    NSIndexPath *indexPathOfRowTapped = self.tableView.indexPathForSelectedRow;
+    NSDictionary *chatUserAtIndex = self.chatrooms[indexPathOfRowTapped.row];
+    NSString *userToMessage = chatUserAtIndex[@"id"];
+    NSString *userToMessageDisplayName = chatUserAtIndex[@"display"];
+    destinationVC.userToMessage = userToMessage;
+    destinationVC.userToMessageDisplayName = userToMessageDisplayName;
+    
 }
-*/
+
 
 @end

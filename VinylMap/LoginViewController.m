@@ -26,6 +26,7 @@
 #import <SSKeychain.h>
 #import <SSKeychainQuery.h>
 #import "DiscogsAPI.h"
+#import "MyAlbumsViewController.h"
 
 
 @interface LoginViewController () <FBSDKLoginButtonDelegate, AccountCreationViewControllerDelegate, UITextFieldDelegate>
@@ -110,6 +111,9 @@
     [self updateFieldsIfLoggedIn];
 }
 
+- (IBAction)screenTapped:(id)sender {
+    [self.view endEditing:YES];
+}
 
 #pragma mark - text fields
 
@@ -124,6 +128,7 @@
     }
     
     return YES;
+    
 }
 
 
@@ -440,6 +445,7 @@
         self.createFirebaseAccount.userInteractionEnabled = YES;
         self.facebookLoginButton.userInteractionEnabled = YES;
     }];
+    
 }
 
 

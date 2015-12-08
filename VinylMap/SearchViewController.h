@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface SearchViewController : UIViewController
-
+- (void)setupFirebase;
 
 @end

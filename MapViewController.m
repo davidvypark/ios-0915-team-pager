@@ -14,7 +14,7 @@
 #import "AlbumDetailsViewController.h"
 
 
-@interface MapViewController () <MKMapViewDelegate, CLLocationManagerDelegate>
+@interface MapViewController () <MKMapViewDelegate, CLLocationManagerDelegate, UITabBarControllerDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (nonatomic, strong) GeoFire * geoFire;
@@ -51,8 +51,8 @@
     
 }
 
-- (void)viewDidAppear {
-[self updateOrSetupRegionQuery];
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    [self updateOrSetupRegionQuery];
 }
 
 
@@ -121,9 +121,7 @@
         self.regionQuery = [self.geoFire queryWithRegion:region];
         [self setupListeners:self.regionQuery];
     }
-    NSLog(@"Updated query to region [%f +/- %f, %f, +/- %f]",
-          region.center.latitude, region.span.latitudeDelta/2,
-          region.center.longitude, region.span.longitudeDelta/2);
+
 }
 
 - (void)setupListeners:(GFQuery *)query
@@ -135,7 +133,6 @@
         __block NSString *ownerOfKey = [[NSString alloc]init];
         __block VinylAnnotation *annotation = [[VinylAnnotation alloc] init];
         [albumOwner observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
-            NSLog(@"%@", snapshot.value[@"owner"]);
             ownerOfKey = snapshot.value[@"owner"];
             annotation.title = key;
             annotation.coordinate = location.coordinate;
@@ -186,7 +183,7 @@
     Firebase *detailsOfSaleItemFirebase = [[Firebase alloc] initWithUrl:detailsOfSaleItemFirebaseURL];
     
     
-    [detailsOfSaleItemFirebase observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+    [detailsOfSaleItemFirebase observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
         detailsOfSaleItem.albumName = snapshot.value[@"title"];
         detailsOfSaleItem.resourceURL = snapshot.value[@"resource_url"];
         detailsOfSaleItem.isBuyer = YES;
@@ -195,7 +192,7 @@
     
     NSString *saleItemOwnerDisplayName = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@", annView.owner];
     Firebase *ownerDisplayName = [[Firebase alloc]initWithUrl:saleItemOwnerDisplayName];
-    [ownerDisplayName observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+    [ownerDisplayName observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
         detailsOfSaleItem.albumOwnerDisplayName = snapshot.value[@"displayName"];
         [self.navigationController pushViewController:detailsOfSaleItem animated:YES];}];
         }

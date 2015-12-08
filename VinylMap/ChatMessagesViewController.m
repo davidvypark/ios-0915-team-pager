@@ -48,7 +48,7 @@
     self.currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
     NSString *displayName = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@", self.currentUser];
     Firebase *displayNameFirebase = [[Firebase alloc] initWithUrl:displayName];
-    [displayNameFirebase observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+    [displayNameFirebase observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
         self.currentUserDisplayName = snapshot.value[@"displayName"];
     }];
     
@@ -117,6 +117,15 @@
     // the FEventTypeChildAdded event will be immediately fired.
     NSString *messageParticipants = [NSString stringWithFormat:@"/%@%@", self.currentUser, self.userToMessage];
     NSString *reversemessageParticipants = [NSString stringWithFormat:@"/%@%@", self.userToMessage, self.currentUser];
+    NSString *chatRooms = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/chatrooms", self.currentUser];
+    NSString *chatroomsReverse = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/chatrooms", self.userToMessage];
+    Firebase *chatRoomsFirebase = [[Firebase alloc] initWithUrl:chatRooms];
+    Firebase *chatroomsReverseFirebase = [[Firebase alloc] initWithUrl:chatroomsReverse];
+    Firebase *chatRoomsRef = [chatRoomsFirebase childByAppendingPath:self.userToMessage];
+    [chatRoomsRef setValue:@{@"display" : self.userToMessageDisplayName, @"id" : self.userToMessage, @"time": kFirebaseServerValueTimestamp, @"newest": aTextField.text}];
+    Firebase *chatRoomsRefReverse = [chatroomsReverseFirebase childByAppendingPath:self.currentUser];
+    [chatRoomsRefReverse setValue:@{@"display" : self.currentUserDisplayName, @"id" : self.currentUser, @"time": kFirebaseServerValueTimestamp, @"newest": aTextField.text}];
+    
 
     Firebase *chatRoomMessages = [self.firebase childByAppendingPath:messageParticipants];
             Firebase *eachMessage = [chatRoomMessages childByAutoId];

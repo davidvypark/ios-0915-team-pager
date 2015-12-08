@@ -15,6 +15,7 @@
 @interface MyAlbumsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UITabBarControllerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollection;
 @property (nonatomic, strong) NSMutableArray *albums;
+@property (nonatomic, strong) NSString * currentUser;
 
 @end
 
@@ -25,25 +26,34 @@
     self.myCollection.delegate = self;
     self.myCollection.dataSource = self;
     self.tabBarController.delegate = self;
-    [self setUpUserCollection];
+    if ([UserObject sharedUser].firebaseRoot.authData) {
+        [self setUpUserCollection];
+    }
+    
 }
 
 - (void)setUpUserCollection {
-    NSString *currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
-    NSString *firebaseRefUrl = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection", currentUser];
-    self.firebaseRef = [[Firebase alloc] initWithUrl:firebaseRefUrl];
-    self.albums = [[NSMutableArray alloc] init];
-    [self.firebaseRef observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
-        [self.albums addObject:snapshot.value];
-        [self.myCollection reloadData];
-    }];
-    [self.firebaseRef observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
-        [self.myCollection reloadData];
-    }];
+        self.currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
+        NSString *firebaseRefUrl = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection", self.currentUser];
+        self.firebaseRef = [[Firebase alloc] initWithUrl:firebaseRefUrl];
+        self.albums = [[NSMutableArray alloc] init];
+        [self.firebaseRef observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
+            [self.albums addObject:snapshot.value];
+            [self.myCollection reloadData];
+        }];
+        [self.firebaseRef observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+            [self.myCollection reloadData];
+        }];
 }
 
-- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-    [self setUpUserCollection];
+- (void)viewWillAppear:(BOOL)animated {
+    if (![UserObject sharedUser].firebaseRoot.authData) {
+        self.albums = [[NSMutableArray alloc] init];
+        [self.myCollection reloadData];
+    }
+    else if (![self.currentUser isEqualToString:[UserObject sharedUser].firebaseRoot.authData.uid]) {
+        [self setUpUserCollection];}
+    else [self.myCollection reloadData];
 }
 
 - (void)didReceiveMemoryWarning {

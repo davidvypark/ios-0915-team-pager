@@ -16,7 +16,7 @@
 #import "DiscogsAPI.h"
 #import "UserObject.h"
 
-@interface SearchViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, BarCodeViewControllerDelegate>
+@interface SearchViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, BarCodeViewControllerDelegate, UITabBarControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *searchField;
 @property (weak, nonatomic) IBOutlet UITableView *searchTableView;
 @property (nonatomic, strong) NSMutableArray *albumResults;
@@ -34,18 +34,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view.
     self.searchField.delegate = self;
     self.searchTableView.delegate = self;
     self.searchTableView.dataSource = self;
+    self.tabBarController.delegate = self;
     self.albumResults = [NSMutableArray new];
-    NSString *currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
-    NSString *firebaseRefUrl = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection", currentUser];
-    self.firebase = [[Firebase alloc] initWithUrl:firebaseRefUrl];
+    [self setupFirebase];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [self setupFirebase];
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField {
     
+}
+
+- (void)setupFirebase{
+    NSString *currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
+    NSString *firebaseRefUrl = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection", currentUser];
+    self.firebase = [[Firebase alloc] initWithUrl:firebaseRefUrl];
 }
 
 -(BOOL) textFieldShouldReturn:(UITextField *)textField {
