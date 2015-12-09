@@ -20,6 +20,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated{
     self.chatrooms = [[NSMutableArray alloc] init];
     
     self.currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
@@ -28,10 +32,10 @@
     NSString *query = [NSString stringWithFormat:@"%@/time", self.currentUser];
     [[chatroomsFirebase queryOrderedByChild:query]
      observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
-        [self.chatrooms addObject:snapshot.value];
-        [self.tableView reloadData];
-    }];
-    
+         [self.chatrooms addObject:snapshot.value];
+         [self.tableView reloadData];
+     }];
+
 }
 
 - (void)didReceiveMemoryWarning {

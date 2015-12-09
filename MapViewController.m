@@ -33,10 +33,6 @@
     self.locationManager = [[CLLocationManager alloc]init];
     self.mapView.delegate = self;
     self.locationManager.delegate = self;
-    // Do any additional setup after loading the view.
-    Firebase *geofireRef = [[Firebase alloc] initWithUrl:@"https://amber-torch-8635.firebaseio.com/geofire"];
-    self.geoFire = [[GeoFire alloc] initWithFirebaseRef:geofireRef];
-    
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [self.locationManager requestWhenInUseAuthorization];
         [self.locationManager startUpdatingLocation];
@@ -45,7 +41,14 @@
     }
     else {[self.locationManager startUpdatingLocation];
         self.mapView.showsUserLocation = YES;
-}
+    }
+   
+
+    // Do any additional setup after loading the view.
+    Firebase *geofireRef = [[Firebase alloc] initWithUrl:@"https://amber-torch-8635.firebaseio.com/geofire"];
+    self.geoFire = [[GeoFire alloc] initWithFirebaseRef:geofireRef];
+    
+
     
     self.vinylAnnotations = [NSMutableDictionary dictionary];
     
