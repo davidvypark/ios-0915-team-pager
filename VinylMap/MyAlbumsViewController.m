@@ -87,7 +87,8 @@
     [cell.albumLabel setText:self.store.albums[indexPath.row][@"title"]];
     [cell.artistLabel setText:self.store.albums[indexPath.row][@"artist"]];
     NSURL *albumArtURL = [NSURL URLWithString:self.store.albums[indexPath.row][@"imageURL"]];
-    UIImage *albumImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:albumArtURL]];
+    [cell.albumArtView setImageWithURL:albumArtURL];
+    UIImage *albumImage = cell.albumArtView.image;
     CGFloat imageWidth = albumImage.size.width;
     albumImage = [UIImage imageWithCGImage:albumImage.CGImage scale:imageWidth/self.squareSize orientation:albumImage.imageOrientation];
     NSLog(@"%1.1f",albumImage.size.width);
