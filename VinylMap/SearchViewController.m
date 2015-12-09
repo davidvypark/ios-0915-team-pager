@@ -141,7 +141,9 @@
                     @"imageURL": resultAlbum.thumbnailURL,
                           @"ID": album.key,
                  @"resourceURL": resultAlbum.resourceURL}];
-    //[self.searchTableView reloadData];
+    [sender setTitle:@"✔︎" forState:UIControlStateNormal];
+    sender.enabled = NO;
+    [self.searchTableView reloadData];
 }
 
 
