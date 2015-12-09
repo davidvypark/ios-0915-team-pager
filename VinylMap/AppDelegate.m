@@ -21,6 +21,7 @@
 #import <SSKeychain.h>
 #import <SSKeychainQuery.h>
 #import "DiscogsAPI.h"
+#import "AlbumCollectionDataStore.h"
 
 @interface AppDelegate  () <GIDSignInDelegate>
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
@@ -37,6 +38,7 @@
     [UserObject sharedUser].facebookUserID = [FBSDKAccessToken currentAccessToken].userID;
     [self setUpFirebase];
     [DiscogsAPI pullDiscogsTokenSecret];
+    [AlbumCollectionDataStore sharedDataStore];
     
     return YES;
 }
@@ -92,6 +94,9 @@
     //GOOGLE'S APP DELEGATE FOR SIGN IN
     
 }
+
+
+#pragma mark - opening URIs
 
 -(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options
 {
@@ -152,10 +157,12 @@
             if([queryItem.name isEqualToString:@"oauth_token_secret"])
             {
                 [UserObject sharedUser].discogsTokenSecret = queryItem.value;
+                [UserObject sharedUser].prelimDiscogsTokenSecret = queryItem.value;
                 NSLog(@"OAuth Final Secret %@",queryItem.value);
             } else if ([queryItem.name isEqualToString:@"oauth_token"])
             {
                 [UserObject sharedUser].discogsRequestToken = queryItem.value;
+                [UserObject sharedUser].prelimDiscogsRequestToken = queryItem.value;
                 NSLog(@"OAuth Final Token %@",queryItem.value);
             }
         }
@@ -164,19 +171,35 @@
         [SSKeychain setPassword:[UserObject sharedUser].discogsTokenSecret
                      forService:DISCOGS_KEYCHAIN
                         account:[UserObject sharedUser].discogsRequestToken error:&error];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:DISCOGS_LOGIN_NOTIFICATION object:nil];
+        
         if(error)
         {
             NSLog(@"%@",error);
         }
+        
+        self.manager.responseSerializer = [AFHTTPSessionManager manager].responseSerializer;
+        [self.manager GET:@"https://api.discogs.com/oauth/identity" parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+            NSLog(@"%@",responseObject);
+            
+            [DiscogsAPI populateUserObjectWithStrings:responseObject];
+            
+            
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            NSLog(@"get identity error: %@",error);
+        }];
         
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@", error);
     }];
     
+    
+    
 }
 
-
+#pragma marks - defaults and no rotation
 
 -(UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {

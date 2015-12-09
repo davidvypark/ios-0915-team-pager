@@ -17,7 +17,6 @@
     album.artist = artistAndTitle.firstObject;
     album.title = artistAndTitle.lastObject;
     NSArray *barcodes = dictionary[@"barcode"];
-    //album.barcode = barcodes.firstObject;
     album.recordLabels = dictionary[@"label"];
     album.country = dictionary[@"country"];
     album.resourceURL = dictionary[@"resource_url"];

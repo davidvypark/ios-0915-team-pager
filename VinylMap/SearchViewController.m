@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *searchField;
 @property (weak, nonatomic) IBOutlet UITableView *searchTableView;
 @property (nonatomic, strong) NSMutableArray *albumResults;
+@property (nonatomic, strong) NSMutableArray *holdingTheCategoryNumbers;
 @property (nonatomic, strong) Firebase *firebase;
 @property (nonatomic, strong) NSMutableArray* collection;
 @property (strong, nonatomic) NSIndexPath *cellIndexPath;
@@ -53,6 +54,7 @@
     NSString *searchKeyword = self.searchField.text;
     searchKeyword = [searchKeyword stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
+    
     NSString *discogsURL = [NSString stringWithFormat:@"https://api.discogs.com/database/search?q=%@&type=title&key=%@&secret=%@", searchKeyword, DISCOGS_CONSUMER_KEY, DISCOGS_CONSUMER_SECRET];
     [manager GET:discogsURL parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
         
@@ -63,10 +65,10 @@
             [self.albumResults removeAllObjects];
             
             
-            NSMutableArray *holdingTheCategoryNumbers = [NSMutableArray new];
+            self.holdingTheCategoryNumbers = [NSMutableArray new];
             for (NSDictionary *album in self.store.albums) {
                 NSString *categoryNumber = album[@"categoryNumber"];
-                [holdingTheCategoryNumbers addObject: categoryNumber];
+                [self.holdingTheCategoryNumbers addObject: categoryNumber];
             }
             
             for (NSDictionary *result in resultsArray) {
@@ -76,7 +78,7 @@
                 if ([result[@"format"] containsObject:@"Vinyl"]) {
                     NSString *categoryNumberOfResult = result[@"catno"];
                     
-                    if ([holdingTheCategoryNumbers containsObject:categoryNumberOfResult]) {
+                    if ([self.holdingTheCategoryNumbers containsObject:categoryNumberOfResult]) {
                         mutableResult[@"hasBeenAdded"] = @"YES";
                     }
                     [self.albumResults addObject:mutableResult];
@@ -130,7 +132,6 @@
                     @"imageURL": resultAlbum.thumbnailURL,
                           @"ID": album.key,
                  @"resourceURL": resultAlbum.resourceURL}];
-    //[self.searchTableView reloadData];
 }
 
 
@@ -139,7 +140,7 @@
     NSMutableString *albumInfo = [NSMutableString new];
     NSDictionary *result = self.albumResults[indexPath.row];
     NSArray *recordLabels = result[@"label"];
-
+    
     NSString *recordLabel;
     if (!recordLabels.firstObject) {
         recordLabel = @"";
@@ -162,11 +163,18 @@
     //cell.albumInfoLabel.text = albumInfo;
     
     NSURL *albumArtURL = [NSURL URLWithString:result[@"thumb"]];
+    
     [cell.albumView setImageWithURL:albumArtURL];
-    if ([result[@"hasBeenAdded"] isEqualToString:@"YES"]) {
+    if ([self.holdingTheCategoryNumbers containsObject:result[@"catno"]]) {
         [cell.addButton setTitle:@"✔︎" forState:UIControlStateNormal];
         cell.addButton.enabled = NO;
+    } else
+    {
+        [cell.addButton setTitle:@"+" forState:UIControlStateNormal];
+        cell.addButton.enabled = YES;
     }
+    
+    
     return cell;
 }
 

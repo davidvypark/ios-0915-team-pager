@@ -54,7 +54,7 @@
     }];
     [self.firebaseRef observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
         
-        NSLog(@"observeSingleEventOfType");
+//        NSLog(@"observeSingleEventOfType");
         [self.myCollection reloadData];
     }];
 }
@@ -86,8 +86,6 @@
     UIImage *albumImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:albumArtURL]];
     CGFloat imageWidth = albumImage.size.width;
     albumImage = [UIImage imageWithCGImage:albumImage.CGImage scale:imageWidth/self.squareSize orientation:albumImage.imageOrientation];
-    NSLog(@"%1.1f",albumImage.size.width);
-    NSLog(@"%1.1f",self.squareSize);
     [cell.albumArtView setImage:albumImage];
     
     return cell;
