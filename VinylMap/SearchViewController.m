@@ -132,7 +132,7 @@
     Album *resultAlbum = [Album albumFromResultDictionary:result];
     [album setValue:@{@"artist": resultAlbum.artist,
                        @"title": resultAlbum.title,
-//                     @"barcode": resultAlbum.barcode,
+                     //@"barcode": resultAlbum.barcode,
                 @"recordLabels": resultAlbum.recordLabels,
                      @"country": resultAlbum.country,
                  @"releaseYear": @(resultAlbum.releaseYear),
