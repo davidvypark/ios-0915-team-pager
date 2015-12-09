@@ -14,7 +14,7 @@
 #import "AlbumDetailsViewController.h"
 
 
-@interface MapViewController () <MKMapViewDelegate, CLLocationManagerDelegate>
+@interface MapViewController () <MKMapViewDelegate, CLLocationManagerDelegate, UITabBarControllerDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (nonatomic, strong) GeoFire * geoFire;
@@ -33,10 +33,6 @@
     self.locationManager = [[CLLocationManager alloc]init];
     self.mapView.delegate = self;
     self.locationManager.delegate = self;
-    // Do any additional setup after loading the view.
-    Firebase *geofireRef = [[Firebase alloc] initWithUrl:@"https://amber-torch-8635.firebaseio.com/geofire"];
-    self.geoFire = [[GeoFire alloc] initWithFirebaseRef:geofireRef];
-    
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [self.locationManager requestWhenInUseAuthorization];
         [self.locationManager startUpdatingLocation];
@@ -45,14 +41,21 @@
     }
     else {[self.locationManager startUpdatingLocation];
         self.mapView.showsUserLocation = YES;
-}
+    }
+   
+
+    // Do any additional setup after loading the view.
+    Firebase *geofireRef = [[Firebase alloc] initWithUrl:@"https://amber-torch-8635.firebaseio.com/geofire"];
+    self.geoFire = [[GeoFire alloc] initWithFirebaseRef:geofireRef];
+    
+
     
     self.vinylAnnotations = [NSMutableDictionary dictionary];
     
 }
 
-- (void)viewDidAppear {
-[self updateOrSetupRegionQuery];
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    [self updateOrSetupRegionQuery];
 }
 
 
@@ -121,9 +124,7 @@
         self.regionQuery = [self.geoFire queryWithRegion:region];
         [self setupListeners:self.regionQuery];
     }
-    NSLog(@"Updated query to region [%f +/- %f, %f, +/- %f]",
-          region.center.latitude, region.span.latitudeDelta/2,
-          region.center.longitude, region.span.longitudeDelta/2);
+
 }
 
 - (void)setupListeners:(GFQuery *)query
@@ -135,7 +136,6 @@
         __block NSString *ownerOfKey = [[NSString alloc]init];
         __block VinylAnnotation *annotation = [[VinylAnnotation alloc] init];
         [albumOwner observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
-            NSLog(@"%@", snapshot.value[@"owner"]);
             ownerOfKey = snapshot.value[@"owner"];
             annotation.title = key;
             annotation.coordinate = location.coordinate;
@@ -185,7 +185,6 @@
     NSString *detailsOfSaleItemFirebaseURL = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection/%@", annView.owner, annView.annotationKey];
     Firebase *detailsOfSaleItemFirebase = [[Firebase alloc] initWithUrl:detailsOfSaleItemFirebaseURL];
     
-    
     [detailsOfSaleItemFirebase observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
         detailsOfSaleItem.albumDict = snapshot.value;
         detailsOfSaleItem.albumDict[@"ID"] = annView.annotationKey;
@@ -195,7 +194,7 @@
     
     NSString *saleItemOwnerDisplayName = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@", annView.owner];
     Firebase *ownerDisplayName = [[Firebase alloc]initWithUrl:saleItemOwnerDisplayName];
-    [ownerDisplayName observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+    [ownerDisplayName observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
         detailsOfSaleItem.albumOwnerDisplayName = snapshot.value[@"displayName"];
         [self.navigationController pushViewController:detailsOfSaleItem animated:YES];}];
         }

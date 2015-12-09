@@ -16,10 +16,12 @@
 @interface MyAlbumsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UITabBarControllerDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollection;
 @property (nonatomic, strong) NSMutableArray *albums;
+@property (nonatomic, strong) NSString * currentUser;
 @property (nonatomic, assign) CGFloat screenWidth;
 @property (nonatomic, assign) CGFloat screenHeight;
 @property (nonatomic, assign) CGFloat squareSize;
 @property (nonatomic, strong) NSDictionary *albumToBeDeleted;
+
 
 @end
 
@@ -34,13 +36,16 @@
     self.myCollection.delegate = self;
     self.myCollection.dataSource = self;
     self.tabBarController.delegate = self;
+
     UILongPressGestureRecognizer *longPressGR = [[UILongPressGestureRecognizer alloc]
        initWithTarget:self action:@selector(handleLongPress:)];
     longPressGR.delegate = self;
     longPressGR.delaysTouchesBegan = YES;
     [self.myCollection addGestureRecognizer:longPressGR];
-    [self setUpUserCollection];
-    self.store = [AlbumCollectionDataStore sharedDataStore];
+    if ([UserObject sharedUser].firebaseRoot.authData) {
+        [self setUpUserCollection];
+        self.store = [AlbumCollectionDataStore sharedDataStore];
+    }
 }
 
 - (void)setUpUserCollection {
@@ -61,10 +66,18 @@
         NSLog(@"observeSingleEventOfType");
         [self.myCollection reloadData];
     }];
+    
 }
 
-- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-    [self setUpUserCollection];
+
+- (void)viewWillAppear:(BOOL)animated {
+    if (![UserObject sharedUser].firebaseRoot.authData) {
+        self.albums = [[NSMutableArray alloc] init];
+        [self.myCollection reloadData];
+    }
+    else if (![self.currentUser isEqualToString:[UserObject sharedUser].firebaseRoot.authData.uid]) {
+        [self setUpUserCollection];}
+    else [self.myCollection reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -77,6 +90,7 @@
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    NSLog(@"%@",self.albums);
     return self.albums.count;
 }
 
@@ -84,9 +98,9 @@
     
     AlbumCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"albumCell" forIndexPath:indexPath];
 //    AlbumCollectionViewCell *cell = [[AlbumCollectionViewCell alloc] initWithFrame:CGRectMake(0, 0, self.squareSize, self.squareSize)]
-    [cell.albumLabel setText:self.store.albums[indexPath.row][@"title"]];
-    [cell.artistLabel setText:self.store.albums[indexPath.row][@"artist"]];
-    NSURL *albumArtURL = [NSURL URLWithString:self.store.albums[indexPath.row][@"imageURL"]];
+    [cell.albumLabel setText:self.albums[indexPath.row][@"title"]];
+    [cell.artistLabel setText:self.albums[indexPath.row][@"artist"]];
+    NSURL *albumArtURL = [NSURL URLWithString:self.albums[indexPath.row][@"imageURL"]];
     [cell.albumArtView setImageWithURL:albumArtURL];
     UIImage *albumImage = cell.albumArtView.image;
     CGFloat imageWidth = albumImage.size.width;
