@@ -10,4 +10,7 @@
 
 @interface ChatroomsTableViewController : UITableViewController
 
+@property (nonatomic, strong) NSMutableArray* chatrooms;
+
+
 @end

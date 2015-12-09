@@ -17,7 +17,7 @@
 #import "UserObject.h"
 #import "Album.h"
 
-@interface SearchViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, BarCodeViewControllerDelegate>
+@interface SearchViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, BarCodeViewControllerDelegate, UITabBarControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *searchField;
 @property (weak, nonatomic) IBOutlet UITableView *searchTableView;
 @property (nonatomic, strong) NSMutableArray *albumResults;
@@ -36,15 +36,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view.
     self.searchField.delegate = self;
     self.searchTableView.delegate = self;
     self.searchTableView.dataSource = self;
+    self.tabBarController.delegate = self;
     self.albumResults = [NSMutableArray new];
+    [self setupFirebase];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [self setupFirebase];
+}
+
+- (void)setupFirebase{
     NSString *currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
     NSString *firebaseRefUrl = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection", currentUser];
     self.firebase = [[Firebase alloc] initWithUrl:firebaseRefUrl];
     self.store = [AlbumCollectionDataStore sharedDataStore];
+    NSLog(@"Albums: %@", self.store.albums);
 }
 
 -(BOOL) textFieldShouldReturn:(UITextField *)textField {
@@ -124,7 +135,7 @@
     Album *resultAlbum = [Album albumFromResultDictionary:result];
     [album setValue:@{@"artist": resultAlbum.artist,
                        @"title": resultAlbum.title,
-                     @"barcode": resultAlbum.barcode,
+                     //@"barcode": resultAlbum.barcode,
                 @"recordLabels": resultAlbum.recordLabels,
                      @"country": resultAlbum.country,
                  @"releaseYear": @(resultAlbum.releaseYear),

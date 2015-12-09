@@ -13,13 +13,14 @@
 #import "UserObject.h"
 #import <Masonry.h>
 
-@interface MyAlbumsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UITabBarControllerDelegate>
+@interface MyAlbumsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UITabBarControllerDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollection;
 @property (nonatomic, strong) NSMutableArray *albums;
+@property (nonatomic, strong) NSString * currentUser;
 @property (nonatomic, assign) CGFloat screenWidth;
 @property (nonatomic, assign) CGFloat screenHeight;
 @property (nonatomic, assign) CGFloat squareSize;
-
+@property (nonatomic, strong) NSDictionary *albumToBeDeleted;
 
 
 @end
@@ -35,8 +36,16 @@
     self.myCollection.delegate = self;
     self.myCollection.dataSource = self;
     self.tabBarController.delegate = self;
-    [self setUpUserCollection];
-    self.store = [AlbumCollectionDataStore sharedDataStore];
+
+    UILongPressGestureRecognizer *longPressGR = [[UILongPressGestureRecognizer alloc]
+       initWithTarget:self action:@selector(handleLongPress:)];
+    longPressGR.delegate = self;
+    longPressGR.delaysTouchesBegan = YES;
+    [self.myCollection addGestureRecognizer:longPressGR];
+    if ([UserObject sharedUser].firebaseRoot.authData) {
+        [self setUpUserCollection];
+        self.store = [AlbumCollectionDataStore sharedDataStore];
+    }
 }
 
 - (void)setUpUserCollection {
@@ -49,7 +58,7 @@
 //        NSLog(@"eventTypeChildAdded");
         
         [self.albums addObject:snapshot.value];
-        self.store.albums = self.albums;
+        self.store.albums = [self.albums mutableCopy];
         [self.myCollection reloadData];
     }];
     [self.firebaseRef observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
@@ -57,10 +66,18 @@
 //        NSLog(@"observeSingleEventOfType");
         [self.myCollection reloadData];
     }];
+    
 }
 
-- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-    [self setUpUserCollection];
+
+- (void)viewWillAppear:(BOOL)animated {
+    if (![UserObject sharedUser].firebaseRoot.authData) {
+        self.albums = [[NSMutableArray alloc] init];
+        [self.myCollection reloadData];
+    }
+    else if (![self.currentUser isEqualToString:[UserObject sharedUser].firebaseRoot.authData.uid]) {
+        [self setUpUserCollection];}
+    else [self.myCollection reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -73,6 +90,7 @@
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    NSLog(@"%@",self.albums);
     return self.albums.count;
 }
 
@@ -83,7 +101,8 @@
     [cell.albumLabel setText:self.albums[indexPath.row][@"title"]];
     [cell.artistLabel setText:self.albums[indexPath.row][@"artist"]];
     NSURL *albumArtURL = [NSURL URLWithString:self.albums[indexPath.row][@"imageURL"]];
-    UIImage *albumImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:albumArtURL]];
+    [cell.albumArtView setImageWithURL:albumArtURL];
+    UIImage *albumImage = cell.albumArtView.image;
     CGFloat imageWidth = albumImage.size.width;
     albumImage = [UIImage imageWithCGImage:albumImage.CGImage scale:imageWidth/self.squareSize orientation:albumImage.imageOrientation];
     [cell.albumArtView setImage:albumImage];
@@ -110,8 +129,56 @@
     return 00;
 }
 
+-(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
+{
+    CGPoint point = [gestureRecognizer locationInView:self.myCollection];
+    
+    NSIndexPath *indexPath = [self.myCollection indexPathForItemAtPoint:point];
+    if (indexPath == nil){
+        NSLog(@"couldn't find index path");
+    } else {
+        NSDictionary *album = self.albums[indexPath.row];
+        self.albumToBeDeleted = album;
+        [self displayDeleteAlertForAlbum:album[@"title"]];
+    }
+}
 
- #pragma mark - Navigation
+- (void)displayDeleteAlertForAlbum: (NSString *)albumName {
+    NSString *alertMessage = [NSString stringWithFormat:@"You are about to delete %@ from your collection. Are you sure?", albumName];
+    UIAlertController *alert=   [UIAlertController
+                                 alertControllerWithTitle:@"Alert!"
+                                 message:alertMessage
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* cancel = [UIAlertAction
+                             actionWithTitle:@"Cancel"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction *action)
+                             {
+                                 [alert dismissViewControllerAnimated:YES completion:nil];
+                             }];
+    UIAlertAction* delete = [UIAlertAction
+                             actionWithTitle:@"Delete"
+                             style:UIAlertActionStyleDestructive
+                             handler:^(UIAlertAction *action) {
+                                 [self deleteAlbumFromCollection];
+                                 [alert dismissViewControllerAnimated:YES completion:nil];
+                             }];
+    [alert addAction:cancel];
+    [alert addAction:delete];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+
+- (void)deleteAlbumFromCollection {
+    NSString *albumID = self.albumToBeDeleted[@"ID"];
+    NSString *currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
+    NSString *albumToBeDeletedURL = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection/%@", currentUser, albumID];
+    Firebase *deleteAlbumRef = [[Firebase alloc] initWithUrl:albumToBeDeletedURL];
+    [self.store.albums removeObject:self.albumToBeDeleted];
+    [deleteAlbumRef removeValue];
+    [self.myCollection reloadData];
+    
+}
 
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
      AlbumDetailsViewController *destinationVC = segue.destinationViewController;

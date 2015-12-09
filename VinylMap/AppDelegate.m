@@ -22,9 +22,12 @@
 #import <SSKeychainQuery.h>
 #import "DiscogsAPI.h"
 #import "AlbumCollectionDataStore.h"
+#import "LoginViewController.h"
 
-@interface AppDelegate  () <GIDSignInDelegate>
+
+@interface AppDelegate  () <GIDSignInDelegate, UITabBarControllerDelegate>
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
+@property (nonatomic, strong) UITabBarController *tabBarController;
 
 @end
 
@@ -39,10 +42,19 @@
     [self setUpFirebase];
     [DiscogsAPI pullDiscogsTokenSecret];
     [AlbumCollectionDataStore sharedDataStore];
+    self.tabBarController.delegate = self;
     
     return YES;
 }
 
+//-(void) showLoginScreen:(BOOL)animated{
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//    LoginViewController *viewController = (LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+//    [self.window makeKeyAndVisible];
+//    [self.window.rootViewController presentViewController:viewController
+//                                                 animated:animated
+//                                               completion:nil];
+//}
 
 -(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
