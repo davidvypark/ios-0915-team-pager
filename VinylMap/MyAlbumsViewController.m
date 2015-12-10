@@ -12,6 +12,7 @@
 #import "AlbumDetailsViewController.h"
 #import "UserObject.h"
 #import <Masonry.h>
+#import "LoginViewController.h"
 
 @interface MyAlbumsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UITabBarControllerDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollection;
@@ -21,7 +22,6 @@
 @property (nonatomic, assign) CGFloat screenHeight;
 @property (nonatomic, assign) CGFloat squareSize;
 @property (nonatomic, strong) NSDictionary *albumToBeDeleted;
-
 
 @end
 
@@ -48,6 +48,8 @@
     }
 }
 
+
+
 - (void)setUpUserCollection {
     NSString *currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
     NSString *firebaseRefUrl = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection", currentUser];
@@ -69,6 +71,21 @@
     
 }
 
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if(![UserObject sharedUser].firebaseRoot.authData) {
+        [self showLoginScreen];
+    }
+}
+
+- (void)showLoginScreen
+{
+    // Get login screen from storyboard and present it
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    LoginViewController *viewController = (LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"InitialLoginVC"];
+    viewController.modalOne = YES;
+    [self presentViewController:viewController animated:NO completion:nil];
+}
 
 - (void)viewWillAppear:(BOOL)animated {
     if (![UserObject sharedUser].firebaseRoot.authData) {
@@ -90,7 +107,7 @@
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    NSLog(@"%@",self.albums);
+    //NSLog(@"%@",self.albums);
     return self.albums.count;
 }
 

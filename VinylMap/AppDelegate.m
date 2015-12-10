@@ -23,7 +23,7 @@
 #import "DiscogsAPI.h"
 #import "AlbumCollectionDataStore.h"
 #import "LoginViewController.h"
-
+#import "InitialLoginViewController.h"
 
 @interface AppDelegate  () <GIDSignInDelegate, UITabBarControllerDelegate>
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
@@ -43,18 +43,9 @@
     [DiscogsAPI pullDiscogsTokenSecret];
     [AlbumCollectionDataStore sharedDataStore];
     self.tabBarController.delegate = self;
-    
+    NSLog(@"%@",[UserObject sharedUser].firebaseRoot.authData);
     return YES;
 }
-
-//-(void) showLoginScreen:(BOOL)animated{
-//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    LoginViewController *viewController = (LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-//    [self.window makeKeyAndVisible];
-//    [self.window.rootViewController presentViewController:viewController
-//                                                 animated:animated
-//                                               completion:nil];
-//}
 
 -(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {

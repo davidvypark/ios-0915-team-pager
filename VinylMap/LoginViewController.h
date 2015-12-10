@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface LoginViewController : UIViewController
+@property (nonatomic, assign) bool modalOne;
 
 @end

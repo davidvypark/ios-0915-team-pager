@@ -107,6 +107,9 @@
     }];
     
     
+    NSLog(@"WHATS UP!!!!!!");
+   
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -119,6 +122,8 @@
 - (IBAction)screenTapped:(id)sender {
     [self.view endEditing:YES];
 }
+
+
 
 #pragma mark - text fields
 
@@ -154,6 +159,7 @@
         self.emailAddressField.text = nil;
         self.passwordField.text = nil;
     }
+    
 }
 
 
@@ -190,7 +196,7 @@
         [self.discogsLoginButton setTitle:@"Link Discogs account" forState:UIControlStateNormal];
         [self.view addSubview:self.discogsLoginButton];
         [self.arrayOfButtons addObject:self.discogsLoginButton];
-        
+        [self dismissViewControllerAnimated:YES completion:nil];
         
     } else  //USER IS NOT LOGGED IN
     {
@@ -273,6 +279,11 @@
         self.discogsLoginButton.userInteractionEnabled = NO;
         self.discogsLoginButton.enabled = NO;
         [self.discogsLoginButton setTitle:@"Must login to link Discogs" forState:UIControlStateNormal];
+    }
+    if ([UserObject sharedUser].firebaseRoot.authData && self.modalOne) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [UserObject sharedUser].loggedInOnce = YES;
+        }];
     }
 }
 
@@ -440,6 +451,7 @@
 -(void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton
 {
     [self logoutOfFirebase];
+    [self showLoginScreen];
     [self viewDidAppear:YES];
 }
 
@@ -455,8 +467,9 @@
 -(void)firebaseLoginClicked
 {
     
-    [self loginToFirebase:self.emailAddressField.text password:self.passwordField.text withCompletion:^(bool loginResult) {
-        //completion
+    [self loginToFirebase:self.emailAddressField.text password:self.passwordField.text withCompletion:^(bool loginResult)
+    {
+        
     }];
 }
 
@@ -493,8 +506,17 @@
     [FBSDKAccessToken setCurrentAccessToken:nil];
     [DiscogsAPI removeDiscogsKeychain];
     [self viewDidAppear:YES];
+    [self showLoginScreen];
 }
 
+- (void)showLoginScreen
+{
+    // Get login screen from storyboard and present it
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    LoginViewController *viewController = (LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"InitialLoginVC"];
+    viewController.modalOne = YES;
+    [self presentViewController:viewController animated:NO completion:nil];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

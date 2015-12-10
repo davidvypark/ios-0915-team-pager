@@ -475,10 +475,28 @@
             </objects>
             <point key="canvasLocation" x="-999" y="-596"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Login View Controller-->
+        <scene sceneID="0sk-X4-AGr">
+            <objects>
+                <viewController storyboardIdentifier="InitialLoginVC" id="tR5-FK-eCg" customClass="LoginViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Duh-tw-CQW"/>
+                        <viewControllerLayoutGuide type="bottom" id="vuF-2B-BDX"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Lb3-va-ZwA">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tFn-m5-GBn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2705" y="-208"/>
+        </scene>
+        <!--tabBarVC-->
         <scene sceneID="6W0-Yb-W7k">
             <objects>
-                <tabBarController id="a4g-6U-oqw" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabBarVC" title="tabBarVC" id="a4g-6U-oqw" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="JO3-A0-bvY">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
