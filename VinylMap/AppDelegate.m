@@ -23,7 +23,7 @@
 #import "DiscogsAPI.h"
 #import "AlbumCollectionDataStore.h"
 #import "LoginViewController.h"
-
+#import "InitialLoginViewController.h"
 
 @interface AppDelegate  () <GIDSignInDelegate>
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
@@ -43,9 +43,11 @@
     [DiscogsAPI pullDiscogsTokenSecret];
     [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert categories:[NSSet setWithObject:@"GLOBAL"]]];
     [AlbumCollectionDataStore sharedDataStore];
-    
+    NSLog(@"%@",[UserObject sharedUser].firebaseRoot.authData);
+
     return YES;
 }
+
 
 //-(void) showLoginScreen:(BOOL)animated{
 //    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -55,7 +57,6 @@
 //                                                 animated:animated
 //                                               completion:nil];
 //}
-
 
 -(void)setUpFirebase
 {

@@ -34,6 +34,7 @@
 @property (nonatomic, strong) NSString *prelimDiscogsTokenSecret;
 @property (nonatomic, strong) NSString *prelimDiscogsRequestToken;
 @property (nonatomic, strong) NSString *discogsOAuthVerifier;
+@property (nonatomic, assign) bool loggedInOnce;
 
 + (instancetype)sharedUser;
 
