@@ -149,13 +149,13 @@
 
     else if (([self.sellSwitch isOn] || [self.tradeSwitch isOn]) && self.albumLocation) {
         if ([self.sellSwitch isOn]  && self.priceLabel.text.length == 0) {
-            UIAlertController *priceAlertController = [UIAlertController
-                                                       alertControllerWithTitle:@"Enter a price"
-                                                       message:@"A price must be entered"
+            UIAlertController *priceAlertController =[UIAlertController
+                                                      alertControllerWithTitle:@"Enter a price"
+                                                      message:@"A price must be entered"
                                                        preferredStyle:UIAlertControllerStyleAlert];
-                [priceAlertController addAction:okAction];
-                [self presentViewController:priceAlertController animated:YES completion:nil];
-            }
+            [priceAlertController addAction:okAction];
+            [self presentViewController:priceAlertController animated:YES completion:nil];
+        }
         else {
             __unsafe_unretained typeof(self) weakSelf = self;
             [self.geoFire setLocation:[[CLLocation alloc] initWithLatitude:self.albumLocation.coordinate.latitude longitude:self.albumLocation.coordinate.longitude] forKey:self.ID withCompletionBlock:^(NSError *error) {
@@ -168,7 +168,7 @@
                 }
                 else {
                     
-                    [albumKey updateChildValues:@{@"owner" : weakSelf.currentUser, @"price" : weakSelf.priceLabel.text, @"sale" : [NSNumber numberWithBool:weakSelf.sellSwitch] , @"trade": [NSNumber numberWithBool:weakSelf.tradeSwitch]} ];
+    [albumKey updateChildValues:@{@"owner" : weakSelf.currentUser, @"artist": weakSelf.albumArtist, @"title": weakSelf.albumName, @"imageURL": weakSelf.albumURL, @"price" : weakSelf.priceLabel.text, @"sale" : [NSNumber numberWithBool:weakSelf.forSale] , @"trade": [NSNumber numberWithBool:weakSelf.forTrade]} ];
                     [weakSelf dismissViewControllerAnimated:YES completion:nil];
                 }
             }];}

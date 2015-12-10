@@ -14,12 +14,13 @@
 #import "AlbumDetailsViewController.h"
 
 
-@interface MapViewController () <MKMapViewDelegate, CLLocationManagerDelegate, UITabBarControllerDelegate>
+@interface MapViewController () <MKMapViewDelegate, CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (nonatomic, strong) GeoFire * geoFire;
 @property (nonatomic, strong) GFRegionQuery *regionQuery;
 @property (nonatomic, strong) NSMutableDictionary *vinylAnnotations;
+@property (nonatomic, strong) VinylAnnotation *annotation;
 
 
 
@@ -53,11 +54,6 @@
     self.vinylAnnotations = [NSMutableDictionary dictionary];
     
 }
-
-- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-    [self updateOrSetupRegionQuery];
-}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -137,7 +133,8 @@
         __block VinylAnnotation *annotation = [[VinylAnnotation alloc] init];
         [albumOwner observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
             ownerOfKey = snapshot.value[@"owner"];
-            annotation.title = key;
+            annotation.title = snapshot.value[@"title"];
+            annotation.subtitle = snapshot.value[@"artist"];
             annotation.coordinate = location.coordinate;
             annotation.owner = ownerOfKey;
             annotation.annotationKey = key;
@@ -162,11 +159,12 @@
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
     if ([annotation isKindOfClass:[VinylAnnotation class]]) {
         
-        MKPinAnnotationView *pinView = (MKPinAnnotationView*) [mapView dequeueReusableAnnotationViewWithIdentifier:@"VinylAnnotation"];
+        MKAnnotationView *pinView = (MKAnnotationView*) [mapView dequeueReusableAnnotationViewWithIdentifier:@"VinylAnnotation"];
         
         if (!pinView) {
-            pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"VinylAnnotation"];
+            pinView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"VinylAnnotation"];
             pinView.canShowCallout = YES;
+            pinView.image = [UIImage imageNamed:@"accommodations-pin.png"];
             pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         }
         

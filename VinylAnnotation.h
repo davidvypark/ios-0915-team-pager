@@ -17,6 +17,8 @@
 @property (nonatomic, retain) UIImage *image;
 @property (nonatomic, strong) NSString *owner;
 @property (nonatomic, strong) NSString *annotationKey;
+@property (nonatomic, strong) UIImageView *thumbnail;
+
 
 //- (MKAnnotationView *) annotationView;
 -(id)initWithLocation:(CLLocationCoordinate2D)location;

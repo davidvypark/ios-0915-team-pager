@@ -27,7 +27,7 @@
 
 @interface AppDelegate  () <GIDSignInDelegate>
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
-@property (nonatomic, strong) UITabBarController *tabBarController;
+
 
 @end
 
@@ -56,11 +56,7 @@
 //                                               completion:nil];
 //}
 
--(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
-{
-    [viewController viewWillAppear:YES];
-    
-}
+
 -(void)setUpFirebase
 {
     [UserObject sharedUser].firebaseRoot = [[Firebase alloc] initWithUrl:FIREBASE_URL];

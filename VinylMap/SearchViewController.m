@@ -17,7 +17,7 @@
 #import "UserObject.h"
 #import "Album.h"
 
-@interface SearchViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, BarCodeViewControllerDelegate, UITabBarControllerDelegate>
+@interface SearchViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, BarCodeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *searchField;
 @property (weak, nonatomic) IBOutlet UITableView *searchTableView;
 @property (nonatomic, strong) NSMutableArray *albumResults;
@@ -41,7 +41,6 @@
     self.searchField.delegate = self;
     self.searchTableView.delegate = self;
     self.searchTableView.dataSource = self;
-    self.tabBarController.delegate = self;
     self.albumResults = [NSMutableArray new];
     [self setupFirebase];
 }
