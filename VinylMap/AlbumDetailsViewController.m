@@ -100,8 +100,9 @@
     if ([[segue identifier] isEqualToString:@"addToMap"]) {
         AddViewController *destinationVC = segue.destinationViewController;
         destinationVC.ID = self.albumDict[@"ID"];
-        destinationVC.albumName = self.albumNameLabel.text;
-        destinationVC.albumURL = self.albumDict[@"thumb"];
+        destinationVC.albumName = self.albumDict[@"title"];
+        destinationVC.albumArtist = self.albumDict[@"artist"];
+        destinationVC.albumURL = self.albumDict[@"imageURL"];
     }
     
     else {

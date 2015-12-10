@@ -15,7 +15,6 @@
 @property (nonatomic, strong) NSString *currentUserDisplayName;
 @property (nonatomic, strong) NSMutableArray *chatroomsUnsorted;
 @property (nonatomic, strong) NSArray *values;
-//@property (nonatomic, strong) NSString *query;
 
 @end
 
@@ -41,8 +40,11 @@
                     NSArray *sortDescriptors = [NSArray arrayWithObject:sortByTime];
         self.chatrooms = [[self.chatroomsUnsorted sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
         NSDictionary *chatRoomofUser = [self.chatrooms objectAtIndex:0];
-        self.values = [chatRoomofUser allValues];
-        self.values = [self.values sortedArrayUsingDescriptors:sortDescriptors];
+        if (![chatRoomofUser isKindOfClass:[NSNull class]]) {
+            self.values = [chatRoomofUser allValues];
+            self.values = [self.values sortedArrayUsingDescriptors:sortDescriptors];
+        }
+        
         [self.tableView reloadData];
     }];
 }
@@ -66,9 +68,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"chatroomsCell" forIndexPath:indexPath];
-
-//    NSArray *values = [cha]
-    NSLog(@"%@", self.values);
     if (self.values.count != 0) {
         NSDictionary *chatUsers = [self.values objectAtIndex:indexPath.row];
         cell.textLabel.text = chatUsers[@"display"];

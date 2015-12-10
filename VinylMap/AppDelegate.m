@@ -32,7 +32,7 @@
 
 @interface AppDelegate  () <GIDSignInDelegate, UITabBarControllerDelegate>
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
-@property (nonatomic, strong) UITabBarController *tabBarController;
+
 
 @end
 
@@ -57,10 +57,8 @@
     [[UITabBar appearance] setTintColor:[UIColor vinylOrange]];
     [[UINavigationBar appearance] setTranslucent:YES];
     [[UINavigationBar appearance] setTintColor:[UIColor vinylMediumGray]];
-    
-    return YES;
-}
 
+    return YES;
 
 -(void)setUpFirebase
 {
