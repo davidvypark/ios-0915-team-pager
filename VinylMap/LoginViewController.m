@@ -37,6 +37,8 @@
 @property (nonatomic, strong) DiscogsButton *firebaseLogoutButton;
 @property (nonatomic, strong) DiscogsButton *discogsLoginButton;
 @property (nonatomic, strong) DiscogsButton *createFirebaseAccount;
+@property (nonatomic, strong) DiscogsButton *syncToDiscogs;
+
 @property (nonatomic, strong) NSMutableArray *arrayOfButtons;
 
 @property (nonatomic, assign) CGFloat offsetAmount;
@@ -66,6 +68,9 @@
     [self setupLogoImage];
     self.offsetAmount = 15;
     self.widthMultiplier = 0.9;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(viewDidAppear:)
+                                                 name:DISCOGS_LOGIN_NOTIFICATION object:nil];
     
     
     self.emailAddressField = [[UITextField alloc] init];
@@ -124,7 +129,13 @@
         [self.passwordField becomeFirstResponder];
     } else if ([textField isEqual:self.passwordField])
     {
-        [self firebaseLoginClicked];
+        if(self.firebaseLoginButton.isUserInteractionEnabled)
+        {
+            [self firebaseLoginClicked];
+        } else
+        {
+            [self resignFirstResponder];
+        }
     }
     
     return YES;
@@ -237,6 +248,8 @@
     
 }
 
+#pragma mark - discogs buttons
+
 -(void)discogsLoginButtonAlive
 {
     if([UserObject sharedUser].firebaseRoot.authData)
@@ -245,7 +258,9 @@
         {
             self.discogsLoginButton.userInteractionEnabled = NO;
             self.discogsLoginButton.enabled = NO;
-            [self.discogsLoginButton setTitle:@"Discogs linked already" forState:UIControlStateNormal];
+            [self.discogsLoginButton setTitle:@"Discogs linked" forState:UIControlStateNormal];
+            [self createDiscogsSyncButton];
+            
         } else
         {
             self.discogsLoginButton.userInteractionEnabled = YES;
@@ -260,6 +275,26 @@
         [self.discogsLoginButton setTitle:@"Must login to link Discogs" forState:UIControlStateNormal];
     }
 }
+
+-(void)createDiscogsSyncButton
+{
+    self.syncToDiscogs = [[DiscogsButton alloc] init];
+    [self.syncToDiscogs setTitle:@"Sync Discogs" forState:UIControlStateNormal];
+    [self.view addSubview:self.syncToDiscogs];
+    [self.arrayOfButtons addObject:self.syncToDiscogs];
+    
+    [self.syncToDiscogs mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@35);
+        make.width.equalTo(self.view).multipliedBy(self.widthMultiplier);
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(self.discogsLoginButton.mas_bottom).offset(self.offsetAmount);
+    }];
+    [self.syncToDiscogs addTarget:self
+                           action:@selector(buttonClicked:)
+                 forControlEvents:UIControlEventTouchUpInside];
+}
+
+#pragma mark - buttons clicked delegate
 
 -(void)buttonClicked:(DiscogsButton *)sendingButton
 {
@@ -282,6 +317,9 @@
     {
         [self createFirebaseAccountNow];
         
+    } else if ([sendingButton isEqual:self.syncToDiscogs])
+    {
+        [DiscogsAPI syncDiscogsAlbums];
     }
     
 }

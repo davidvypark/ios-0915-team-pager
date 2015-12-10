@@ -17,4 +17,8 @@
 
 +(void)removeDiscogsKeychain;
 
++(void)populateUserObjectWithStrings:(id)responseObject;
+
++(void)syncDiscogsAlbums;
+
 @end

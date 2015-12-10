@@ -20,4 +20,18 @@
     return _sharedDataStore;
 }
 
+
+
+-(void)iterateThroughAlbums:(NSDictionary *)album withCompletion:(bool (^)(bool included))completion
+{
+    AlbumCollectionDataStore *store = [AlbumCollectionDataStore sharedDataStore];
+    
+    for (NSDictionary *eachAlbum in store.albums) {
+//        if (eachAlbum[@"catno"] isEqualToString:<#(nonnull NSString *)#> )
+    }
+    
+    
+    
+}
+
 @end

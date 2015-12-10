@@ -11,6 +11,7 @@
 NSString *const DISCOGS_CONSUMER_KEY = @"VrBSOcWzbUsqcUoFFecY";
 NSString *const DISCOGS_CONSUMER_SECRET = @"vWfYNMSqHwtXmJGDSUSEZmyfFOjRtjpY";
 NSString *const DISCOGS_KEYCHAIN = @"discogsTokenSecret";
+NSString* const DISCOGS_LOGIN_NOTIFICATION = @"DISCOGS_LOGIN_NOTIFICATION";
 
 NSString *const DISCOGS_USERNAME = @"jason.harris@flatironschool.com";
 NSString *const DISCOGS_PASSWORD = @"password";
