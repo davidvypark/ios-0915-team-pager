@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="a4g-6U-oqw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="a4g-6U-oqw">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -392,44 +392,59 @@
                                 <rect key="frame" x="0.0" y="64" width="600" height="495"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="MOH-bD-sbS">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="5" id="MOH-bD-sbS">
                                     <size key="itemSize" width="150" height="200"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="5" minY="5" maxX="5" maxY="5"/>
+                                    <inset key="sectionInset" minX="5" minY="0.0" maxX="5" maxY="5"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="albumCell" id="e7t-vj-a96" customClass="AlbumCollectionViewCell">
-                                        <rect key="frame" x="5" y="69" width="160" height="210"/>
+                                        <rect key="frame" x="5" y="64" width="160" height="210"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="160" height="210"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Album" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a9B-yF-T1l">
-                                                    <rect key="frame" x="5" y="163" width="150" height="21"/>
-                                                    <animations/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="0.1019607843" green="0.20000000000000001" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Artist" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B7R-Q4-5s7">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B7R-Q4-5s7">
                                                     <rect key="frame" x="5" y="181" width="150" height="21"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.1019607843" green="0.20000000000000001" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Mv-OZ-3k5">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Mv-OZ-3k5">
                                                     <rect key="frame" x="5" y="5" width="150" height="150"/>
                                                     <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="4Mv-OZ-3k5" secondAttribute="height" multiplier="1:1" id="084-qE-FFN"/>
+                                                    </constraints>
                                                 </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Album" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a9B-yF-T1l">
+                                                    <rect key="frame" x="5" y="160" width="150" height="21"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.1019607843" green="0.20000000000000001" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <animations/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="4Mv-OZ-3k5" firstAttribute="leading" secondItem="a9B-yF-T1l" secondAttribute="leading" id="2qc-HJ-Sbr"/>
+                                            <constraint firstItem="4Mv-OZ-3k5" firstAttribute="top" secondItem="e7t-vj-a96" secondAttribute="topMargin" constant="-3" id="3d1-F0-XDi"/>
+                                            <constraint firstItem="4Mv-OZ-3k5" firstAttribute="trailing" secondItem="B7R-Q4-5s7" secondAttribute="trailing" id="6d4-Ab-YQR"/>
+                                            <constraint firstItem="B7R-Q4-5s7" firstAttribute="top" secondItem="4Mv-OZ-3k5" secondAttribute="bottom" constant="26" id="EJF-GB-gMo"/>
+                                            <constraint firstItem="4Mv-OZ-3k5" firstAttribute="trailing" secondItem="a9B-yF-T1l" secondAttribute="trailing" id="F94-N6-WeZ"/>
+                                            <constraint firstItem="4Mv-OZ-3k5" firstAttribute="leading" secondItem="e7t-vj-a96" secondAttribute="leadingMargin" constant="-3" id="Jg9-IP-fkZ"/>
+                                            <constraint firstItem="B7R-Q4-5s7" firstAttribute="bottom" secondItem="e7t-vj-a96" secondAttribute="bottomMargin" id="Meo-c6-kiF"/>
+                                            <constraint firstItem="a9B-yF-T1l" firstAttribute="top" secondItem="4Mv-OZ-3k5" secondAttribute="bottom" constant="5" id="Sck-FZ-MQH"/>
+                                            <constraint firstItem="4Mv-OZ-3k5" firstAttribute="leading" secondItem="B7R-Q4-5s7" secondAttribute="leading" id="iMu-tn-7vW"/>
+                                            <constraint firstItem="4Mv-OZ-3k5" firstAttribute="centerX" secondItem="e7t-vj-a96" secondAttribute="centerX" id="kC7-6L-c2f"/>
+                                        </constraints>
                                         <size key="customSize" width="160" height="210"/>
                                         <connections>
                                             <outlet property="albumArtView" destination="4Mv-OZ-3k5" id="PAa-vu-rgG"/>
