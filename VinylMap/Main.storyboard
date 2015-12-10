@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="a4g-6U-oqw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="a4g-6U-oqw">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -155,7 +154,7 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iEW-Aj-buL" id="BON-d7-5Mb">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="69.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="69"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="q1O-TV-rpG">
@@ -460,20 +459,20 @@
             </objects>
             <point key="canvasLocation" x="-999" y="-596"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Vinyl Tab Bar Controller-->
         <scene sceneID="6W0-Yb-W7k">
             <objects>
-                <tabBarController id="a4g-6U-oqw" sceneMemberID="viewController">
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="JO3-A0-bvY">
+                <tabBarController id="a4g-6U-oqw" customClass="VinylTabBarController" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="JO3-A0-bvY" customClass="VinylShortTabBar">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="GqO-VT-pSo" kind="relationship" relationship="viewControllers" id="TmQ-oh-NjR"/>
                         <segue destination="oKU-2c-5mf" kind="relationship" relationship="viewControllers" id="7w4-Zt-xN4"/>
                         <segue destination="pTf-hd-fwh" kind="relationship" relationship="viewControllers" id="hSP-ad-hTC"/>
+                        <segue destination="GqO-VT-pSo" kind="relationship" relationship="viewControllers" id="TmQ-oh-NjR"/>
                         <segue destination="cDq-m6-6Kb" kind="relationship" relationship="viewControllers" id="fgx-3T-rPh"/>
                         <segue destination="jcd-eO-KmW" kind="relationship" relationship="viewControllers" id="nrq-wr-Mdr"/>
                     </connections>
@@ -575,7 +574,7 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Price" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="39J-22-1Hk">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Price" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="39J-22-1Hk">
                                 <rect key="frame" x="167" y="534" width="54" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -748,19 +747,21 @@
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QXX-n1-SfQ" id="gP9-cn-cqt">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qF8-uH-ajd">
-                                            <rect key="frame" x="15" y="6" width="31.5" height="19.5"/>
+                                            <rect key="frame" x="15" y="5" width="32" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="E9l-WW-3eX">
-                                            <rect key="frame" x="15" y="25.5" width="40.5" height="13.5"/>
+                                            <rect key="frame" x="15" y="25" width="41" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -785,11 +786,11 @@
             </objects>
             <point key="canvasLocation" x="-999" y="1516"/>
         </scene>
-        <!--My Collection-->
+        <!--Navigation Controller-->
         <scene sceneID="Y1u-mL-GWj">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GqO-VT-pSo" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="My Collection" image="Images/collection.png" id="xEU-Ir-NaJ"/>
+                    <tabBarItem key="tabBarItem" title="" image="record-32px" id="xEU-Ir-NaJ"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ai7-8Z-fV8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -805,11 +806,11 @@
             </objects>
             <point key="canvasLocation" x="-1687" y="-596"/>
         </scene>
-        <!--Map-->
+        <!--Navigation Controller-->
         <scene sceneID="MG3-oe-riQ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="pTf-hd-fwh" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Map" image="Images/map.png" id="uem-1d-HbH"/>
+                    <tabBarItem key="tabBarItem" title="" image="map-32px" id="uem-1d-HbH"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="doI-5K-JNO">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -829,7 +830,9 @@
         <scene sceneID="aEm-3Q-CEb">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="oKU-2c-5mf" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="search" id="2Ki-Vr-VcF"/>
+                    <tabBarItem key="tabBarItem" image="search-32px" id="2Ki-Vr-VcF">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="15"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="CFt-M9-bIC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -845,11 +848,11 @@
             </objects>
             <point key="canvasLocation" x="-1693" y="108"/>
         </scene>
-        <!--Messages-->
+        <!--Navigation Controller-->
         <scene sceneID="yFo-N0-ayo">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cDq-m6-6Kb" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Messages" image="Images/messages.png" id="9Nb-4c-44h"/>
+                    <tabBarItem key="tabBarItem" title="" image="speech-bubble-32px" id="9Nb-4c-44h"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="8MZ-H3-I9J">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -865,11 +868,11 @@
             </objects>
             <point key="canvasLocation" x="-1693" y="1516"/>
         </scene>
-        <!--Settings-->
+        <!--Navigation Controller-->
         <scene sceneID="8Pu-6D-b7e">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jcd-eO-KmW" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" image="Images/settings.png" id="SFc-Hf-UUS"/>
+                    <tabBarItem key="tabBarItem" title="" image="settings-32px" id="SFc-Hf-UUS"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Thn-Ji-AMA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -887,10 +890,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Images/collection.png" width="16" height="16"/>
-        <image name="Images/map.png" width="16" height="16"/>
-        <image name="Images/messages.png" width="16" height="16"/>
-        <image name="Images/settings.png" width="16" height="16"/>
+        <image name="map-32px" width="32" height="32"/>
+        <image name="record-32px" width="32" height="32"/>
+        <image name="search-32px" width="32" height="32"/>
+        <image name="settings-32px" width="32" height="32"/>
+        <image name="speech-bubble-32px" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="lNI-Ok-Msy"/>

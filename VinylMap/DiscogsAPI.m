@@ -152,7 +152,7 @@
         NSPredicate *compoundPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:params];
         
         NSArray *filteredArray = [resultsArray filteredArrayUsingPredicate:compoundPredicate];
-        NSLog(@"%@",filteredArray);
+//        NSLog(@"%@",filteredArray);
         
         
         
@@ -173,7 +173,7 @@
         Firebase *collectionHere = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@%@",FIREBASE_URL,collectionURL]];
         
         for (NSDictionary *unowned in unownedAlbums) {
-            NSDictionary *albumn = @{@"artist": unowned[@"basic_information"][@"artists"][0][@"name"],
+            NSDictionary *album = @{@"artist": unowned[@"basic_information"][@"artists"][0][@"name"],
                                      @"title": unowned[@"basic_information"][@"title"],
                                      @"recordLabels": unowned[@"basic_information"][@"labels"][0][@"name"],
                                      @"releaseYear": unowned[@"basic_information"][@"year"],
@@ -185,15 +185,19 @@
             
             Firebase *collectionID = [collectionHere childByAutoId];
             
-            [collectionID  setValue:albumn withCompletionBlock:^(NSError *error, Firebase *ref) {
-                if(error)
-                {
-                    NSLog(@"error returned %@",error);
-                } else
-                {
-                    NSLog(@"%@ added to firebase",unowned[@"basic_information"][@"title"]);
-                }
-            }];
+            if([unowned[@"basic_information"][@"formats"][0][@"name"] isEqualToString:@"Vinyl"])
+            {
+                [collectionID  setValue:album withCompletionBlock:^(NSError *error, Firebase *ref) {
+                    if(error)
+                    {
+                        NSLog(@"error returned %@",error);
+                    } else
+                    {
+                        NSLog(@"%@ added to firebase",unowned[@"basic_information"][@"title"]);
+                    }
+                }];
+        
+            }
         }
         
         

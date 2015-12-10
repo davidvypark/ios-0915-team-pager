@@ -55,6 +55,8 @@
 }
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    
+    
     [self updateOrSetupRegionQuery];
 }
 

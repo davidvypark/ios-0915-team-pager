@@ -12,6 +12,9 @@
 #import "AlbumDetailsViewController.h"
 #import "UserObject.h"
 #import <Masonry.h>
+#import "VinylColors.h"
+#import "LoginViewController.h"
+
 
 @interface MyAlbumsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UITabBarControllerDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollection;
@@ -46,6 +49,18 @@
         [self setUpUserCollection];
         self.store = [AlbumCollectionDataStore sharedDataStore];
     }
+    
+
+    
+    
+}
+
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    
 }
 
 - (void)setUpUserCollection {
@@ -78,7 +93,12 @@
     else if (![self.currentUser isEqualToString:[UserObject sharedUser].firebaseRoot.authData.uid]) {
         [self setUpUserCollection];}
     else [self.myCollection reloadData];
+    
+    
+    
+    
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -90,7 +110,7 @@
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    NSLog(@"%@",self.albums);
+//    NSLog(@"%@",self.albums);
     return self.albums.count;
 }
 

@@ -46,7 +46,8 @@
     [self setupFirebase];
 }
 
--(void)viewWillAppear:(BOOL)animated {
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     [self setupFirebase];
 }
 
@@ -55,7 +56,7 @@
     NSString *firebaseRefUrl = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection", currentUser];
     self.firebase = [[Firebase alloc] initWithUrl:firebaseRefUrl];
     self.store = [AlbumCollectionDataStore sharedDataStore];
-    NSLog(@"Albums: %@", self.store.albums);
+//    NSLog(@"Albums: %@", self.store.albums);
 }
 
 -(BOOL) textFieldShouldReturn:(UITextField *)textField {
@@ -212,7 +213,7 @@
             [self.view addSubview:spinner];
             [spinner startAnimating];
             [DiscogsAPI barcodeAPIsearch:barcode withCompletion:^(NSArray *arrayOfAlbums, bool isError) {
-                NSLog(@"%@",arrayOfAlbums);//RESULTS FROM DISCOGS API
+//                NSLog(@"%@",arrayOfAlbums);//RESULTS FROM DISCOGS API
                 [spinner removeFromSuperview];
             }];
         }];

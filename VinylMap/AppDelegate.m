@@ -23,6 +23,14 @@
 #import "DiscogsAPI.h"
 #import "AlbumCollectionDataStore.h"
 #import "LoginViewController.h"
+#import "VinylColors.h"
+#import "MyAlbumsViewController.h"
+#import "AlbumDetailsViewController.h"
+#import "SearchViewController.h"
+#import "BarcodeViewController.h"
+
+
+
 
 
 @interface AppDelegate  () <GIDSignInDelegate, UITabBarControllerDelegate>
@@ -44,10 +52,15 @@
     [AlbumCollectionDataStore sharedDataStore];
     self.tabBarController.delegate = self;
     
+    [[UINavigationBar appearance] setBarTintColor:[UIColor vinylDarkGray]];
+    [[UITabBar appearance] setBarTintColor:[UIColor vinylDarkGray   ]];
+    [[UITabBar appearance] setTintColor:[UIColor vinylOrange]];
+    
+    self.tabBarController.tabBar.items[0].image = [UIImage imageNamed:@"map.png"];
+    
+    
     return YES;
-}
-
-//-(void) showLoginScreen:(BOOL)animated{
+}//-(void) showLoginScreen:(BOOL)animated{
 //    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 //    LoginViewController *viewController = (LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
 //    [self.window makeKeyAndVisible];
@@ -58,6 +71,8 @@
 
 -(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
+    
+    
     [viewController viewWillAppear:YES];
     
 }
