@@ -101,6 +101,8 @@
     self.originalTextFieldBottomConstant = self.textFieldBottomContstraint.constant;
     
 
+    
+
 }
 -(void)scrollToBottom{
     
@@ -234,7 +236,9 @@
     NSDictionary* keyboardInfo = [notification userInfo];
     NSValue* keyboardFrameBegin = [keyboardInfo valueForKey:UIKeyboardFrameBeginUserInfoKey];
     CGRect keyboardFrameBeginRect = [keyboardFrameBegin CGRectValue];
-    self.textFieldBottomContstraint.constant -= keyboardFrameBeginRect.size.height;
+    CGFloat tabBarHeight = self.tabBarController.tabBar.frame.size.height;
+
+    self.textFieldBottomContstraint.constant -= keyboardFrameBeginRect.size.height - tabBarHeight;
 
 }
 
