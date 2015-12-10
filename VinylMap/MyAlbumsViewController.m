@@ -15,8 +15,8 @@
 #import "VinylColors.h"
 #import "LoginViewController.h"
 
+@interface MyAlbumsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate>
 
-@interface MyAlbumsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UITabBarControllerDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollection;
 @property (nonatomic, strong) NSMutableArray *albums;
 @property (nonatomic, strong) NSString * currentUser;
@@ -24,7 +24,6 @@
 @property (nonatomic, assign) CGFloat screenHeight;
 @property (nonatomic, assign) CGFloat squareSize;
 @property (nonatomic, strong) NSDictionary *albumToBeDeleted;
-
 
 @end
 
@@ -34,12 +33,8 @@
     [super viewDidLoad];
     self.screenWidth = MIN(self.view.frame.size.width,self.view.frame.size.height);
     self.squareSize = self.screenWidth * 0.45;
-    UITabBarController *tabBarController = (UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController ;
-    [tabBarController setDelegate:self];
     self.myCollection.delegate = self;
     self.myCollection.dataSource = self;
-    self.tabBarController.delegate = self;
-
     UILongPressGestureRecognizer *longPressGR = [[UILongPressGestureRecognizer alloc]
        initWithTarget:self action:@selector(handleLongPress:)];
     longPressGR.delegate = self;
@@ -56,12 +51,6 @@
 }
 
 
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    
-}
 
 - (void)setUpUserCollection {
     NSString *currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
@@ -84,6 +73,21 @@
     
 }
 
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if(![UserObject sharedUser].firebaseRoot.authData) {
+        [self showLoginScreen];
+    }
+}
+
+- (void)showLoginScreen
+{
+    // Get login screen from storyboard and present it
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    LoginViewController *viewController = (LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"InitialLoginVC"];
+    viewController.modalOne = YES;
+    [self presentViewController:viewController animated:NO completion:nil];
+}
 
 - (void)viewWillAppear:(BOOL)animated {
     if (![UserObject sharedUser].firebaseRoot.authData) {
@@ -110,7 +114,7 @@
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-//    NSLog(@"%@",self.albums);
+    
     return self.albums.count;
 }
 
@@ -122,10 +126,10 @@
     [cell.artistLabel setText:self.albums[indexPath.row][@"artist"]];
     NSURL *albumArtURL = [NSURL URLWithString:self.albums[indexPath.row][@"imageURL"]];
     [cell.albumArtView setImageWithURL:albumArtURL];
-    UIImage *albumImage = cell.albumArtView.image;
-    CGFloat imageWidth = albumImage.size.width;
-    albumImage = [UIImage imageWithCGImage:albumImage.CGImage scale:imageWidth/self.squareSize orientation:albumImage.imageOrientation];
-    [cell.albumArtView setImage:albumImage];
+//    UIImage *albumImage = cell.albumArtView.image;
+//    CGFloat imageWidth = albumImage.size.width;
+//    albumImage = [UIImage imageWithCGImage:albumImage.CGImage scale:imageWidth/self.squareSize orientation:albumImage.imageOrientation];
+//    [cell.albumArtView setImage:albumImage];
     
     return cell;
 }
@@ -133,7 +137,7 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     
-    return CGSizeMake(self.squareSize, self.squareSize + 40);
+    return CGSizeMake(self.squareSize*.95, self.squareSize*.95 + 40);
 }
 
 #pragma mark collection view cell paddings
@@ -146,8 +150,9 @@
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     
-    return 00;
+    return 0;
 }
+
 
 -(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
 {

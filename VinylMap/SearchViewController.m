@@ -144,8 +144,11 @@
                     @"imageURL": resultAlbum.thumbnailURL,
                           @"ID": album.key,
                  @"resourceURL": resultAlbum.resourceURL}];
-}
 
+    [sender setTitle:@"✔︎" forState:UIControlStateNormal];
+    sender.enabled = NO;
+    [self.searchTableView reloadData];
+}
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AlbumTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"albumCell" forIndexPath:indexPath];

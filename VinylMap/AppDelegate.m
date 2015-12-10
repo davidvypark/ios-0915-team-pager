@@ -30,9 +30,6 @@
 #import "BarcodeViewController.h"
 
 
-
-
-
 @interface AppDelegate  () <GIDSignInDelegate, UITabBarControllerDelegate>
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
 @property (nonatomic, strong) UITabBarController *tabBarController;
@@ -49,25 +46,20 @@
     [UserObject sharedUser].facebookUserID = [FBSDKAccessToken currentAccessToken].userID;
     [self setUpFirebase];
     [DiscogsAPI pullDiscogsTokenSecret];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert categories:[NSSet setWithObject:@"GLOBAL"]]];
     [AlbumCollectionDataStore sharedDataStore];
     self.tabBarController.delegate = self;
+    NSLog(@"%@",[UserObject sharedUser].firebaseRoot.authData);
+    
     
     [[UINavigationBar appearance] setBarTintColor:[UIColor vinylDarkGray]];
-    [[UITabBar appearance] setBarTintColor:[UIColor vinylDarkGray   ]];
+    [[UITabBar appearance] setBarTintColor:[UIColor vinylDarkGray]];
     [[UITabBar appearance] setTintColor:[UIColor vinylOrange]];
-    
-    self.tabBarController.tabBar.items[0].image = [UIImage imageNamed:@"map.png"];
-    
+    [[UINavigationBar appearance] setTranslucent:YES];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
     return YES;
-}//-(void) showLoginScreen:(BOOL)animated{
-//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    LoginViewController *viewController = (LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-//    [self.window makeKeyAndVisible];
-//    [self.window.rootViewController presentViewController:viewController
-//                                                 animated:animated
-//                                               completion:nil];
-//}
+}
 
 -(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
