@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="a4g-6U-oqw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="a4g-6U-oqw">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -705,8 +705,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2mb-NL-O0s">
-                                <rect key="frame" x="24" y="550" width="552" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2mb-NL-O0s">
+                                <rect key="frame" x="24" y="501" width="552" height="30"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.84999999999999998" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -722,8 +722,8 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="DMZ-pL-ylB">
-                                <rect key="frame" x="24" y="105" width="552" height="437"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="DMZ-pL-ylB">
+                                <rect key="frame" x="24" y="105" width="552" height="388"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -740,9 +740,9 @@
                             <constraint firstItem="2mb-NL-O0s" firstAttribute="centerX" secondItem="jxw-Kc-lvd" secondAttribute="centerX" id="9Mh-Pp-7B1"/>
                             <constraint firstItem="2mb-NL-O0s" firstAttribute="width" secondItem="DMZ-pL-ylB" secondAttribute="width" id="C9g-JW-xMb"/>
                             <constraint firstItem="dTE-Zp-ExA" firstAttribute="top" secondItem="us8-nB-d9z" secondAttribute="bottom" constant="8" id="Vy7-h8-Tfu"/>
+                            <constraint firstItem="2mb-NL-O0s" firstAttribute="bottom" secondItem="b77-Fa-vMa" secondAttribute="top" constant="-20" id="W4s-hh-6wt"/>
                             <constraint firstItem="dTE-Zp-ExA" firstAttribute="centerX" secondItem="jxw-Kc-lvd" secondAttribute="centerX" id="i0N-G1-7lo"/>
                             <constraint firstItem="DMZ-pL-ylB" firstAttribute="leading" secondItem="jxw-Kc-lvd" secondAttribute="leadingMargin" constant="4" id="unB-xS-M6R"/>
-                            <constraint firstItem="2mb-NL-O0s" firstAttribute="bottom" secondItem="b77-Fa-vMa" secondAttribute="top" constant="-20" id="uqO-Cs-cQG"/>
                             <constraint firstItem="DMZ-pL-ylB" firstAttribute="top" secondItem="dTE-Zp-ExA" secondAttribute="bottom" constant="12" id="vzP-aX-6ss"/>
                             <constraint firstItem="DMZ-pL-ylB" firstAttribute="trailing" secondItem="jxw-Kc-lvd" secondAttribute="trailingMargin" constant="-4" id="xqq-pf-PEm"/>
                         </constraints>
@@ -755,7 +755,7 @@
                         <outlet property="nameField" destination="dTE-Zp-ExA" id="FIa-zy-5MW"/>
                         <outlet property="tableView" destination="DMZ-pL-ylB" id="Cfl-cf-NSw"/>
                         <outlet property="textField" destination="2mb-NL-O0s" id="54Y-4Y-vBn"/>
-                        <outlet property="textFieldBottomContstraint" destination="uqO-Cs-cQG" id="HEm-rh-wIv"/>
+                        <outlet property="textFieldBottomContstraint" destination="W4s-hh-6wt" id="LHP-WG-Rfd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wog-bj-e6p" sceneMemberID="firstResponder"/>

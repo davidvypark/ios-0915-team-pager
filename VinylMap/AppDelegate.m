@@ -25,7 +25,7 @@
 #import "LoginViewController.h"
 #import "InitialLoginViewController.h"
 
-@interface AppDelegate  () <GIDSignInDelegate, UITabBarControllerDelegate>
+@interface AppDelegate  () <GIDSignInDelegate>
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
 @property (nonatomic, strong) UITabBarController *tabBarController;
 
@@ -41,9 +41,14 @@
     [UserObject sharedUser].facebookUserID = [FBSDKAccessToken currentAccessToken].userID;
     [self setUpFirebase];
     [DiscogsAPI pullDiscogsTokenSecret];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert categories:[NSSet setWithObject:@"GLOBAL"]]];
     [AlbumCollectionDataStore sharedDataStore];
+<<<<<<< HEAD
     self.tabBarController.delegate = self;
     NSLog(@"%@",[UserObject sharedUser].firebaseRoot.authData);
+=======
+    
+>>>>>>> master
     return YES;
 }
 

@@ -13,6 +13,9 @@
 @interface ChatroomsTableViewController ()
 @property (nonatomic, strong) NSString *currentUser;
 @property (nonatomic, strong) NSString *currentUserDisplayName;
+@property (nonatomic, strong) NSMutableArray *chatroomsUnsorted;
+@property (nonatomic, strong) NSArray *values;
+//@property (nonatomic, strong) NSString *query;
 
 @end
 
@@ -20,23 +23,30 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.chatrooms = [[NSMutableArray alloc] init];
+    self.chatroomsUnsorted = [[NSMutableArray alloc]init];
+    
     
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-    self.chatrooms = [[NSMutableArray alloc] init];
     
     self.currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
     NSString *chatroom = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/chatrooms", self.currentUser];
     Firebase *chatroomsFirebase = [[Firebase alloc] initWithUrl:chatroom];
-    NSString *query = [NSString stringWithFormat:@"%@/time", self.currentUser];
-    [[chatroomsFirebase queryOrderedByChild:query]
-     observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
-         [self.chatrooms addObject:snapshot.value];
-         [self.tableView reloadData];
-     }];
-
+    [chatroomsFirebase observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        [self.chatroomsUnsorted removeAllObjects];
+        [self.chatroomsUnsorted addObject:snapshot.value];
+        NSSortDescriptor *sortByTime = [NSSortDescriptor sortDescriptorWithKey:@"time" ascending:NO];
+                    NSArray *sortDescriptors = [NSArray arrayWithObject:sortByTime];
+        self.chatrooms = [[self.chatroomsUnsorted sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
+        NSDictionary *chatRoomofUser = [self.chatrooms objectAtIndex:0];
+        self.values = [chatRoomofUser allValues];
+        self.values = [self.values sortedArrayUsingDescriptors:sortDescriptors];
+        [self.tableView reloadData];
+    }];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -50,15 +60,22 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.chatrooms.count;
-}
+    return self.values.count;
 
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"chatroomsCell" forIndexPath:indexPath];
-    NSDictionary *chatUsers = [self.chatrooms objectAtIndex:indexPath.row];
-    cell.textLabel.text = chatUsers[@"display"];
-    cell.detailTextLabel.text = chatUsers[@"newest"];
+
+//    NSArray *values = [cha]
+    NSLog(@"%@", self.values);
+    if (self.values.count != 0) {
+        NSDictionary *chatUsers = [self.values objectAtIndex:indexPath.row];
+        cell.textLabel.text = chatUsers[@"display"];
+        cell.detailTextLabel.text = chatUsers[@"newest"];
+    }
+    
+
     
     return cell;
 }
@@ -107,7 +124,7 @@
     // Pass the selected object to the new view controller.
     ChatMessagesViewController *destinationVC = segue.destinationViewController;
     NSIndexPath *indexPathOfRowTapped = self.tableView.indexPathForSelectedRow;
-    NSDictionary *chatUserAtIndex = self.chatrooms[indexPathOfRowTapped.row];
+    NSDictionary *chatUserAtIndex = self.values[indexPathOfRowTapped.row];
     NSString *userToMessage = chatUserAtIndex[@"id"];
     NSString *userToMessageDisplayName = chatUserAtIndex[@"display"];
     destinationVC.userToMessage = userToMessage;

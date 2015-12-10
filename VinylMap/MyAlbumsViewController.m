@@ -14,7 +14,8 @@
 #import <Masonry.h>
 #import "LoginViewController.h"
 
-@interface MyAlbumsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UITabBarControllerDelegate, UIGestureRecognizerDelegate>
+@interface MyAlbumsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate>
+
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollection;
 @property (nonatomic, strong) NSMutableArray *albums;
 @property (nonatomic, strong) NSString * currentUser;
@@ -31,12 +32,8 @@
     [super viewDidLoad];
     self.screenWidth = MIN(self.view.frame.size.width,self.view.frame.size.height);
     self.squareSize = self.screenWidth * 0.45;
-    UITabBarController *tabBarController = (UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController ;
-    [tabBarController setDelegate:self];
     self.myCollection.delegate = self;
     self.myCollection.dataSource = self;
-    self.tabBarController.delegate = self;
-
     UILongPressGestureRecognizer *longPressGR = [[UILongPressGestureRecognizer alloc]
        initWithTarget:self action:@selector(handleLongPress:)];
     longPressGR.delegate = self;
