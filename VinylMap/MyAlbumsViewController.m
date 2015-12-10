@@ -13,7 +13,7 @@
 #import "UserObject.h"
 #import <Masonry.h>
 
-@interface MyAlbumsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UITabBarControllerDelegate>
+@interface MyAlbumsViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollection;
 @property (nonatomic, strong) NSMutableArray *albums;
 @property (nonatomic, strong) NSString * currentUser;
@@ -30,11 +30,8 @@
     [super viewDidLoad];
     self.screenWidth = MIN(self.view.frame.size.width,self.view.frame.size.height);
     self.squareSize = self.screenWidth * 0.45;
-    UITabBarController *tabBarController = (UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController ;
-    [tabBarController setDelegate:self];
     self.myCollection.delegate = self;
     self.myCollection.dataSource = self;
-    self.tabBarController.delegate = self;
     if ([UserObject sharedUser].firebaseRoot.authData) {
         [self setUpUserCollection];
         self.store = [AlbumCollectionDataStore sharedDataStore];
@@ -87,7 +84,9 @@
     [cell.albumLabel setText:self.albums[indexPath.row][@"title"]];
     [cell.artistLabel setText:self.albums[indexPath.row][@"artist"]];
     NSURL *albumArtURL = [NSURL URLWithString:self.albums[indexPath.row][@"imageURL"]];
-    UIImage *albumImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:albumArtURL]];
+    [cell.albumArtView setImageWithURL:albumArtURL];
+    UIImage *albumImage = cell.albumArtView.image;
+//    UIImage *albumImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:albumArtURL]];
     CGFloat imageWidth = albumImage.size.width;
     albumImage = [UIImage imageWithCGImage:albumImage.CGImage scale:imageWidth/self.squareSize orientation:albumImage.imageOrientation];
     NSLog(@"%1.1f",albumImage.size.width);

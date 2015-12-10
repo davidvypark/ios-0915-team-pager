@@ -24,7 +24,7 @@
 #import "LoginViewController.h"
 
 
-@interface AppDelegate  () <GIDSignInDelegate, UITabBarControllerDelegate>
+@interface AppDelegate  () <GIDSignInDelegate>
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
 @property (nonatomic, strong) UITabBarController *tabBarController;
 
@@ -40,7 +40,7 @@
     [UserObject sharedUser].facebookUserID = [FBSDKAccessToken currentAccessToken].userID;
     [self setUpFirebase];
     [DiscogsAPI pullDiscogsTokenSecret];
-    self.tabBarController.delegate = self;
+    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert categories:[NSSet setWithObject:@"GLOBAL"]]];
     
     return YES;
 }

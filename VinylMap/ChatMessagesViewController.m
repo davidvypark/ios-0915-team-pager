@@ -70,7 +70,16 @@
 
         // Add the chat message to the array.
             [self.chat addObject:snapshot.value];
+        if ([[UIApplication sharedApplication] currentUserNotificationSettings].types & UIUserNotificationTypeAlert) {
+            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+            localNotification.alertTitle = @"Visit";
+            localNotification.alertBody = snapshot.value[@"text"];
+            localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:5];
+            localNotification.category = @"GLOBAL"; // Lazy categorization
             
+            [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+        }
+
         
         
         // Reload the table view so the new message will show up.
@@ -93,7 +102,6 @@
     
 
 }
-
 -(void)scrollToBottom{
     
     [self.tableView scrollRectToVisible:CGRectMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height, self.tableView.bounds.size.width, self.tableView.bounds.size.height) animated:NO];
@@ -185,7 +193,6 @@
     }
     
     NSDictionary* chatMessage = [self.chat objectAtIndex:index.row];
-    
 
     cell.textLabel.text = chatMessage[@"text"];
     cell.detailTextLabel.text = chatMessage[@"name"];
@@ -198,7 +205,8 @@
 
 // Subscribe to keyboard show/hide notifications.
 - (void)viewWillAppear:(BOOL)animated
-{
+    {
+[[UIApplication sharedApplication] cancelAllLocalNotifications];
     [[NSNotificationCenter defaultCenter]
         addObserver:self selector:@selector(keyboardWillShow:)
         name:UIKeyboardWillShowNotification object:nil];
