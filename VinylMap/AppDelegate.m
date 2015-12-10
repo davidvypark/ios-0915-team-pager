@@ -56,18 +56,12 @@
     [[UITabBar appearance] setBarTintColor:[UIColor vinylDarkGray]];
     [[UITabBar appearance] setTintColor:[UIColor vinylOrange]];
     [[UINavigationBar appearance] setTranslucent:YES];
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setTintColor:[UIColor vinylMediumGray]];
     
     return YES;
 }
 
--(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
-{
-    
-    
-    [viewController viewWillAppear:YES];
-    
-}
+
 -(void)setUpFirebase
 {
     [UserObject sharedUser].firebaseRoot = [[Firebase alloc] initWithUrl:FIREBASE_URL];
