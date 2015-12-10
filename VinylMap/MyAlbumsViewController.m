@@ -102,10 +102,10 @@
     [cell.artistLabel setText:self.albums[indexPath.row][@"artist"]];
     NSURL *albumArtURL = [NSURL URLWithString:self.albums[indexPath.row][@"imageURL"]];
     [cell.albumArtView setImageWithURL:albumArtURL];
-    UIImage *albumImage = cell.albumArtView.image;
-    CGFloat imageWidth = albumImage.size.width;
-    albumImage = [UIImage imageWithCGImage:albumImage.CGImage scale:imageWidth/self.squareSize orientation:albumImage.imageOrientation];
-    [cell.albumArtView setImage:albumImage];
+//    UIImage *albumImage = cell.albumArtView.image;
+//    CGFloat imageWidth = albumImage.size.width;
+//    albumImage = [UIImage imageWithCGImage:albumImage.CGImage scale:imageWidth/self.squareSize orientation:albumImage.imageOrientation];
+//    [cell.albumArtView setImage:albumImage];
     
     return cell;
 }
@@ -113,7 +113,7 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     
-    return CGSizeMake(self.squareSize, self.squareSize + 40);
+    return CGSizeMake(self.squareSize*.95, self.squareSize*.95 + 40);
 }
 
 #pragma mark collection view cell paddings
@@ -126,8 +126,9 @@
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     
-    return 00;
+    return 0;
 }
+
 
 -(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
 {
