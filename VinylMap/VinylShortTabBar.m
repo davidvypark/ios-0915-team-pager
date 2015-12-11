@@ -13,7 +13,7 @@
 -(CGSize)sizeThatFits:(CGSize)size
 {
     CGSize defaultSize = [super sizeThatFits:size];
-    defaultSize.height = 45;
+    defaultSize.height = 50;
     return defaultSize;
 }
 

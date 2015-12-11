@@ -42,6 +42,7 @@
     [self.myCollection addGestureRecognizer:longPressGR];
     self.store = [AlbumCollectionDataStore sharedDataStore];
     self.albums = [[NSMutableArray alloc] init];
+    self.myCollection.backgroundColor = [UIColor vinylDarkGray];
 }
 
 

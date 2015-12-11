@@ -96,6 +96,7 @@
     self.firebase = [[Firebase alloc] initWithUrl:firebaseRefUrl];
     self.store = [AlbumCollectionDataStore sharedDataStore];
 //    NSLog(@"Albums: %@", self.store.albums);
+}
 
 -(BOOL) textFieldShouldReturn:(UITextField *)textField {
     
