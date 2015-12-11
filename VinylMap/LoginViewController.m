@@ -75,7 +75,7 @@
     
     [self setUpTextFields];
     
-    self.view.backgroundColor = [UIColor vinylDarkGray];
+    self.view.backgroundColor = [UIColor vinylMediumGray];
     
     
     NSLog(@"WHATS UP, I'M THE LOGIN VIEW CONTROLLER!!!!!!");
