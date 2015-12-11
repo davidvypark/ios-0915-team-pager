@@ -86,7 +86,7 @@
             </objects>
             <point key="canvasLocation" x="1489" y="2184"/>
         </scene>
-        <!--Login View Controller-->
+        <!--Settings-->
         <scene sceneID="ie4-Xy-nGh">
             <objects>
                 <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="LZT-Gn-6Fh" customClass="LoginViewController" sceneMemberID="viewController">
@@ -104,7 +104,7 @@
                             <outletCollection property="gestureRecognizers" destination="ZDV-vO-KMP" appends="YES" id="Ryk-Pi-9C5"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" id="fgF-wy-cMF"/>
+                    <navigationItem key="navigationItem" title="Settings" id="fgF-wy-cMF"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dzL-wL-qUY" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="ZDV-vO-KMP">
@@ -364,7 +364,7 @@
             </objects>
             <point key="canvasLocation" x="-316" y="-596"/>
         </scene>
-        <!--My Albums View Controller-->
+        <!--My Collection-->
         <scene sceneID="QPc-TP-s9R">
             <objects>
                 <viewController storyboardIdentifier="MyAlbumsViewController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="IKb-7H-Nhk" customClass="MyAlbumsViewController" sceneMemberID="viewController">
@@ -398,7 +398,6 @@
                                                     <rect key="frame" x="5" y="181" width="150" height="21"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" red="0.1019607843" green="0.20000000000000001" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Mv-OZ-3k5">
@@ -412,7 +411,6 @@
                                                     <rect key="frame" x="5" y="160" width="150" height="21"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="0.1019607843" green="0.20000000000000001" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -454,7 +452,7 @@
                             <constraint firstItem="NAl-9B-dyO" firstAttribute="centerX" secondItem="m0g-5G-OL7" secondAttribute="centerX" id="qV9-CN-xZc"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="cuZ-m7-p1y"/>
+                    <navigationItem key="navigationItem" title="My Collection" id="cuZ-m7-p1y"/>
                     <connections>
                         <outlet property="myCollection" destination="NAl-9B-dyO" id="cbI-uC-ruV"/>
                     </connections>
@@ -659,7 +657,7 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uXv-8o-ifm" id="C1z-5L-1IN">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UrZ-id-Cv0">
@@ -699,7 +697,7 @@
             </objects>
             <point key="canvasLocation" x="-999" y="816"/>
         </scene>
-        <!--Chat Messages View Controller-->
+        <!--Messages-->
         <scene sceneID="9CH-7N-sre">
             <objects>
                 <viewController id="quf-bS-riB" customClass="ChatMessagesViewController" sceneMemberID="viewController">
@@ -756,7 +754,7 @@
                             <outletCollection property="gestureRecognizers" destination="CMn-m4-tsJ" appends="YES" id="QNn-8T-QQz"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" id="oHc-xo-fIm"/>
+                    <navigationItem key="navigationItem" title="Messages" id="oHc-xo-fIm"/>
                     <connections>
                         <outlet property="nameField" destination="dTE-Zp-ExA" id="FIa-zy-5MW"/>
                         <outlet property="tableView" destination="DMZ-pL-ylB" id="Cfl-cf-NSw"/>
@@ -773,7 +771,7 @@
             </objects>
             <point key="canvasLocation" x="-333" y="1516"/>
         </scene>
-        <!--Chatrooms Table View Controller-->
+        <!--Messages-->
         <scene sceneID="B59-8A-rUy">
             <objects>
                 <tableViewController id="koM-MW-nIH" customClass="ChatroomsTableViewController" sceneMemberID="viewController">
@@ -820,7 +818,7 @@
                             <outlet property="delegate" destination="koM-MW-nIH" id="YFI-yp-Q0W"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="Ndo-1Q-uDO"/>
+                    <navigationItem key="navigationItem" title="Messages" id="Ndo-1Q-uDO"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bjX-6h-dVM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

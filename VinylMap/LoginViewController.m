@@ -78,17 +78,19 @@
         [self setUpTextFields];
         UIImage *background = [UIImage imageNamed:@"records.jpg"];
         UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:background];
+        backgroundImageView.alpha = 0.5;
         [self.view insertSubview:backgroundImageView atIndex:0];
         
         [backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self.view);
         }];
+        self.view.backgroundColor = [UIColor vinylMediumGray];
     }
     else {
         [self setUpLoggedInMessage];
     }
-    
-    //self.view.backgroundColor = [UIColor vinylMediumGray];
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
+
 }
 
 -(void)viewDidAppear:(BOOL)animated

@@ -101,7 +101,7 @@
     self.originalTextFieldBottomConstant = self.textFieldBottomContstraint.constant;
     
 
-    
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
 
 }
 -(void)scrollToBottom{

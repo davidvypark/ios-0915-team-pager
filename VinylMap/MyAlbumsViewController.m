@@ -43,6 +43,7 @@
     self.store = [AlbumCollectionDataStore sharedDataStore];
     self.albums = [[NSMutableArray alloc] init];
     self.myCollection.backgroundColor = [UIColor vinylMediumGray];
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
 }
 
 

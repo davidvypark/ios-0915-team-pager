@@ -25,7 +25,7 @@
     self.chatrooms = [[NSMutableArray alloc] init];
     self.chatroomsUnsorted = [[NSMutableArray alloc]init];
     
-    
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
 }
 
 - (void)viewWillAppear:(BOOL)animated{

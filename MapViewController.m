@@ -54,6 +54,7 @@
 
     
     self.vinylAnnotations = [NSMutableDictionary dictionary];
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
     
 }
 
