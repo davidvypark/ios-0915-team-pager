@@ -14,13 +14,13 @@
 #import "AlbumDetailsViewController.h"
 
 
-@interface MapViewController () <MKMapViewDelegate, CLLocationManagerDelegate>
+@interface MapViewController () <MKMapViewDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (nonatomic, strong) GeoFire * geoFire;
 @property (nonatomic, strong) GFRegionQuery *regionQuery;
 @property (nonatomic, strong) NSMutableDictionary *vinylAnnotations;
-@property (nonatomic, strong) VinylAnnotation *annotation;
+@property (weak, nonatomic) IBOutlet UITableView *availableVinylsTableView;
 
 
 
@@ -34,6 +34,8 @@
     self.locationManager = [[CLLocationManager alloc]init];
     self.mapView.delegate = self;
     self.locationManager.delegate = self;
+    self.availableVinylsTableView.delegate = self;
+    self.availableVinylsTableView.dataSource = self;
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [self.locationManager requestWhenInUseAuthorization];
         [self.locationManager startUpdatingLocation];
@@ -60,14 +62,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
-    CLLocationCoordinate2D selfCoord = self.mapView.userLocation.location.coordinate;
-    MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(selfCoord, 3000.0, 3000.0);
-    [self.mapView setRegion:startRegion animated:YES];
-    [self.locationManager stopUpdatingLocation];
-    self.mapView.showsUserLocation = NO;
 
-}
 - (IBAction)returnToUserTapped:(UIButton *)sender {
     [self.locationManager startUpdatingLocation];
     self.mapView.showsUserLocation = YES;
@@ -109,8 +104,18 @@
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
     [self updateOrSetupRegionQuery];
+  
 }
 
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
+    CLLocationCoordinate2D selfCoord = self.mapView.userLocation.location.coordinate;
+    MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(selfCoord, 3000.0, 3000.0);
+    [self.mapView setRegion:startRegion animated:NO];
+    [self.locationManager stopUpdatingLocation];
+    self.mapView.showsUserLocation = NO;
+    [self updateOrSetupRegionQuery];
+    
+}
 - (void)updateOrSetupRegionQuery
 {
     MKCoordinateRegion region = self.mapView.region;
@@ -121,11 +126,13 @@
         [self setupListeners:self.regionQuery];
     }
 
+
 }
 
 - (void)setupListeners:(GFQuery *)query
 {
-
+    
+    
     [query observeEventType:GFEventTypeKeyEntered withBlock:^(NSString *key, CLLocation *location) {
         NSString *albumOwnerUrl = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/geofire/%@", key];
         Firebase *albumOwner = [[Firebase alloc] initWithUrl:albumOwnerUrl];
@@ -140,6 +147,7 @@
             annotation.annotationKey = key;
             [self.mapView addAnnotation:annotation];
             self.vinylAnnotations[key] = annotation;
+            [self.availableVinylsTableView reloadData];
 
         }];
         
@@ -147,11 +155,13 @@
     [query observeEventType:GFEventTypeKeyExited withBlock:^(NSString *key, CLLocation *location) {
         VinylAnnotation *annotation = self.vinylAnnotations[key];
         [self.mapView removeAnnotation:annotation];
+        [self.availableVinylsTableView reloadData];
     }];
     [query observeEventType:GFEventTypeKeyMoved withBlock:^(NSString *key, CLLocation *location) {
         VinylAnnotation *annotation = self.vinylAnnotations[key];
         [UIView animateWithDuration:3.0 animations:^{
             annotation.coordinate = location.coordinate;
+            [self.availableVinylsTableView reloadData];
         }];
     }];
 }
@@ -178,7 +188,6 @@
     VinylAnnotation *annView = view.annotation;
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     AlbumDetailsViewController *detailsOfSaleItem = [storyboard instantiateViewControllerWithIdentifier:@"AlbumDetailsViewController"];
-
     
     NSString *detailsOfSaleItemFirebaseURL = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection/%@", annView.owner, annView.annotationKey];
     Firebase *detailsOfSaleItemFirebase = [[Firebase alloc] initWithUrl:detailsOfSaleItemFirebaseURL];
@@ -198,6 +207,30 @@
         }
 
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    if (self.mapView.annotations.count != 0) {
+        return self.mapView.annotations.count;
+    }
+    else return 0;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"albumCell" forIndexPath:indexPath];
+    UILabel *titleLabel = (UILabel *) [cell viewWithTag:1];
 
+        VinylAnnotation *rowAnnotation = [self.mapView.annotations objectAtIndex:indexPath.row];
+        titleLabel.text = rowAnnotation.title;
+
+    
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.mapView.annotations.count !=0) {
+        [self.mapView selectAnnotation:[self.mapView.annotations objectAtIndex:indexPath.row] animated:NO];}
+}
 @end

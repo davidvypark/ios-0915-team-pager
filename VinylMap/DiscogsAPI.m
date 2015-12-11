@@ -179,7 +179,6 @@
                                      @"releaseYear": unowned[@"basic_information"][@"year"],
                                      @"categoryNumber": unowned[@"basic_information"][@"labels"][0][@"catno"],
                                      @"imageURL": unowned[@"basic_information"][@"thumb"],
-                                     @"ID": unowned[@"basic_information"][@"id"],
                                      @"Format" :unowned[@"basic_information"][@"formats"][0][@"name"],
                                      @"resourceURL": unowned[@"basic_information"][@"labels"][0][@"resource_url"]};
             
@@ -194,7 +193,9 @@
                     NSLog(@"%@ added to firebase",unowned[@"basic_information"][@"title"]);
                 }
             }];
+            [collectionID updateChildValues:@{@"ID": collectionID.key}];
         }
+        
         
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

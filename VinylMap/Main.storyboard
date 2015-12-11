@@ -655,7 +655,7 @@
             </objects>
             <point key="canvasLocation" x="362" y="-596"/>
         </scene>
-        <!--Map View Controller-->
+        <!--Albums Near You-->
         <scene sceneID="4vD-Gs-ony">
             <objects>
                 <viewController id="ZED-Dd-gcy" customClass="MapViewController" sceneMemberID="viewController">
@@ -667,25 +667,60 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Itb-ui-Xiw">
-                                <rect key="frame" x="0.0" y="20" width="414" height="410"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Itb-ui-Xiw">
+                                <rect key="frame" x="0.0" y="64" width="600" height="330"/>
                                 <animations/>
                                 <gestureRecognizers/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fWo-XP-I7D">
-                                <rect key="frame" x="314" y="390" width="46" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fWo-XP-I7D">
+                                <rect key="frame" x="539" y="356" width="46" height="30"/>
                                 <animations/>
                                 <state key="normal" title="Return"/>
                                 <connections>
                                     <action selector="returnToUserTapped:" destination="ZED-Dd-gcy" eventType="touchUpInside" id="wYb-KY-Jsm"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="83G-Vg-wR4">
+                                <rect key="frame" x="0.0" y="394" width="600" height="157"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="albumCell" id="uXv-8o-ifm">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uXv-8o-ifm" id="C1z-5L-1IN">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UrZ-id-Cv0">
+                                                    <rect key="frame" x="22" y="8" width="313" height="28"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="83G-Vg-wR4" firstAttribute="centerX" secondItem="PH1-KP-Efw" secondAttribute="centerX" id="BXo-xY-obl"/>
+                            <constraint firstItem="Itb-ui-Xiw" firstAttribute="top" secondItem="nqm-vq-V8H" secondAttribute="bottom" id="Dvk-F1-xrj"/>
+                            <constraint firstItem="83G-Vg-wR4" firstAttribute="bottom" secondItem="btb-BE-hXu" secondAttribute="top" id="HNG-iT-h5z"/>
+                            <constraint firstItem="Itb-ui-Xiw" firstAttribute="width" secondItem="PH1-KP-Efw" secondAttribute="width" id="Ilp-ld-b2d"/>
+                            <constraint firstItem="Itb-ui-Xiw" firstAttribute="height" secondItem="PH1-KP-Efw" secondAttribute="height" multiplier="0.55" id="WYM-tb-7W8"/>
+                            <constraint firstItem="Itb-ui-Xiw" firstAttribute="centerX" secondItem="PH1-KP-Efw" secondAttribute="centerX" id="d0G-mE-N8e"/>
+                            <constraint firstItem="fWo-XP-I7D" firstAttribute="bottom" secondItem="83G-Vg-wR4" secondAttribute="top" constant="-8" id="d4E-JO-V4y"/>
+                            <constraint firstItem="83G-Vg-wR4" firstAttribute="top" secondItem="Itb-ui-Xiw" secondAttribute="bottom" id="e7K-nu-2tv"/>
+                            <constraint firstItem="fWo-XP-I7D" firstAttribute="trailing" secondItem="PH1-KP-Efw" secondAttribute="trailingMargin" constant="5" id="o2A-QY-Kpn"/>
+                            <constraint firstItem="83G-Vg-wR4" firstAttribute="width" secondItem="PH1-KP-Efw" secondAttribute="width" id="zkw-gX-hJj"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Ufe-fn-sru"/>
+                    <navigationItem key="navigationItem" title="Albums Near You" id="Ufe-fn-sru"/>
                     <connections>
+                        <outlet property="availableVinylsTableView" destination="83G-Vg-wR4" id="jLu-r5-0mb"/>
                         <outlet property="mapView" destination="Itb-ui-Xiw" id="Qak-SC-edm"/>
                     </connections>
                 </viewController>
@@ -856,7 +891,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fso-3O-OZ8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1693" y="816"/>
+            <point key="canvasLocation" x="-1779" y="752"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="aEm-3Q-CEb">
