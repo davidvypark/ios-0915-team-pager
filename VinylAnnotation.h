@@ -14,13 +14,9 @@
 @property (nonatomic) CLLocationCoordinate2D coordinate;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *subtitle;
-@property (nonatomic, retain) UIImage *image;
 @property (nonatomic, strong) NSString *owner;
 @property (nonatomic, strong) NSString *annotationKey;
-@property (nonatomic, strong) UIImageView *thumbnail;
 
-
-//- (MKAnnotationView *) annotationView;
 -(id)initWithLocation:(CLLocationCoordinate2D)location;
 
 @end

@@ -93,12 +93,19 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+    [self stopCallingViewDidAppear];
+}
+
+-(void)stopCallingViewDidAppear
+{
     [self setUpButtons];
     [self discogsLoginButtonAlive];
     if(![UserObject sharedUser].firebaseRoot.authData && !self.modalOne)
     {
         [self showLoginScreen];
     }
+    
 }
 
 - (IBAction)screenTapped:(id)sender {
@@ -375,7 +382,7 @@
         NSString *authorizeStringURL = [NSString stringWithFormat:@"https://discogs.com/oauth/authorize?oauth_token=%@",[UserObject sharedUser].prelimDiscogsRequestToken];
         NSURL *authorizeURL = [NSURL URLWithString:authorizeStringURL];
         [[UIApplication sharedApplication] openURL:authorizeURL];
-        [self viewDidAppear:YES];
+        [self stopCallingViewDidAppear];
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@", error);
@@ -409,6 +416,13 @@
         
     } else if ([sendingButton isEqual:self.syncToDiscogs])
     {
+        self.syncToDiscogs.userInteractionEnabled = NO;
+        self.syncToDiscogs.enabled = NO;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.syncToDiscogs.userInteractionEnabled = YES;
+        self.syncToDiscogs.enabled = YES;
+        });
+        
         [DiscogsAPI syncDiscogsAlbums];
     }
     
@@ -448,7 +462,7 @@
         if(error)
         {
             NSLog(@"%@",error);
-            [self viewDidAppear:YES];
+            [self stopCallingViewDidAppear];
         } else
         {
             NSLog(@"Facebook Login Complete"); //AUTHDATA COMPLETE
@@ -465,7 +479,7 @@
             // Create a child path with a key set to the uid underneath the "users" node
             [[[[UserObject sharedUser].firebaseRoot childByAppendingPath:@"users"]
               childByAppendingPath:authData.uid] setValue:facebookUser];
-            [self viewDidAppear:YES];
+            [self stopCallingViewDidAppear];
         }
     }];
     
@@ -474,9 +488,7 @@
 
 -(void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton
 {
-    [self logoutOfFirebase];
-    [self showLoginScreen];
-    [self viewDidAppear:YES];
+    [self logoutActions];
 }
 
 - (BOOL)loginButtonWillLogin:(FBSDKLoginButton *)loginButton
@@ -513,7 +525,7 @@
         } else {
             // user is logged in, check authData for data
             [FBSDKAccessToken setCurrentAccessToken:nil];
-            [self viewDidAppear:YES];
+            [self stopCallingViewDidAppear];
             completionBlock(YES);
         }
         self.firebaseLoginButton.userInteractionEnabled = YES;
@@ -526,11 +538,9 @@
 
 -(void)logoutOfFirebase
 {
-    [[UserObject sharedUser].firebaseRoot unauth];
-    [FBSDKAccessToken setCurrentAccessToken:nil];
-    [DiscogsAPI removeDiscogsKeychain];
-    [self viewDidAppear:YES];
+    [self logoutActions];
 }
+
 
 - (void)showLoginScreen
 {
@@ -546,7 +556,7 @@
 -(void)createAccountResult:(NSDictionary *)someResult
 {
     
-    __block NSDictionary *result = [someResult copy];
+    __block NSDictionary *result = [someResult mutableCopy];
     
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     spinner.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height*3/4);
@@ -559,29 +569,11 @@
     [self loginToFirebase:result[@"email"] password:result[@"password"] withCompletion:^(bool loginResult) {
         if(loginResult)
         {
-            //DEBUGGING THE OVERWRITING
-            /*
-            for (NSUInteger i=0; i<2 ; i++)
-            {
-                if (i==1)
-                {
-                    __block NSMutableDictionary *mutableResult = [result mutableCopy];
-                    mutableResult[@"displayName"] = @"was able to rewrite";
-                    result = [NSDictionary dictionaryWithDictionary:mutableResult];
-                }
-                
-                [[[UserObject sharedUser].firebaseRoot childByAppendingPath:pathString] setValue:result withCompletionBlock:^(NSError *error, Firebase *ref) {
-                    if(error)
-                    {
-                        NSLog(@"error returned %@",error);
-                    } else
-                    {
-                        NSLog(@"wrote to /users/%@ \n%@",result[@"provider"],result);
-                    }
-                }];
-            }
-            */
-        [[[UserObject sharedUser].firebaseRoot childByAppendingPath:pathString] setValue:result withCompletionBlock:^(NSError *error, Firebase *ref) {
+            NSMutableDictionary *noPasswordDict = [result mutableCopy];
+            [noPasswordDict removeObjectForKey:@"password"];
+            
+            
+        [[[UserObject sharedUser].firebaseRoot childByAppendingPath:pathString] setValue:noPasswordDict withCompletionBlock:^(NSError *error, Firebase *ref) {
             if(error)
             {
                 NSLog(@"error returned %@",error);
@@ -623,6 +615,16 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
     
+}
+
+#pragma mark - logout
+-(void)logoutActions
+{
+    [[UserObject sharedUser].firebaseRoot unauth];
+    [FBSDKAccessToken setCurrentAccessToken:nil];
+    [DiscogsAPI removeDiscogsKeychain];
+    [AlbumCollectionDataStore sharedDataStore].albums = [@[] mutableCopy];
+    [self stopCallingViewDidAppear];
 }
 
 
