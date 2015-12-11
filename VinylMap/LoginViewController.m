@@ -595,8 +595,8 @@
                                           preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *okAction = [UIAlertAction
-                               actionWithTitle:NSLocalizedString(@"Cancel", @"OK action")
-                               style:UIAlertActionStyleDestructive
+                               actionWithTitle:@"OK"
+                               style:UIAlertActionStyleDefault
                                handler:^(UIAlertAction *action)
                                {
                                    
