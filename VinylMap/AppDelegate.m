@@ -48,17 +48,15 @@
     [DiscogsAPI pullDiscogsTokenSecret];
     [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert categories:[NSSet setWithObject:@"GLOBAL"]]];
     [AlbumCollectionDataStore sharedDataStore];
-    self.tabBarController.delegate = self;
     NSLog(@"%@",[UserObject sharedUser].firebaseRoot.authData);
     
+    [self setUpTabBars];
     
-    [[UINavigationBar appearance] setBarTintColor:[UIColor vinylDarkGray]];
-    [[UITabBar appearance] setBarTintColor:[UIColor vinylDarkGray]];
-    [[UITabBar appearance] setTintColor:[UIColor vinylOrange]];
-    [[UINavigationBar appearance] setTranslucent:YES];
-    [[UINavigationBar appearance] setTintColor:[UIColor vinylMediumGray]];
-
+    
     return YES;
+}
+
+
 
 -(void)setUpFirebase
 {
@@ -209,6 +207,36 @@
     
     
 }
+
+-(void)setUpTabBars
+{
+    [[UINavigationBar appearance] setBarTintColor:[UIColor vinylDarkGray]];
+//    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
+//    [[UINavigationBar appearance] setTranslucent:YES];
+//    NSLog(@"%u",[UINavigationBar appearance].isTranslucent);
+    NSLog(@"Is Bar Opaque: %@",[UINavigationBar appearance].isOpaque ? @"YES":@"NO");
+    
+    [[UITabBar appearance] setBarTintColor:[UIColor vinylDarkGray]];
+    [[UITabBar appearance] setTintColor:[UIColor vinylOrange]];
+    [[UINavigationBar appearance] setTranslucent:YES];
+    [[UINavigationBar appearance] setTintColor:[UIColor vinylLightGray]];
+    
+    
+    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+    UITabBar *tabBar = tabBarController.tabBar;
+    UITabBarItem *tabBarItem0 = [tabBar.items objectAtIndex:0];
+    UITabBarItem *tabBarItem1 = [tabBar.items objectAtIndex:1];
+    UITabBarItem *tabBarItem2 = [tabBar.items objectAtIndex:2];
+    UITabBarItem *tabBarItem3 = [tabBar.items objectAtIndex:3];
+    UITabBarItem *tabBarItem4 = [tabBar.items objectAtIndex:4];
+    
+    tabBarItem0.selectedImage = [UIImage imageNamed:@"search-oj-32px.png"];
+    tabBarItem1.selectedImage = [UIImage imageNamed:@"map-oj-32px.png"];
+    tabBarItem2.selectedImage = [UIImage imageNamed:@"record-oj-32px"];
+    tabBarItem3.selectedImage = [UIImage imageNamed:@"speech-bubble-oj-32px.png"];
+    tabBarItem4.selectedImage = [UIImage imageNamed:@"settings-oj-32px.png"];
+}
+
 
 #pragma marks - defaults and no rotation
 

@@ -16,7 +16,7 @@
 
 +(UIColor *)vinylLightGray { return [UIColor colorWithRed:233/255.0 green:233/255.0 blue:233/255.0 alpha:1]; }
 
-+(UIColor *)vinylMediumGray { return [UIColor colorWithRed:128/255.0 green:128/255.0 blue:128/255.0 alpha:1]; }
++(UIColor *)vinylMediumGray { return [UIColor colorWithRed:188/255.0 green:188/255.0 blue:188/255.0 alpha:1]; }
 
 +(UIColor *)vinylBlue { return [UIColor colorWithRed:50/255.0 green:153/255.0 blue:187/255.0 alpha:1]; }
 

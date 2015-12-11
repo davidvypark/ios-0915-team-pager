@@ -124,30 +124,11 @@
                         <viewControllerLayoutGuide type="bottom" id="J5z-2f-Ku6"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="dgH-kk-YrM">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search by artist, title, etc" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nL0-rj-QCu">
-                                <rect key="frame" x="20" y="64" width="487" height="30"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kyz-RZ-ElA">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                                <animations/>
-                                <items>
-                                    <navigationItem title="Title" id="mOu-LH-FVz">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Ckq-6J-kRu">
-                                            <connections>
-                                                <action selector="cancelButtonTapped:" destination="G6t-G7-Qgk" id="ErY-T3-SDn"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QWN-Br-lbL">
-                                <rect key="frame" x="0.0" y="102" width="600" height="478"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QWN-Br-lbL" userLabel="Search Table View">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -155,7 +136,7 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iEW-Aj-buL" id="BON-d7-5Mb">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="71"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="69"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="q1O-TV-rpG">
@@ -239,32 +220,16 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xFF-CA-M5u">
-                                <rect key="frame" x="522" y="63" width="58" height="30"/>
-                                <animations/>
-                                <state key="normal" title="Barcode"/>
-                                <connections>
-                                    <action selector="barcodeButtonTapped:" destination="G6t-G7-Qgk" eventType="touchUpInside" id="Gsc-di-aDJ"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="nL0-rj-QCu" firstAttribute="top" secondItem="kyz-RZ-ElA" secondAttribute="bottom" constant="20" id="AY2-qu-wl9"/>
                             <constraint firstItem="QWN-Br-lbL" firstAttribute="width" secondItem="dgH-kk-YrM" secondAttribute="width" id="EQF-4e-0ev"/>
-                            <constraint firstItem="J5z-2f-Ku6" firstAttribute="top" secondItem="QWN-Br-lbL" secondAttribute="bottom" constant="20" id="HeE-6G-izF"/>
+                            <constraint firstItem="J5z-2f-Ku6" firstAttribute="top" secondItem="QWN-Br-lbL" secondAttribute="bottom" id="HeE-6G-izF"/>
                             <constraint firstAttribute="leadingMargin" secondItem="QWN-Br-lbL" secondAttribute="leading" constant="20" id="QSR-RN-J3G"/>
-                            <constraint firstItem="nL0-rj-QCu" firstAttribute="top" secondItem="dgH-kk-YrM" secondAttribute="top" constant="64" id="R3f-tp-DSP"/>
-                            <constraint firstItem="QWN-Br-lbL" firstAttribute="leading" secondItem="nL0-rj-QCu" secondAttribute="leading" constant="-20" id="R7q-jx-3mQ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="xFF-CA-M5u" secondAttribute="trailing" id="RRX-pX-2lK"/>
-                            <constraint firstItem="kyz-RZ-ElA" firstAttribute="leading" secondItem="dgH-kk-YrM" secondAttribute="leading" id="UIs-5n-TYH"/>
-                            <constraint firstItem="QWN-Br-lbL" firstAttribute="top" secondItem="nL0-rj-QCu" secondAttribute="bottom" constant="8" symbolic="YES" id="XJI-hd-AUY"/>
-                            <constraint firstItem="kyz-RZ-ElA" firstAttribute="centerX" secondItem="QWN-Br-lbL" secondAttribute="centerX" id="YO3-uR-93Q"/>
                             <constraint firstAttribute="leadingMargin" secondItem="QWN-Br-lbL" secondAttribute="leading" id="fUb-4J-OfV"/>
                             <constraint firstAttribute="trailingMargin" secondItem="QWN-Br-lbL" secondAttribute="trailing" id="gDN-Dc-hsk"/>
-                            <constraint firstItem="xFF-CA-M5u" firstAttribute="baseline" secondItem="nL0-rj-QCu" secondAttribute="baseline" id="kLX-Jh-MaM"/>
-                            <constraint firstItem="xFF-CA-M5u" firstAttribute="leading" secondItem="nL0-rj-QCu" secondAttribute="trailing" constant="15" id="qgk-Q5-yd5"/>
+                            <constraint firstItem="QWN-Br-lbL" firstAttribute="top" secondItem="9Gt-yB-zNb" secondAttribute="bottom" id="hSb-sr-z0v"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -273,8 +238,31 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" id="YeQ-pU-8kP"/>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" id="YeQ-pU-8kP">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="ojh-4O-ekY">
+                            <textField key="customView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search by artist, title, etc" textAlignment="natural" minimumFontSize="17" id="nL0-rj-QCu">
+                                <rect key="frame" x="20" y="7" width="487" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="2vF-xr-L6X">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="xFF-CA-M5u">
+                                <rect key="frame" x="522" y="7" width="58" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <animations/>
+                                <state key="normal" title="Barcode"/>
+                                <connections>
+                                    <action selector="barcodeButtonTapped:" destination="G6t-G7-Qgk" eventType="touchUpInside" id="Gsc-di-aDJ"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="barcodeButton" destination="xFF-CA-M5u" id="ud9-OG-6u2"/>
                         <outlet property="searchField" destination="nL0-rj-QCu" id="q2f-hY-YWu"/>
                         <outlet property="searchTableView" destination="QWN-Br-lbL" id="Wlf-I1-XWL"/>
                     </connections>
@@ -479,6 +467,7 @@
         <scene sceneID="6W0-Yb-W7k">
             <objects>
                 <tabBarController id="a4g-6U-oqw" customClass="VinylTabBarController" sceneMemberID="viewController">
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="JO3-A0-bvY" customClass="VinylShortTabBar">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -801,6 +790,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bjX-6h-dVM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-999" y="1516"/>
+        </scene>
+        <!--InitialLoginVC-->
+        <scene sceneID="E00-ss-dhq">
+            <objects>
+                <viewController storyboardIdentifier="InitialLoginVC" title="InitialLoginVC" id="e0f-Bc-evN" customClass="LoginViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="WzN-sC-882"/>
+                        <viewControllerLayoutGuide type="bottom" id="7IB-y2-kuW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="iHa-xk-uC7">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KZ9-pQ-h6X" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2618" y="-1010"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Y1u-mL-GWj">

@@ -160,7 +160,6 @@
 			isa = PBXGroup;
 			children = (
 				BFC1BE471C0ACBF0003DF47F /* Chat */,
-				2BF0EB561C0355DD00EA03B1 /* Storyboards */,
 				BF6124101C04FA8C00B045D6 /* Maps */,
 				2BF0EB571C0355FF00EA03B1 /* Album Collection/Wishlist */,
 				2B6016F31BFCC978003DB81A /* AppDelegate.h */,
@@ -178,8 +177,6 @@
 				96AF90981BFCE64B00BCFC96 /* Main.storyboard */,
 				965333541BFE347D00BB4F7A /* DiscogsAPI.h */,
 				965333551BFE347D00BB4F7A /* DiscogsAPI.m */,
-				96B2D9961C19E27A00CA7559 /* VinylColors.h */,
-				96B2D9971C19E27A00CA7559 /* VinylColors.m */,
 				964422AD1BFF8A9300E0CF47 /* Login Files */,
 				968C481E1C1200080070B76C /* UIFiles */,
 				2B6016FC1BFCC978003DB81A /* Assets.xcassets */,
@@ -201,13 +198,6 @@
 				2B6016F11BFCC978003DB81A /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		2BF0EB561C0355DD00EA03B1 /* Storyboards */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Storyboards;
 			sourceTree = "<group>";
 		};
 		2BF0EB571C0355FF00EA03B1 /* Album Collection/Wishlist */ = {
@@ -261,6 +251,8 @@
 				968C48191C10F1C90070B76C /* DiscogsButton.m */,
 				968C481B1C11FE0C0070B76C /* UIColor+ChangeIt.h */,
 				968C481C1C11FE0C0070B76C /* UIColor+ChangeIt.m */,
+				96B2D9961C19E27A00CA7559 /* VinylColors.h */,
+				96B2D9971C19E27A00CA7559 /* VinylColors.m */,
 			);
 			name = UIFiles;
 			sourceTree = "<group>";

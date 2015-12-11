@@ -181,7 +181,7 @@
                                      @"imageURL": unowned[@"basic_information"][@"thumb"],
                                      @"ID": unowned[@"basic_information"][@"id"],
                                      @"Format" :unowned[@"basic_information"][@"formats"][0][@"name"],
-                                     @"resourceURL": unowned[@"basic_information"][@"labels"][0][@"resource_url"]};
+                                     @"resourceURL": unowned[@"basic_information"][@"resource_url"]};
             
             Firebase *collectionID = [collectionHere childByAutoId];
             

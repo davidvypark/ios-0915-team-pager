@@ -15,7 +15,7 @@
 #import "VinylColors.h"
 #import "LoginViewController.h"
 
-@interface MyAlbumsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate>
+@interface MyAlbumsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate, UITabBarControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollection;
 @property (nonatomic, strong) NSMutableArray *albums;
@@ -45,10 +45,11 @@
         self.store = [AlbumCollectionDataStore sharedDataStore];
     }
     
-
-    
+    self.myCollection.backgroundColor = [UIColor vinylDarkGray];
     
 }
+
+
 
 
 
@@ -126,6 +127,7 @@
     [cell.artistLabel setText:self.albums[indexPath.row][@"artist"]];
     NSURL *albumArtURL = [NSURL URLWithString:self.albums[indexPath.row][@"imageURL"]];
     [cell.albumArtView setImageWithURL:albumArtURL];
+    cell.backgroundColor = [UIColor vinylMediumGray];
 //    UIImage *albumImage = cell.albumArtView.image;
 //    CGFloat imageWidth = albumImage.size.width;
 //    albumImage = [UIImage imageWithCGImage:albumImage.CGImage scale:imageWidth/self.squareSize orientation:albumImage.imageOrientation];
