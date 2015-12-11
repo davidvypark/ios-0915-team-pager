@@ -140,21 +140,16 @@
         
         AlbumCollectionDataStore *albumStore = [AlbumCollectionDataStore sharedDataStore];
         
-        NSMutableArray *params = [NSMutableArray array];
         NSMutableSet *ownedAlbums = [[NSMutableSet alloc] init];
         NSMutableSet *unownedAlbums = [[NSMutableSet alloc] init];
+        NSMutableSet *unownedAlbumsCats = [[NSMutableSet alloc] init];
         
         for (NSDictionary *eachOwned in albumStore.albums) {
-            NSString *predicateString = [NSString stringWithFormat:@"id == '%@'",eachOwned[@"categoryNumber"]];
-            [params addObject:[NSPredicate predicateWithFormat:predicateString]];
-            [ownedAlbums addObject:eachOwned[@"categoryNumber"]];
+            if(eachOwned[@"categoryNumber"])
+            {
+                [ownedAlbums addObject:eachOwned[@"categoryNumber"]];
+            }
         }
-        NSPredicate *compoundPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:params];
-        
-        NSArray *filteredArray = [resultsArray filteredArrayUsingPredicate:compoundPredicate];
-        NSLog(@"%@",filteredArray);
-        
-        
         
         for (NSDictionary *eachResult in resultsArray)
         {
@@ -163,9 +158,23 @@
                 
             } else
             {
-                [unownedAlbums addObject:eachResult];
+                bool isVinyl = NO;
+                for (NSDictionary *formats in eachResult[@"basic_information"][@"formats"]) {
+                    NSString *type = formats[@"name"];
+                    if([type isEqualToString:@"Vinyl"])
+                    {
+                         isVinyl = YES;
+                    }
+                }
+                
+                
+                if(isVinyl)
+                {
+                    [unownedAlbumsCats addObject:eachResult[@"basic_information"][@"labels"][0][@"catno"]];
+                    [unownedAlbums addObject:eachResult];
+    
+                }
             }
-            
         }
         
         NSString *currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
@@ -173,18 +182,19 @@
         Firebase *collectionHere = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@%@",FIREBASE_URL,collectionURL]];
         
         for (NSDictionary *unowned in unownedAlbums) {
-            NSDictionary *albumn = @{@"artist": unowned[@"basic_information"][@"artists"][0][@"name"],
+            NSDictionary *album = @{@"artist": unowned[@"basic_information"][@"artists"][0][@"name"],
                                      @"title": unowned[@"basic_information"][@"title"],
                                      @"recordLabels": unowned[@"basic_information"][@"labels"][0][@"name"],
                                      @"releaseYear": unowned[@"basic_information"][@"year"],
                                      @"categoryNumber": unowned[@"basic_information"][@"labels"][0][@"catno"],
                                      @"imageURL": unowned[@"basic_information"][@"thumb"],
                                      @"Format" :unowned[@"basic_information"][@"formats"][0][@"name"],
-                                     @"resourceURL": unowned[@"basic_information"][@"labels"][0][@"resource_url"]};
+                                     @"resourceURL": unowned[@"basic_information"][@"resource_url"]};
             
             Firebase *collectionID = [collectionHere childByAutoId];
             
-            [collectionID  setValue:albumn withCompletionBlock:^(NSError *error, Firebase *ref) {
+
+            [collectionID  setValue:album withCompletionBlock:^(NSError *error, Firebase *ref) {
                 if(error)
                 {
                     NSLog(@"error returned %@",error);
@@ -193,6 +203,7 @@
                     NSLog(@"%@ added to firebase",unowned[@"basic_information"][@"title"]);
                 }
             }];
+
             [collectionID updateChildValues:@{@"ID": collectionID.key}];
         }
         

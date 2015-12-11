@@ -27,6 +27,7 @@
 #import <SSKeychainQuery.h>
 #import "DiscogsAPI.h"
 #import "MyAlbumsViewController.h"
+#import "VinylColors.h"
 
 
 @interface LoginViewController () <FBSDKLoginButtonDelegate, AccountCreationViewControllerDelegate, UITextFieldDelegate>
@@ -72,51 +73,32 @@
                                              selector:@selector(viewDidAppear:)
                                                  name:DISCOGS_LOGIN_NOTIFICATION object:nil];
     
+    [self setUpTextFields];
     
-    self.emailAddressField = [[UITextField alloc] init];
-    self.emailAddressField.placeholder = @"email address";
-    self.emailAddressField.delegate = self;
-    [self.view addSubview:self.emailAddressField];
-    
-    self.passwordField = [[UITextField alloc] init];
-    self.passwordField.placeholder = @"password";
-    self.passwordField.secureTextEntry = YES;
-    self.passwordField.delegate = self;
-    [self.view addSubview:self.passwordField];
-
-    
-    for (UITextField *textField in @[self.passwordField, self.emailAddressField]) {
-        CGFloat grayNESS = 0.9;
-        textField.backgroundColor = [[UIColor alloc] initWithRed:grayNESS green:grayNESS blue:grayNESS alpha:1];
-        textField.borderStyle = UITextBorderStyleRoundedRect;
-        
-        [textField mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(self.view);
-            make.width.equalTo(self.view).multipliedBy(self.widthMultiplier);
-        }];
-        
-    }
+    self.view.backgroundColor = [UIColor vinylMediumGray];
     
     
-    [self.emailAddressField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.logoImage.mas_bottom).offset(self.offsetAmount);
-    }];
-    
-    [self.passwordField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.emailAddressField.mas_bottom).offset(self.offsetAmount);
-    }];
-    
-    
-    NSLog(@"WHATS UP!!!!!!");
+    NSLog(@"WHATS UP, I'M THE LOGIN VIEW CONTROLLER!!!!!!");
    
     
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+    [self stopCallingViewDidAppear];
+}
+
+-(void)stopCallingViewDidAppear
+{
     [self setUpButtons];
     [self discogsLoginButtonAlive];
     [self updateFieldsIfLoggedIn];
+    if(![UserObject sharedUser].firebaseRoot.authData && !self.modalOne)
+    {
+        [self showLoginScreen];
+    }
+    
 }
 
 - (IBAction)screenTapped:(id)sender {
@@ -125,7 +107,7 @@
 
 
 
-#pragma mark - text fields
+#pragma mark - text field handling/delegates
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -254,6 +236,44 @@
     
 }
 
+
+-(void)setUpTextFields
+{
+    self.emailAddressField = [[UITextField alloc] init];
+    self.emailAddressField.placeholder = @"email address";
+    self.emailAddressField.delegate = self;
+    [self.view addSubview:self.emailAddressField];
+    
+    self.passwordField = [[UITextField alloc] init];
+    self.passwordField.placeholder = @"password";
+    self.passwordField.secureTextEntry = YES;
+    self.passwordField.delegate = self;
+    [self.view addSubview:self.passwordField];
+    
+    
+    for (UITextField *textField in @[self.passwordField, self.emailAddressField]) {
+        CGFloat grayNESS = 0.9;
+        textField.backgroundColor = [UIColor vinylLightGray];
+        textField.borderStyle = UITextBorderStyleRoundedRect;
+        
+        [textField mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.view);
+            make.width.equalTo(self.view).multipliedBy(self.widthMultiplier);
+        }];
+        
+    }
+    
+    
+    [self.emailAddressField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.logoImage.mas_bottom).offset(self.offsetAmount);
+    }];
+    
+    [self.passwordField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.emailAddressField.mas_bottom).offset(self.offsetAmount);
+    }];
+
+}
+
 #pragma mark - discogs buttons
 
 -(void)discogsLoginButtonAlive
@@ -305,50 +325,6 @@
                  forControlEvents:UIControlEventTouchUpInside];
 }
 
-#pragma mark - buttons clicked delegate
-
--(void)buttonClicked:(DiscogsButton *)sendingButton
-{
-    
-    if([sendingButton isEqual:self.dismissViewControllerButton])
-    {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    } else if ([sendingButton isEqual:self.firebaseLoginButton])
-    {
-        [self firebaseLoginClicked];
-        
-    } else if ([sendingButton isEqual:self.firebaseLogoutButton])
-    {
-        [self logoutOfFirebase];
-    } else if ([sendingButton isEqual:self.discogsLoginButton])
-    {
-        [self discogsLoginButtonPressed];
-        
-    } else if ([sendingButton isEqual:self.createFirebaseAccount])
-    {
-        [self createFirebaseAccountNow];
-        
-    } else if ([sendingButton isEqual:self.syncToDiscogs])
-    {
-        [DiscogsAPI syncDiscogsAlbums];
-    }
-    
-}
-
-#pragma mark - create account
-
--(void)createFirebaseAccountNow
-{
-    self.createAccountVC = [[AccountCreationViewController alloc] init];
-    self.createAccountVC.delegate = self;
-    [self.createAccountVC setModalPresentationStyle:UIModalPresentationOverFullScreen];
-    [self presentViewController:self.createAccountVC animated:NO completion:nil];
-    
-}
-
-
-
-
 #pragma mark - discogs login
 
 -(void)discogsLoginButtonPressed
@@ -382,25 +358,74 @@
             if([queryItem.name isEqualToString:@"oauth_token_secret"])
             {
                 [UserObject sharedUser].prelimDiscogsTokenSecret = queryItem.value;
-//                NSLog(@"OAuth Prelim Secret %@",queryItem.value);
+                //                NSLog(@"OAuth Prelim Secret %@",queryItem.value);
             } else if ([queryItem.name isEqualToString:@"oauth_token"])
             {
                 [UserObject sharedUser].prelimDiscogsRequestToken = queryItem.value;
                 
-//                NSLog(@"OAuth Prelim Token %@",queryItem.value);
+                //                NSLog(@"OAuth Prelim Token %@",queryItem.value);
             }
         }
         NSString *authorizeStringURL = [NSString stringWithFormat:@"https://discogs.com/oauth/authorize?oauth_token=%@",[UserObject sharedUser].prelimDiscogsRequestToken];
         NSURL *authorizeURL = [NSURL URLWithString:authorizeStringURL];
         [[UIApplication sharedApplication] openURL:authorizeURL];
-        [self viewDidAppear:YES];
+        [self stopCallingViewDidAppear];
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@", error);
     }];
     
+}
+
+
+#pragma mark - buttons clicked delegate
+
+-(void)buttonClicked:(DiscogsButton *)sendingButton
+{
+    
+    if([sendingButton isEqual:self.dismissViewControllerButton])
+    {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else if ([sendingButton isEqual:self.firebaseLoginButton])
+    {
+        [self firebaseLoginClicked];
+        
+    } else if ([sendingButton isEqual:self.firebaseLogoutButton])
+    {
+        [self logoutOfFirebase];
+    } else if ([sendingButton isEqual:self.discogsLoginButton])
+    {
+        [self discogsLoginButtonPressed];
+        
+    } else if ([sendingButton isEqual:self.createFirebaseAccount])
+    {
+        [self createFirebaseAccountNow];
+        
+    } else if ([sendingButton isEqual:self.syncToDiscogs])
+    {
+        self.syncToDiscogs.userInteractionEnabled = NO;
+        self.syncToDiscogs.enabled = NO;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.syncToDiscogs.userInteractionEnabled = YES;
+        self.syncToDiscogs.enabled = YES;
+        });
+        
+        [DiscogsAPI syncDiscogsAlbums];
+    }
     
 }
+
+#pragma mark - create account
+
+-(void)createFirebaseAccountNow
+{
+    self.createAccountVC = [[AccountCreationViewController alloc] init];
+    self.createAccountVC.delegate = self;
+    [self.createAccountVC setModalPresentationStyle:UIModalPresentationOverFullScreen];
+    [self presentViewController:self.createAccountVC animated:NO completion:nil];
+    
+}
+
 
 
 
@@ -424,7 +449,7 @@
         if(error)
         {
             NSLog(@"%@",error);
-            [self viewDidAppear:YES];
+            [self stopCallingViewDidAppear];
         } else
         {
             NSLog(@"Facebook Login Complete"); //AUTHDATA COMPLETE
@@ -441,7 +466,7 @@
             // Create a child path with a key set to the uid underneath the "users" node
             [[[[UserObject sharedUser].firebaseRoot childByAppendingPath:@"users"]
               childByAppendingPath:authData.uid] setValue:facebookUser];
-            [self viewDidAppear:YES];
+            [self stopCallingViewDidAppear];
         }
     }];
     
@@ -450,9 +475,7 @@
 
 -(void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton
 {
-    [self logoutOfFirebase];
-    [self showLoginScreen];
-    [self viewDidAppear:YES];
+    [self logoutActions];
 }
 
 - (BOOL)loginButtonWillLogin:(FBSDKLoginButton *)loginButton
@@ -489,7 +512,7 @@
         } else {
             // user is logged in, check authData for data
             [FBSDKAccessToken setCurrentAccessToken:nil];
-            [self viewDidAppear:YES];
+            [self stopCallingViewDidAppear];
             completionBlock(YES);
         }
         self.firebaseLoginButton.userInteractionEnabled = YES;
@@ -502,12 +525,9 @@
 
 -(void)logoutOfFirebase
 {
-    [[UserObject sharedUser].firebaseRoot unauth];
-    [FBSDKAccessToken setCurrentAccessToken:nil];
-    [DiscogsAPI removeDiscogsKeychain];
-    [self viewDidAppear:YES];
-    [self showLoginScreen];
+    [self logoutActions];
 }
+
 
 - (void)showLoginScreen
 {
@@ -518,37 +538,12 @@
     [self presentViewController:viewController animated:NO completion:nil];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-    
-}
-
-
-- (IBAction)googleLoginPressed:(id)sender
-{
-    
-}
-
-
-- (IBAction)discogsLoginPressed:(id)sender
-{
-    
-    
-}
-
-- (IBAction)otherLoginPressed:(id)sender
-{
-    
-    
-}
-
 #pragma mark - account creation
 
 -(void)createAccountResult:(NSDictionary *)someResult
 {
     
-    __block NSDictionary *result = [someResult copy];
+    __block NSDictionary *result = [someResult mutableCopy];
     
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     spinner.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height*3/4);
@@ -561,29 +556,11 @@
     [self loginToFirebase:result[@"email"] password:result[@"password"] withCompletion:^(bool loginResult) {
         if(loginResult)
         {
-            //DEBUGGING THE OVERWRITING
-            /*
-            for (NSUInteger i=0; i<2 ; i++)
-            {
-                if (i==1)
-                {
-                    __block NSMutableDictionary *mutableResult = [result mutableCopy];
-                    mutableResult[@"displayName"] = @"was able to rewrite";
-                    result = [NSDictionary dictionaryWithDictionary:mutableResult];
-                }
-                
-                [[[UserObject sharedUser].firebaseRoot childByAppendingPath:pathString] setValue:result withCompletionBlock:^(NSError *error, Firebase *ref) {
-                    if(error)
-                    {
-                        NSLog(@"error returned %@",error);
-                    } else
-                    {
-                        NSLog(@"wrote to /users/%@ \n%@",result[@"provider"],result);
-                    }
-                }];
-            }
-            */
-        [[[UserObject sharedUser].firebaseRoot childByAppendingPath:pathString] setValue:result withCompletionBlock:^(NSError *error, Firebase *ref) {
+            NSMutableDictionary *noPasswordDict = [result mutableCopy];
+            [noPasswordDict removeObjectForKey:@"password"];
+            
+            
+        [[[UserObject sharedUser].firebaseRoot childByAppendingPath:pathString] setValue:noPasswordDict withCompletionBlock:^(NSError *error, Firebase *ref) {
             if(error)
             {
                 NSLog(@"error returned %@",error);
@@ -610,8 +587,8 @@
                                           preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *okAction = [UIAlertAction
-                               actionWithTitle:NSLocalizedString(@"Cancel", @"OK action")
-                               style:UIAlertActionStyleDestructive
+                               actionWithTitle:@"OK"
+                               style:UIAlertActionStyleDefault
                                handler:^(UIAlertAction *action)
                                {
                                    
@@ -621,7 +598,25 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+    
+}
+
+#pragma mark - logout
+-(void)logoutActions
+{
+    [[UserObject sharedUser].firebaseRoot unauth];
+    [FBSDKAccessToken setCurrentAccessToken:nil];
+    [DiscogsAPI removeDiscogsKeychain];
+    [AlbumCollectionDataStore sharedDataStore].albums = [@[] mutableCopy];
+    [self stopCallingViewDidAppear];
+}
+
+
 #pragma mark - logo image
+
 -(void)setupLogoImage
 {
     self.logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"record_globe_image"]];

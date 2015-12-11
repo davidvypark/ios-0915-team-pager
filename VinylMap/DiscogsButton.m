@@ -8,7 +8,7 @@
 
 #import "DiscogsButton.h"
 #import "UIColor+ChangeIt.h"
-
+#import "VinylColors.h"
 
 @implementation DiscogsButton
 
@@ -38,14 +38,14 @@
 
 -(void)commonInitMethod
 {
-    self.buttonColor = [[UIColor alloc] initWithRed:0.15 green:0.15 blue:0.15 alpha:1];
+    self.buttonColor = [UIColor vinylBlue];
     self.backgroundColor = self.buttonColor;
     self.layer.cornerRadius = 10;
     self.adjustsImageWhenHighlighted = YES;
     self.reversesTitleShadowWhenHighlighted = YES;
-    [self.layer setBorderWidth:1];
-    [self.layer setBorderColor:[[UIColor alloc] initWithRed:0.5 green:0.5 blue:0.5 alpha:0.5].CGColor];
-    self.tintColor = [UIColor blackColor];
+    [self.layer setBorderWidth:1.0];
+    [self.layer setBorderColor:[UIColor vinylLightGray].CGColor];
+    self.tintColor = [UIColor vinylOrange];
 }
 
 

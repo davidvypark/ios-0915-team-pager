@@ -16,10 +16,15 @@
 #import "DiscogsAPI.h"
 #import "UserObject.h"
 #import "Album.h"
+#import "VinylColors.h"
+#import <Masonry.h>
 
 @interface SearchViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, BarCodeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *searchField;
 @property (weak, nonatomic) IBOutlet UITableView *searchTableView;
+@property (weak, nonatomic) IBOutlet UIButton *barcodeButton;
+
+
 @property (nonatomic, strong) NSMutableArray *albumResults;
 @property (nonatomic, strong) NSMutableArray *holdingTheCategoryNumbers;
 @property (nonatomic, strong) Firebase *firebase;
@@ -43,9 +48,45 @@
     self.searchTableView.dataSource = self;
     self.albumResults = [NSMutableArray new];
     [self setupFirebase];
+
 }
 
--(void)viewWillAppear:(BOOL)animated {
+
+-(void)viewDidAppear:(BOOL)animated
+{
+
+    [super viewDidAppear:animated];
+    
+    self.searchField.backgroundColor = [UIColor vinylLightGray];
+    
+    [self.searchField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(self.searchField.superview).multipliedBy(0.86);
+        make.bottom.equalTo(self.searchField.superview).offset(-5);
+        make.left.equalTo(self.searchField.superview).offset(5);
+    }];
+    
+    
+    self.barcodeButton.backgroundColor = [UIColor clearColor];
+    [self.barcodeButton setTitle:@"" forState:UIControlStateNormal];
+    
+    UIImage *barcodeImage = [UIImage imageNamed:@"barcode-32px.png"];
+    CGFloat sizeRatio = barcodeImage.size.height / self.searchField.frame.size.height;
+    barcodeImage = [UIImage imageWithCGImage:barcodeImage.CGImage scale:sizeRatio orientation:barcodeImage.imageOrientation];
+
+    [self.barcodeButton setImage:barcodeImage forState:UIControlStateNormal];
+    
+    [self.barcodeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(self.barcodeButton.superview).multipliedBy(0.09);
+        make.right.equalTo(self.barcodeButton.superview).offset(-5);
+        make.centerY.equalTo(self.searchField);
+    }];
+    
+    
+}
+
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     [self setupFirebase];
 }
 
@@ -54,7 +95,7 @@
     NSString *firebaseRefUrl = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection", currentUser];
     self.firebase = [[Firebase alloc] initWithUrl:firebaseRefUrl];
     self.store = [AlbumCollectionDataStore sharedDataStore];
-    NSLog(@"Albums: %@", self.store.albums);
+//    NSLog(@"Albums: %@", self.store.albums);
 }
 
 -(BOOL) textFieldShouldReturn:(UITextField *)textField {
@@ -145,7 +186,6 @@
 
     [sender setTitle:@"✔︎" forState:UIControlStateNormal];
     sender.enabled = NO;
-    [self.searchTableView reloadData];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -214,7 +254,7 @@
             [self.view addSubview:spinner];
             [spinner startAnimating];
             [DiscogsAPI barcodeAPIsearch:barcode withCompletion:^(NSArray *arrayOfAlbums, bool isError) {
-                NSLog(@"%@",arrayOfAlbums);//RESULTS FROM DISCOGS API
+//                NSLog(@"%@",arrayOfAlbums);//RESULTS FROM DISCOGS API
                 [spinner removeFromSuperview];
             }];
         }];

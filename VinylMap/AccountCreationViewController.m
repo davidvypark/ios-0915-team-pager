@@ -237,9 +237,9 @@
             // provided by user login text fields
             NSMutableDictionary *newUser = [@{
                                       @"provider": result[@"uid"],
-                                      @"password": self.passwordField.text,
                                       @"email" : self.emailAddressField.text,
                                       @"displayName" : self.displayName.text,
+                                      @"password" : self.passwordField.text,
                                       @"firstName" : self.firstName.text,
                                       @"lastName" : self.lastName.text
                                       } mutableCopy];
