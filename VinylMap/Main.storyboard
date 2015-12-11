@@ -452,7 +452,13 @@
                             <constraint firstItem="NAl-9B-dyO" firstAttribute="centerX" secondItem="m0g-5G-OL7" secondAttribute="centerX" id="qV9-CN-xZc"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="My Collection" id="cuZ-m7-p1y"/>
+                    <navigationItem key="navigationItem" title="My Collection" id="cuZ-m7-p1y">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="sb0-p1-QeU">
+                            <connections>
+                                <segue destination="G6t-G7-Qgk" kind="show" id="UCi-8q-lUt"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="myCollection" destination="NAl-9B-dyO" id="cbI-uC-ruV"/>
                     </connections>
@@ -954,6 +960,7 @@
         <image name="speech-bubble-32px" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="UCi-8q-lUt"/>
         <segue reference="z4P-t6-q3t"/>
     </inferredMetricsTieBreakers>
 </document>
