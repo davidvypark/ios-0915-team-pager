@@ -140,6 +140,7 @@
         __block NSString *ownerOfKey = [[NSString alloc]init];
         __block VinylAnnotation *annotation = [[VinylAnnotation alloc] init];
         [albumOwner observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+            if (snapshot.value != [NSNull null]) {
             ownerOfKey = snapshot.value[@"owner"];
             annotation.title = snapshot.value[@"title"];
             annotation.subtitle = snapshot.value[@"artist"];
@@ -149,7 +150,7 @@
             [self.mapView addAnnotation:annotation];
             self.vinylAnnotations[key] = annotation;
             [self.availableVinylsTableView reloadData];
-
+            }
         }];
         
     }];
