@@ -15,6 +15,7 @@
 		2B6017001BFCC978003DB81A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B6016FE1BFCC978003DB81A /* LaunchScreen.storyboard */; };
 		2B9C06241C0C900300060A19 /* AlbumCollectionDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9C06231C0C900300060A19 /* AlbumCollectionDataStore.m */; };
 		2BDB1BF61C19FA6100D42059 /* InitialLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BDB1BF51C19FA6100D42059 /* InitialLoginViewController.m */; };
+		2BDB1BFB1C1B581100D42059 /* records.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2BDB1BFA1C1B581100D42059 /* records.jpg */; };
 		2BF0EB401BFE813800EA03B1 /* AlbumCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB3F1BFE813800EA03B1 /* AlbumCollectionViewCell.m */; };
 		2BF0EB431BFE843A00EA03B1 /* AlbumTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB421BFE843A00EA03B1 /* AlbumTableViewCell.m */; };
 		2BF0EB461BFE847F00EA03B1 /* MyAlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB451BFE847F00EA03B1 /* MyAlbumsViewController.m */; };
@@ -60,6 +61,7 @@
 		2B9C06231C0C900300060A19 /* AlbumCollectionDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumCollectionDataStore.m; sourceTree = "<group>"; };
 		2BDB1BF41C19FA6100D42059 /* InitialLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialLoginViewController.h; sourceTree = "<group>"; };
 		2BDB1BF51C19FA6100D42059 /* InitialLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialLoginViewController.m; sourceTree = "<group>"; };
+		2BDB1BFA1C1B581100D42059 /* records.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = records.jpg; path = VinylMap/Images/records.jpg; sourceTree = "<group>"; };
 		2BF0EB3E1BFE813700EA03B1 /* AlbumCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumCollectionViewCell.h; sourceTree = "<group>"; };
 		2BF0EB3F1BFE813800EA03B1 /* AlbumCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumCollectionViewCell.m; sourceTree = "<group>"; };
 		2BF0EB411BFE843A00EA03B1 /* AlbumTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumTableViewCell.h; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 		2B6016E41BFCC978003DB81A = {
 			isa = PBXGroup;
 			children = (
+				2BDB1BFA1C1B581100D42059 /* records.jpg */,
 				969BDB921C0CA56C00B0293E /* Default-568h@2x.png */,
 				2B6016EF1BFCC978003DB81A /* VinylMap */,
 				2B6016EE1BFCC978003DB81A /* Products */,
@@ -354,6 +357,7 @@
 				96AF90991BFCE64B00BCFC96 /* Main.storyboard in Resources */,
 				2B6017001BFCC978003DB81A /* LaunchScreen.storyboard in Resources */,
 				969BDB931C0CA56C00B0293E /* Default-568h@2x.png in Resources */,
+				2BDB1BFB1C1B581100D42059 /* records.jpg in Resources */,
 				2B6016FD1BFCC978003DB81A /* Assets.xcassets in Resources */,
 				96A90FDB1C0D0568003C7394 /* GoogleService-Info.plist in Resources */,
 			);

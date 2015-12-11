@@ -14,6 +14,7 @@
 #import <Masonry.h>
 #import "VinylColors.h"
 #import "LoginViewController.h"
+#import <GeoFire/GeoFire.h>
 
 @interface MyAlbumsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate, UITabBarControllerDelegate>
 
@@ -43,6 +44,7 @@
     self.store = [AlbumCollectionDataStore sharedDataStore];
     self.albums = [[NSMutableArray alloc] init];
     self.myCollection.backgroundColor = [UIColor vinylMediumGray];
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
 }
 
 
@@ -186,6 +188,9 @@
     NSLog(@"%@", albumID);
     NSString *currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
     NSString *albumToBeDeletedURL = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection/%@", currentUser, albumID];
+    Firebase *geofireRef = [[Firebase alloc] initWithUrl:@"https://amber-torch-8635.firebaseio.com/geofire"];
+    GeoFire *geoFire = [[GeoFire alloc] initWithFirebaseRef:geofireRef];
+    [geoFire removeKey:albumID];
     Firebase *deleteAlbumRef = [[Firebase alloc] initWithUrl:albumToBeDeletedURL];
     [self.store.albums removeObject:self.albumToBeDeleted];
     [deleteAlbumRef removeValue];

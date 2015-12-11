@@ -194,18 +194,19 @@
             Firebase *collectionID = [collectionHere childByAutoId];
             
 
-                [collectionID  setValue:album withCompletionBlock:^(NSError *error, Firebase *ref) {
-                    if(error)
-                    {
-                        NSLog(@"error returned %@",error);
-                    } else
-                    {
-                        NSLog(@"%@ added to firebase",unowned[@"basic_information"][@"title"]);
-                    }
-                }];
-        
+            [collectionID  setValue:album withCompletionBlock:^(NSError *error, Firebase *ref) {
+                if(error)
+                {
+                    NSLog(@"error returned %@",error);
+                } else
+                {
+                    NSLog(@"%@ added to firebase",unowned[@"basic_information"][@"title"]);
+                }
+            }];
+
             [collectionID updateChildValues:@{@"ID": collectionID.key}];
         }
+        
         
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

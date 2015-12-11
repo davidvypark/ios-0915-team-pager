@@ -51,6 +51,8 @@
 @property (nonatomic, strong) UITextField *emailAddressField;
 @property (nonatomic, strong) UITextField *passwordField;
 
+@property (nonatomic, strong) UILabel *loggedInLabel;
+
 
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
 @property (nonatomic, strong) AccountCreationViewController *createAccountVC;
@@ -72,15 +74,23 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(viewDidAppear:)
                                                  name:DISCOGS_LOGIN_NOTIFICATION object:nil];
-    
-    [self setUpTextFields];
-    
-    self.view.backgroundColor = [UIColor vinylMediumGray];
-    
-    
-    NSLog(@"WHATS UP, I'M THE LOGIN VIEW CONTROLLER!!!!!!");
-   
-    
+    if (self.modalOne) {
+        [self setUpTextFields];
+        UIImage *background = [UIImage imageNamed:@"records.jpg"];
+        UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:background];
+        backgroundImageView.alpha = 0.5;
+        [self.view insertSubview:backgroundImageView atIndex:0];
+        
+        [backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self.view);
+        }];
+        self.view.backgroundColor = [UIColor vinylMediumGray];
+    }
+    else {
+        [self setUpLoggedInMessage];
+    }
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
+
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -93,7 +103,6 @@
 {
     [self setUpButtons];
     [self discogsLoginButtonAlive];
-    [self updateFieldsIfLoggedIn];
     if(![UserObject sharedUser].firebaseRoot.authData && !self.modalOne)
     {
         [self showLoginScreen];
@@ -128,23 +137,6 @@
     return YES;
     
 }
-
-
--(void)updateFieldsIfLoggedIn
-{
-    if([UserObject sharedUser].firebaseRoot.authData)
-    {
-        self.emailAddressField.text = [UserObject sharedUser].firebaseRoot.authData.providerData[@"email"];
-        self.passwordField.text = @"*******";
-    } else
-    {
-        self.emailAddressField.text = nil;
-        self.passwordField.text = nil;
-    }
-    
-}
-
-
 
 #pragma mark - set up buttons
 
@@ -222,18 +214,41 @@
 
         } else
         {
-            [button mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.height.equalTo(@35);
-                make.width.equalTo(self.view).multipliedBy(self.widthMultiplier);
-                make.centerX.equalTo(self.view);
-                make.top.equalTo(self.passwordField.mas_bottom).offset(self.offsetAmount);
-            }];
-            
+            if(self.modalOne)
+            {
+                [button mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.height.equalTo(@35);
+                    make.width.equalTo(self.view).multipliedBy(self.widthMultiplier);
+                    make.centerX.equalTo(self.view);
+                    make.top.equalTo(self.passwordField.mas_bottom).offset(self.offsetAmount);
+                }];
+            } else
+            {
+                [button mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.height.equalTo(@35);
+                    make.width.equalTo(self.view).multipliedBy(self.widthMultiplier);
+                    make.centerX.equalTo(self.view);
+                    make.top.equalTo(self.loggedInLabel.mas_bottom).offset(self.offsetAmount);
+                }];
+   
+            }
         }
         
         previousButton = button;
     }
     
+}
+
+-(void)setUpLoggedInMessage {
+    self.loggedInLabel = [UILabel new];
+    NSString *loggedInMessage = [NSString stringWithFormat:@"Logged in as %@", [UserObject sharedUser].firebaseRoot.authData.providerData[@"email"]];
+    self.loggedInLabel.text = loggedInMessage;
+    self.loggedInLabel.textColor = [UIColor vinylDarkGray];
+    [self.view addSubview:self.loggedInLabel];
+    [self.loggedInLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(self.logoImage.mas_bottom).offset(self.offsetAmount);
+    }];
 }
 
 
@@ -623,8 +638,8 @@
     [self.view addSubview:self.logoImage];
     [self.logoImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
-        make.top.equalTo(self.mas_topLayoutGuideBottom).offset(10);
-        make.height.and.width.equalTo(@(self.view.frame.size.width/3));
+        make.top.equalTo(self.mas_topLayoutGuideBottom).offset(self.view.frame.size.height/20);
+        make.height.and.width.equalTo(@(self.view.frame.size.width/1.5));
     }];
 }
 

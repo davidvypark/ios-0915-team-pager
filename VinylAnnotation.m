@@ -20,13 +20,4 @@
     return self;
 }
 
-
-//- (MKAnnotationView *) annotationView {
-//    MKAnnotationView *annotationView = [[MKAnnotationView alloc]initWithAnnotation:self reuseIdentifier:@"VinylAnnotation"];
-//    annotationView.enabled = YES;
-//    annotationView.canShowCallout = YES;
-//    annotationView.image = self.image;
-//    annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-//    return annotationView;
-//}
 @end
