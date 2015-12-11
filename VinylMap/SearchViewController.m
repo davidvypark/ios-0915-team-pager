@@ -54,7 +54,6 @@
     NSString *firebaseRefUrl = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection", currentUser];
     self.firebase = [[Firebase alloc] initWithUrl:firebaseRefUrl];
     self.store = [AlbumCollectionDataStore sharedDataStore];
-    NSLog(@"Albums: %@", self.store.albums);
 }
 
 -(BOOL) textFieldShouldReturn:(UITextField *)textField {
@@ -145,7 +144,6 @@
 
     [sender setTitle:@"✔︎" forState:UIControlStateNormal];
     sender.enabled = NO;
-    [self.searchTableView reloadData];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

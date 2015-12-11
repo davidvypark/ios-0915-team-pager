@@ -39,30 +39,21 @@
     longPressGR.delegate = self;
     longPressGR.delaysTouchesBegan = YES;
     [self.myCollection addGestureRecognizer:longPressGR];
-    if ([UserObject sharedUser].firebaseRoot.authData) {
-        [self setUpUserCollection];
-        self.store = [AlbumCollectionDataStore sharedDataStore];
-    }
+    self.store = [AlbumCollectionDataStore sharedDataStore];
+    self.albums = [[NSMutableArray alloc] init];
 }
-
-
 
 - (void)setUpUserCollection {
     NSString *currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
     NSString *firebaseRefUrl = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection", currentUser];
     self.firebaseRef = [[Firebase alloc] initWithUrl:firebaseRefUrl];
-    self.albums = [[NSMutableArray alloc] init];
     [self.firebaseRef observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
-        
-//        NSLog(@"eventTypeChildAdded");
-        
         [self.albums addObject:snapshot.value];
         self.store.albums = [self.albums mutableCopy];
+        NSLog(@"%@", self.store.albums);
         [self.myCollection reloadData];
     }];
     [self.firebaseRef observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
-        
-//        NSLog(@"observeSingleEventOfType");
         [self.myCollection reloadData];
     }];
     
@@ -86,7 +77,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     if (![UserObject sharedUser].firebaseRoot.authData) {
-        self.albums = [[NSMutableArray alloc] init];
         [self.myCollection reloadData];
     }
     else if (![self.currentUser isEqualToString:[UserObject sharedUser].firebaseRoot.authData.uid]) {
@@ -104,22 +94,17 @@
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    //NSLog(@"%@",self.albums);
-    return self.albums.count;
+    return self.store.albums.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     AlbumCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"albumCell" forIndexPath:indexPath];
 //    AlbumCollectionViewCell *cell = [[AlbumCollectionViewCell alloc] initWithFrame:CGRectMake(0, 0, self.squareSize, self.squareSize)]
-    [cell.albumLabel setText:self.albums[indexPath.row][@"title"]];
-    [cell.artistLabel setText:self.albums[indexPath.row][@"artist"]];
-    NSURL *albumArtURL = [NSURL URLWithString:self.albums[indexPath.row][@"imageURL"]];
+    [cell.albumLabel setText:self.store.albums[indexPath.row][@"title"]];
+    [cell.artistLabel setText:self.store.albums[indexPath.row][@"artist"]];
+    NSURL *albumArtURL = [NSURL URLWithString:self.store.albums[indexPath.row][@"imageURL"]];
     [cell.albumArtView setImageWithURL:albumArtURL];
-//    UIImage *albumImage = cell.albumArtView.image;
-//    CGFloat imageWidth = albumImage.size.width;
-//    albumImage = [UIImage imageWithCGImage:albumImage.CGImage scale:imageWidth/self.squareSize orientation:albumImage.imageOrientation];
-//    [cell.albumArtView setImage:albumImage];
     
     return cell;
 }
@@ -152,7 +137,7 @@
     if (indexPath == nil){
         NSLog(@"couldn't find index path");
     } else {
-        NSDictionary *album = self.albums[indexPath.row];
+        NSDictionary *album = self.store.albums[indexPath.row];
         self.albumToBeDeleted = album;
         [self displayDeleteAlertForAlbum:album[@"title"]];
     }
@@ -186,6 +171,7 @@
 
 - (void)deleteAlbumFromCollection {
     NSString *albumID = self.albumToBeDeleted[@"ID"];
+    NSLog(@"%@", albumID);
     NSString *currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
     NSString *albumToBeDeletedURL = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection/%@", currentUser, albumID];
     Firebase *deleteAlbumRef = [[Firebase alloc] initWithUrl:albumToBeDeletedURL];
@@ -198,7 +184,7 @@
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
      AlbumDetailsViewController *destinationVC = segue.destinationViewController;
      NSIndexPath *indexPath = [self.myCollection indexPathForCell:sender];
-     NSDictionary *album = self.albums[indexPath.row];
+     NSDictionary *album = self.store.albums[indexPath.row];
      destinationVC.albumDict = [album mutableCopy];
  }
 
