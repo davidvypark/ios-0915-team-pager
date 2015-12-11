@@ -118,7 +118,7 @@
         <!--Search View Controller-->
         <scene sceneID="fQV-Ne-Xgw">
             <objects>
-                <viewController id="G6t-G7-Qgk" customClass="SearchViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="searchViewController" id="G6t-G7-Qgk" customClass="SearchViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9Gt-yB-zNb"/>
                         <viewControllerLayoutGuide type="bottom" id="J5z-2f-Ku6"/>
@@ -436,7 +436,7 @@
                                             <outlet property="albumArtView" destination="4Mv-OZ-3k5" id="PAa-vu-rgG"/>
                                             <outlet property="albumLabel" destination="a9B-yF-T1l" id="OaV-yU-sIY"/>
                                             <outlet property="artistLabel" destination="B7R-Q4-5s7" id="nqM-8U-eDV"/>
-                                            <segue destination="7jW-5w-AHI" kind="show" id="j5t-zj-E2h"/>
+                                            <segue destination="7jW-5w-AHI" kind="show" identifier="detailSegue" id="j5t-zj-E2h"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -452,7 +452,13 @@
                             <constraint firstItem="NAl-9B-dyO" firstAttribute="centerX" secondItem="m0g-5G-OL7" secondAttribute="centerX" id="qV9-CN-xZc"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="My Collection" id="cuZ-m7-p1y"/>
+                    <navigationItem key="navigationItem" title="My Collection" id="cuZ-m7-p1y">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="sb0-p1-QeU">
+                            <connections>
+                                <action selector="plusButtonTapped:" destination="IKb-7H-Nhk" id="zWJ-6W-FEb"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="myCollection" destination="NAl-9B-dyO" id="cbI-uC-ruV"/>
                     </connections>

@@ -16,6 +16,8 @@
 #import "LoginViewController.h"
 #import <GeoFire/GeoFire.h>
 
+#import "SearchViewController.h"
+
 @interface MyAlbumsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate, UITabBarControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollection;
@@ -46,6 +48,16 @@
     self.myCollection.backgroundColor = [UIColor vinylMediumGray];
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
 }
+
+- (IBAction)plusButtonTapped:(id)sender {
+    
+    [self.tabBarController setSelectedIndex:0];
+    UINavigationController *searchNav = self.tabBarController.childViewControllers[0];
+    SearchViewController *searchVC = [searchNav.childViewControllers firstObject];
+    [searchVC makeSearchFieldFirstResponder];
+    
+}
+
 
 
 - (void)setUpUserCollection {
@@ -199,10 +211,13 @@
 }
 
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-     AlbumDetailsViewController *destinationVC = segue.destinationViewController;
-     NSIndexPath *indexPath = [self.myCollection indexPathForCell:sender];
-     NSDictionary *album = self.store.albums[indexPath.row];
-     destinationVC.albumDict = [album mutableCopy];
+     if ([segue.identifier isEqualToString:@"detailSegue"]) {
+         AlbumDetailsViewController *destinationVC = segue.destinationViewController;
+         NSIndexPath *indexPath = [self.myCollection indexPathForCell:sender];
+         NSDictionary *album = self.store.albums[indexPath.row];
+         destinationVC.albumDict = [album mutableCopy];
+     }
+    
  }
 
 
