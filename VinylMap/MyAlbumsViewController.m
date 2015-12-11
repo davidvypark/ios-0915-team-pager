@@ -50,6 +50,7 @@
     NSString *currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
     NSString *firebaseRefUrl = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection", currentUser];
     self.firebaseRef = [[Firebase alloc] initWithUrl:firebaseRefUrl];
+    [self.albums removeAllObjects];
     [self.firebaseRef observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
         [self.albums addObject:snapshot.value];
         self.store.albums = [self.albums mutableCopy];
