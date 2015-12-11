@@ -13,5 +13,6 @@
 - (void)setupFirebase;
 @property (nonatomic, strong) AlbumCollectionDataStore *store;
 
+-(void)makeSearchFieldFirstResponder;
 
 @end

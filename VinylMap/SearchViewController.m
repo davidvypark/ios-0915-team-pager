@@ -58,7 +58,7 @@
     [super viewDidAppear:animated];
     
     self.searchField.backgroundColor = [UIColor vinylLightGray];
-    
+    self.searchField.tintColor = [UIColor vinylDarkGray];
     [self.searchField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(self.searchField.superview).multipliedBy(0.86);
         make.bottom.equalTo(self.searchField.superview).offset(-5);
@@ -84,6 +84,9 @@
     
 }
 
+-(void)makeSearchFieldFirstResponder{
+    [self.searchField becomeFirstResponder];
+}
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
