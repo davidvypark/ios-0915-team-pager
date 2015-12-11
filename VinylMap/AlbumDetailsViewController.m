@@ -16,7 +16,6 @@
 #import "DiscogsButton.h"
 
 @interface AlbumDetailsViewController ()
-@property (nonatomic, strong) DiscogsButton *backButton;
 
 @end
 
@@ -56,19 +55,6 @@
         self.ownerLabel.hidden = NO;
     }
     
-    self.backButton = [[DiscogsButton alloc]  init];
-    [self.backButton setTitle:@"backButton" forState:UIControlStateNormal];
-    [self.view addSubview:self.backButton];
-    
-    [self.backButton addTarget:self
-                        action:@selector(buttonClicked:)
-              forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.backButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@35);
-        make.centerX.equalTo(self.view);
-        make.top.equalTo(self.sellTradeButton.mas_bottom).offset(10);
-    }];
     
     
     

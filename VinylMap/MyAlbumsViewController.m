@@ -42,7 +42,7 @@
     [self.myCollection addGestureRecognizer:longPressGR];
     self.store = [AlbumCollectionDataStore sharedDataStore];
     self.albums = [[NSMutableArray alloc] init];
-    self.myCollection.backgroundColor = [UIColor vinylDarkGray];
+    self.myCollection.backgroundColor = [UIColor vinylMediumGray];
 }
 
 
@@ -50,16 +50,18 @@
     NSString *currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
     NSString *firebaseRefUrl = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/collection", currentUser];
     self.firebaseRef = [[Firebase alloc] initWithUrl:firebaseRefUrl];
+    [self.albums removeAllObjects];
     [self.firebaseRef observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
         [self.albums addObject:snapshot.value];
         self.store.albums = [self.albums mutableCopy];
-        NSLog(@"%@", self.store.albums);
+//        NSLog(@"%@", self.store.albums);
         [self.myCollection reloadData];
     }];
     [self.firebaseRef observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        //        NSLog(@"%@", self.store.albums);
         [self.myCollection reloadData];
     }];
-    
+    [self.myCollection reloadData];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -113,7 +115,7 @@
     [cell.artistLabel setText:self.store.albums[indexPath.row][@"artist"]];
     NSURL *albumArtURL = [NSURL URLWithString:self.store.albums[indexPath.row][@"imageURL"]];
     [cell.albumArtView setImageWithURL:albumArtURL];
-    cell.backgroundColor = [UIColor vinylMediumGray];
+    cell.backgroundColor = [UIColor vinylLightGray];
 
     
     return cell;

@@ -304,7 +304,7 @@
                                     <constraint firstAttribute="height" constant="300" id="I0B-rm-NSh"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="752" text="Album Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Twg-cF-16p">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="752" text="Album Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Twg-cF-16p">
                                 <rect key="frame" x="251" y="399" width="99" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -367,7 +367,7 @@
         <!--My Albums View Controller-->
         <scene sceneID="QPc-TP-s9R">
             <objects>
-                <viewController storyboardIdentifier="MyAlbumsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="IKb-7H-Nhk" customClass="MyAlbumsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MyAlbumsViewController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="IKb-7H-Nhk" customClass="MyAlbumsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="TlH-iK-CpT"/>
                         <viewControllerLayoutGuide type="bottom" id="BNt-ba-JNe"/>
@@ -388,7 +388,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="albumCell" id="e7t-vj-a96" customClass="AlbumCollectionViewCell">
-                                        <rect key="frame" x="5" y="64" width="160" height="210"/>
+                                        <rect key="frame" x="5" y="0.0" width="160" height="210"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="160" height="210"/>
@@ -921,6 +921,6 @@
         <image name="speech-bubble-32px" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="lNI-Ok-Msy"/>
+        <segue reference="z4P-t6-q3t"/>
     </inferredMetricsTieBreakers>
 </document>

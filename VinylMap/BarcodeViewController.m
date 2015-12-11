@@ -50,13 +50,21 @@
     
     [self barcodeScanner];
     
+    UIButton *saysBarcode = [[UIButton alloc] init];
+    saysBarcode.userInteractionEnabled = NO;
+    saysBarcode.titleLabel.text = @"Scan Barcode";
     
-    //    only allow portrait mode
-    //    [self restrictRotation:YES];
-    //    [[UIDevice currentDevice] setValue:@(UIInterfaceOrientationPortrait) forKey:@"orientation"];
-    //    [self secondBarcodeScanner];
-    //    [self displayButtons];
-
+    [self.view addSubview:saysBarcode];
+    
+    
+    [saysBarcode mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(self.view);
+        make.height.equalTo(@40);
+        make.bottom.equalTo(self.cameraView.mas_top).offset(-10);
+    }];
+    
+    
+    
 }
 
 
