@@ -32,7 +32,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     self.currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
-    self.view.backgroundColor = [UIColor vinylMediumGray];
+    self.view.backgroundColor = [UIColor vinylLightGray];
     NSString *chatroom = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/chatrooms", self.currentUser];
     Firebase *chatroomsFirebase = [[Firebase alloc] initWithUrl:chatroom];
     [chatroomsFirebase observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
@@ -75,7 +75,10 @@
         cell.detailTextLabel.text = chatUsers[@"newest"];
     }
     
-    cell.backgroundColor = [UIColor vinylMediumGray];
+    cell.backgroundColor = [UIColor vinylLightGray];
+    UIView *bgColorView = [[UIView alloc] init];
+    bgColorView.backgroundColor = [UIColor vinylBlue];
+    [cell setSelectedBackgroundView:bgColorView];
     
     return cell;
 }

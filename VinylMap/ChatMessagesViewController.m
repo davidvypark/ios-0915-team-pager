@@ -11,12 +11,13 @@
 #import "ChatMessagesViewController.h"
 #import "UserObject.h"
 #import "VinylColors.h"
+#import <Masonry.h>
 
 #define chatroom @"https://amber-torch-8635.firebaseio.com/data/chatrooms"
 
 @interface ChatMessagesViewController ()
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *textFieldBottomContstraint;
-@property (nonatomic) double originalTextFieldBottomConstant;
+@property (nonatomic, assign) double originalTextFieldBottomConstant;
 @property (nonatomic, strong) NSString *currentUser;
 @property (nonatomic, strong) NSString *currentUserDisplayName;
 
@@ -39,7 +40,9 @@
 	
     // Initialize array that will store chat messages.
     self.chat = [[NSMutableArray alloc] init];
-    self.view.backgroundColor = [UIColor vinylMediumGray];
+    self.view.backgroundColor = [UIColor vinylLightGray];
+    self.tableView.backgroundColor = [UIColor vinylLightGray];
+    
     
     // Initialize the root of our Firebase namespace.
     self.firebase = [[Firebase alloc] initWithUrl:chatroom];
@@ -53,6 +56,7 @@
     }];
     
     nameField.text = self.userToMessageDisplayName;
+    self.title   = self.userToMessageDisplayName;
     
     
     // This allows us to check if these were messages already stored on the server
@@ -198,7 +202,11 @@
 
     cell.textLabel.text = chatMessage[@"text"];
     cell.detailTextLabel.text = chatMessage[@"name"];
-    cell.backgroundColor = [UIColor vinylMediumGray];
+    
+    cell.backgroundColor = [UIColor vinylLightGray];
+    UIView *bgColorView = [[UIView alloc] init];
+    bgColorView.backgroundColor = [UIColor vinylBlue];
+    [cell setSelectedBackgroundView:bgColorView];
     
     return cell;
 }

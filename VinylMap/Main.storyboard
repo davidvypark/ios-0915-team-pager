@@ -729,15 +729,8 @@
                                     <outlet property="delegate" destination="quf-bS-riB" id="AlI-yb-XrL"/>
                                 </connections>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dTE-Zp-ExA">
-                                <rect key="frame" x="275" y="72" width="50" height="21"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="18"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="DMZ-pL-ylB">
-                                <rect key="frame" x="24" y="105" width="552" height="388"/>
+                                <rect key="frame" x="24" y="64" width="552" height="429"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -751,13 +744,11 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="DMZ-pL-ylB" firstAttribute="bottom" secondItem="2mb-NL-O0s" secondAttribute="top" constant="-8" id="5cf-j7-kOB"/>
+                            <constraint firstItem="DMZ-pL-ylB" firstAttribute="top" secondItem="us8-nB-d9z" secondAttribute="bottom" id="9Eg-98-em8"/>
                             <constraint firstItem="2mb-NL-O0s" firstAttribute="centerX" secondItem="jxw-Kc-lvd" secondAttribute="centerX" id="9Mh-Pp-7B1"/>
                             <constraint firstItem="2mb-NL-O0s" firstAttribute="width" secondItem="DMZ-pL-ylB" secondAttribute="width" id="C9g-JW-xMb"/>
-                            <constraint firstItem="dTE-Zp-ExA" firstAttribute="top" secondItem="us8-nB-d9z" secondAttribute="bottom" constant="8" id="Vy7-h8-Tfu"/>
                             <constraint firstItem="2mb-NL-O0s" firstAttribute="bottom" secondItem="b77-Fa-vMa" secondAttribute="top" constant="-20" id="W4s-hh-6wt"/>
-                            <constraint firstItem="dTE-Zp-ExA" firstAttribute="centerX" secondItem="jxw-Kc-lvd" secondAttribute="centerX" id="i0N-G1-7lo"/>
                             <constraint firstItem="DMZ-pL-ylB" firstAttribute="leading" secondItem="jxw-Kc-lvd" secondAttribute="leadingMargin" constant="4" id="unB-xS-M6R"/>
-                            <constraint firstItem="DMZ-pL-ylB" firstAttribute="top" secondItem="dTE-Zp-ExA" secondAttribute="bottom" constant="12" id="vzP-aX-6ss"/>
                             <constraint firstItem="DMZ-pL-ylB" firstAttribute="trailing" secondItem="jxw-Kc-lvd" secondAttribute="trailingMargin" constant="-4" id="xqq-pf-PEm"/>
                         </constraints>
                         <connections>
@@ -766,7 +757,6 @@
                     </view>
                     <navigationItem key="navigationItem" title="Messages" id="oHc-xo-fIm"/>
                     <connections>
-                        <outlet property="nameField" destination="dTE-Zp-ExA" id="FIa-zy-5MW"/>
                         <outlet property="tableView" destination="DMZ-pL-ylB" id="Cfl-cf-NSw"/>
                         <outlet property="textField" destination="2mb-NL-O0s" id="54Y-4Y-vBn"/>
                         <outlet property="textFieldBottomContstraint" destination="W4s-hh-6wt" id="LHP-WG-Rfd"/>
