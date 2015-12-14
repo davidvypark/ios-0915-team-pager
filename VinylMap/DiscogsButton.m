@@ -45,7 +45,7 @@
     self.reversesTitleShadowWhenHighlighted = YES;
     [self.layer setBorderWidth:1.0];
     [self.layer setBorderColor:[UIColor vinylLightGray].CGColor];
-    self.tintColor = [UIColor vinylOrange];
+    self.tintColor = [UIColor vinylLightGray];
 }
 
 
