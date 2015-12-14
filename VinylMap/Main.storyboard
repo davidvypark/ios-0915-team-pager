@@ -486,10 +486,10 @@
                                 <exclude reference="OZZ-RV-sMV"/>
                                 <exclude reference="cwQ-nJ-KKG"/>
                                 <exclude reference="wPU-Uf-xpm"/>
-                                <exclude reference="xOZ-Ab-LeO"/>
                                 <exclude reference="OXc-8A-Y13"/>
                                 <exclude reference="LjT-YZ-BGW"/>
                                 <exclude reference="Xh2-y7-huP"/>
+                                <exclude reference="xOZ-Ab-LeO"/>
                             </mask>
                         </variation>
                     </view>
