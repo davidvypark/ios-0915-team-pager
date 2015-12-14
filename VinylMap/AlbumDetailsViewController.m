@@ -101,7 +101,7 @@
         destinationVC.albumName = self.albumDict[@"title"];
         destinationVC.albumArtist = self.albumDict[@"artist"];
         destinationVC.albumURL = self.albumDict[@"imageURL"];
-
+        destinationVC.albumDeetVC = self;
     }
     
     else {

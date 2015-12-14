@@ -13,6 +13,9 @@
 #import <UIKit+AFNetworking.h>
 #import <Mapkit/Mapkit.h>
 #import "UserObject.h"
+#import "VinylColors.h"
+#import <Masonry.h>
+
 
 @interface AddViewController ()<MKMapViewDelegate, CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *addMapView;
@@ -26,7 +29,12 @@
 @property (weak, nonatomic) IBOutlet UISwitch *tradeSwitch;
 @property (nonatomic) BOOL forSale;
 @property (nonatomic) BOOL forTrade;
+<<<<<<< HEAD
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButton;
+=======
+@property (weak, nonatomic) IBOutlet UINavigationBar *theNavigationBar;
+@property (weak, nonatomic) IBOutlet UINavigationItem *navigationTitleItem;
+>>>>>>> harris/branch
 
 
 @end
@@ -39,13 +47,12 @@
     self.addMapView.delegate = self;
     self.locationManager.delegate = self;
     
+    
     // Do any additional setup after loading the view.
     Firebase *geofireRef = [[Firebase alloc] initWithUrl:@"https://amber-torch-8635.firebaseio.com/geofire"];
     self.geoFire = [[GeoFire alloc] initWithFirebaseRef:geofireRef];
     self.currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
     
-    
-
     
     
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
@@ -57,6 +64,29 @@
     else {[self.locationManager startUpdatingLocation];
         self.addMapView.showsUserLocation = YES;
     }
+    self.navigationTitleItem.title = @"Long Press Location";
+    self.theNavigationBar.tintColor = [UIColor vinylLightGray];
+    self.theNavigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
+//    self.view.backgroundColor = [UIColor vinylDarkGray];
+    
+    
+    CGFloat navHeight = self.albumDeetVC.navigationController.navigationBar.frame.size.height;
+    CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
+    NSLog(@"navHeight: %f \n statusHeight: %f",navHeight,statusBarHeight);
+    
+    [self.theNavigationBar mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@(navHeight + statusBarHeight));
+        make.topMargin.equalTo(self.view);
+    }];
+    
+    
+    
+    
+}
+
+-(BOOL)prefersStatusBarHidden
+{
+    return YES;
 }
 
 

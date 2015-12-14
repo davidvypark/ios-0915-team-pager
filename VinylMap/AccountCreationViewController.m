@@ -21,6 +21,7 @@
 @property (nonatomic, strong) UITextField *lastName;
 @property (nonatomic, strong) UITextField *displayName;
 @property (nonatomic, strong) UISwitch *acceptTerms;
+@property (nonatomic, strong) NSArray *textFieldArray;
 
 @property (nonatomic, strong) DiscogsButton *createAccountButon;
 @property (nonatomic, strong) DiscogsButton *cancelButton;
@@ -74,33 +75,38 @@
 {
     self.firstName = [[UITextField alloc] init];
     self.firstName.placeholder = @"first name";
+    self.firstName.delegate = self;
     self.lastName = [[UITextField alloc] init];
     self.lastName.placeholder = @"last name";
+    self.lastName.delegate = self;
     self.emailAddressField = [[UITextField alloc] init];
     self.emailAddressField.placeholder = @"email address";
+    self.emailAddressField.delegate = self;
     self.displayName = [[UITextField alloc] init];
     self.displayName.placeholder = @"display name";
+    self.displayName.delegate = self;
     self.passwordField = [[UITextField alloc] init];
     self.passwordField.placeholder = @"password";
     self.passwordField.secureTextEntry = YES;
+    self.passwordField.delegate = self;
     self.confirmPassword = [[UITextField alloc] init];
     self.confirmPassword.placeholder = @"password";
     self.confirmPassword.secureTextEntry = YES;
+    self.confirmPassword.delegate = self;
     
     
     //MAKES IT EASY TO DEBUG
-    self.firstName.text = @"debug firstname";
-    self.lastName.text = @"debug lastname";
-    self.displayName.text = @"debug displayname";
-    self.emailAddressField.text = [NSString stringWithFormat:@"%u@%u.com",arc4random()*9999999,arc4random()*9999999];
-    self.emailAddressField.keyboardType = UIKeyboardTypeEmailAddress;
-    self.passwordField.text = @"password";
-    self.confirmPassword.text = @"password";
+//    self.firstName.text = @"debug firstname";
+//    self.lastName.text = @"debug lastname";
+//    self.displayName.text = @"debug displayname";
+//    self.emailAddressField.text = [NSString stringWithFormat:@"%u@%u.com",arc4random()*9999999,arc4random()*9999999];
+//    self.passwordField.text = @"password";
+//    self.confirmPassword.text = @"password";
     //REMOVE TURN THESE OFF
     
-    NSArray *textFieldArray = @[self.firstName , self.lastName , self.emailAddressField , self.displayName, self.passwordField , self.confirmPassword];
+    self.textFieldArray = @[self.firstName , self.lastName , self.emailAddressField , self.displayName, self.passwordField , self.confirmPassword];
     UITextField *previousField;
-    for (UITextField *textField in textFieldArray) {
+    for (UITextField *textField in self.textFieldArray) {
         [self.view addSubview:textField];
         CGFloat grayNESS = 0.9;
         textField.backgroundColor = [[UIColor alloc] initWithRed:grayNESS green:grayNESS blue:grayNESS alpha:1];
@@ -166,23 +172,67 @@
 
 -(void)setupBackground
 {
-    UIView *behindVisualEffect = [[UIView alloc] init];
-    //    behindVisualEffect.alpha = 0.9;
-    behindVisualEffect.backgroundColor = [UIColor vinylMediumGray];
-    [self.view addSubview:behindVisualEffect];
-    [behindVisualEffect mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(behindVisualEffect.superview);
+//    UIView *behindVisualEffect = [[UIView alloc] init];
+//    //    behindVisualEffect.alpha = 0.9;
+//    behindVisualEffect.backgroundColor = [UIColor vinylMediumGray];
+//    [self.view addSubview:behindVisualEffect];
+//    [behindVisualEffect mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.edges.equalTo(behindVisualEffect.superview);
+//    }];
+//    
+//    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+//    UIVisualEffectView *backgroundView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+//    backgroundView.accessibilityLabel = @"backGround";
+//    [behindVisualEffect addSubview:backgroundView];
+//    
+//    [backgroundView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.edges.equalTo(self.view);
+//    }];
+    
+    UIImage *background = [UIImage imageNamed:@"records.jpg"];
+    UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:background];
+    backgroundImageView.alpha = 0.5;
+    [self.view insertSubview:backgroundImageView atIndex:0];
+    
+    [backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.and.width.equalTo(self.view).offset(100);
+        make.left.equalTo(self.view).offset(-50);
+        make.top.equalTo(self.view).offset(-50);
     }];
     
-    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-    UIVisualEffectView *backgroundView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-    backgroundView.accessibilityLabel = @"backGround";
-    [behindVisualEffect addSubview:backgroundView];
     
-    [backgroundView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
-    }];
+    UIInterpolatingMotionEffect *verticalMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y" type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+    verticalMotionEffect.minimumRelativeValue = @(-50);
+    verticalMotionEffect.maximumRelativeValue = @(50);
+    UIInterpolatingMotionEffect *horizontalMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x" type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+    horizontalMotionEffect.minimumRelativeValue = @(-50);
+    horizontalMotionEffect.maximumRelativeValue = @(50);
+    UIMotionEffectGroup *group = [UIMotionEffectGroup new];
+    group.motionEffects = @[horizontalMotionEffect, verticalMotionEffect];
+    [backgroundImageView addMotionEffect:group];
+    
+    self.view.backgroundColor = [UIColor vinylMediumGray];
 }
+
+#pragma mark - text field handling/delegates
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    
+    if([textField isEqual:self.confirmPassword])
+    {
+        [self buttonWasPressed:self.createAccountButon];
+    } else
+    {
+        NSUInteger indexNumber = [self.textFieldArray indexOfObject:textField];
+        [self.textFieldArray[indexNumber+1] becomeFirstResponder];
+    }
+    
+    return YES;
+    
+}
+
+
 
 #pragma mark - button was pressed
 
