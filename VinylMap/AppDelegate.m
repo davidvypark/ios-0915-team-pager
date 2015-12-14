@@ -49,12 +49,11 @@
     [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert categories:[NSSet setWithObject:@"GLOBAL"]]];
     [AlbumCollectionDataStore sharedDataStore];
     NSLog(@"%@",[UserObject sharedUser].firebaseRoot.authData);
-    
     [self setUpTabBars];
-    
     
     return YES;
 }
+
 
 
 
@@ -218,10 +217,9 @@
     
     [[UITabBar appearance] setBarTintColor:[UIColor vinylDarkGray]];
     [[UITabBar appearance] setTintColor:[UIColor vinylOrange]];
-    [[UINavigationBar appearance] setTranslucent:YES];
+//    [[UINavigationBar appearance] setTranslucent:YES];
     [[UINavigationBar appearance] setTintColor:[UIColor vinylLightGray]];
-    
-    
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
     UITabBar *tabBar = tabBarController.tabBar;
     UITabBarItem *tabBarItem0 = [tabBar.items objectAtIndex:0];

@@ -118,6 +118,7 @@
 {
     [self setUpButtons];
     [self discogsLoginButtonAlive];
+    self.loggedInLabel.text = [NSString stringWithFormat:@"Logged in as %@", [UserObject sharedUser].firebaseRoot.authData.providerData[@"email"]];
     if(![UserObject sharedUser].firebaseRoot.authData && !self.modalOne)
     {
         [self showLoginScreen];
@@ -467,38 +468,46 @@
     
     NSLog(@"did complete with error %@",error);
     
-    NSSet *grantedPermissions = result.token.permissions;
-    NSSet *declinedPermissions = result.token.declinedPermissions;
-    NSString *userID = result.token.userID;
-    NSString *tokenString = result.token.tokenString;
-    NSLog(@"userID: %@ \n token: %@ \n permissions: %@ \n declined permissions: %@ \n",userID,tokenString,grantedPermissions,declinedPermissions);
-    [UserObject sharedUser].facebookUserID = [FBSDKAccessToken currentAccessToken].userID;
-    [UserObject sharedUser].facebookToken = result.token.tokenString;
+    if(error)
+    {
+        
+    } else
+    {
+        NSSet *grantedPermissions = result.token.permissions;
+        NSSet *declinedPermissions = result.token.declinedPermissions;
+        NSString *userID = result.token.userID;
+        NSString *tokenString = result.token.tokenString;
+        NSLog(@"userID: %@ \n token: %@ \n permissions: %@ \n declined permissions: %@ \n",userID,tokenString,grantedPermissions,declinedPermissions);
+        [UserObject sharedUser].facebookUserID = [FBSDKAccessToken currentAccessToken].userID;
+        [UserObject sharedUser].facebookToken = result.token.tokenString;
+        
+        [[UserObject sharedUser].firebaseRoot authWithOAuthProvider:@"facebook" token:result.token.tokenString withCompletionBlock:^(NSError *error, FAuthData *authData) {
+            if(error)
+            {
+                NSLog(@"%@",error);
+                [self stopCallingViewDidAppear];
+            } else
+            {
+                NSLog(@"Facebook Login Complete"); //AUTHDATA COMPLETE
+                NSDictionary *userProfile = authData.providerData[@"cachedUserProfile"];
+                NSMutableDictionary *facebookUser = [@{
+                                                       @"provider": authData.provider,
+                                                       @"email" : authData.providerData[@"email"],
+                                                       @"displayName" : authData.providerData[@"displayName"],
+                                                       @"firstName" : userProfile[@"first_name"],
+                                                       @"lastName" : userProfile[@"last_name"],
+                                                       @"profileImageURL": authData.providerData[@"profileImageURL"]
+                                                       } mutableCopy];
+                
+                // Create a child path with a key set to the uid underneath the "users" node
+                [[[[UserObject sharedUser].firebaseRoot childByAppendingPath:@"users"]
+                  childByAppendingPath:authData.uid] setValue:facebookUser];
+                [self stopCallingViewDidAppear];
+            }
+        }];
+        
+    }
     
-    [[UserObject sharedUser].firebaseRoot authWithOAuthProvider:@"facebook" token:result.token.tokenString withCompletionBlock:^(NSError *error, FAuthData *authData) {
-        if(error)
-        {
-            NSLog(@"%@",error);
-            [self stopCallingViewDidAppear];
-        } else
-        {
-            NSLog(@"Facebook Login Complete"); //AUTHDATA COMPLETE
-            NSDictionary *userProfile = authData.providerData[@"cachedUserProfile"];
-            NSMutableDictionary *facebookUser = [@{
-                                              @"provider": authData.provider,
-                                              @"email" : authData.providerData[@"email"],
-                                              @"displayName" : authData.providerData[@"displayName"],
-                                              @"firstName" : userProfile[@"first_name"],
-                                              @"lastName" : userProfile[@"last_name"],
-                                              @"profileImageURL": authData.providerData[@"profileImageURL"]
-                                              } mutableCopy];
-            
-            // Create a child path with a key set to the uid underneath the "users" node
-            [[[[UserObject sharedUser].firebaseRoot childByAppendingPath:@"users"]
-              childByAppendingPath:authData.uid] setValue:facebookUser];
-            [self stopCallingViewDidAppear];
-        }
-    }];
     
 }
 
