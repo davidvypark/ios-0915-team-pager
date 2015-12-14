@@ -71,6 +71,7 @@
     [self setupLogoImage];
     self.offsetAmount = 15;
     self.widthMultiplier = 0.9;
+    self.view.backgroundColor = [UIColor vinylMediumGray];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(viewDidAppear:)
                                                  name:DISCOGS_LOGIN_NOTIFICATION object:nil];
@@ -78,17 +79,33 @@
         [self setUpTextFields];
         UIImage *background = [UIImage imageNamed:@"records.jpg"];
         UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:background];
+        backgroundImageView.alpha = 0.5;
         [self.view insertSubview:backgroundImageView atIndex:0];
         
         [backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
+            make.height.and.width.equalTo(self.view).offset(100);
+            make.left.equalTo(self.view).offset(-50);
+            make.top.equalTo(self.view).offset(-50);
         }];
+        
+        
+        UIInterpolatingMotionEffect *verticalMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y" type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+        verticalMotionEffect.minimumRelativeValue = @(-50);
+        verticalMotionEffect.maximumRelativeValue = @(50);
+        UIInterpolatingMotionEffect *horizontalMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x" type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+        horizontalMotionEffect.minimumRelativeValue = @(-50);
+        horizontalMotionEffect.maximumRelativeValue = @(50);
+        UIMotionEffectGroup *group = [UIMotionEffectGroup new];
+        group.motionEffects = @[horizontalMotionEffect, verticalMotionEffect];
+        [backgroundImageView addMotionEffect:group];
+        
+        self.view.backgroundColor = [UIColor vinylMediumGray];
     }
     else {
         [self setUpLoggedInMessage];
     }
-    
-    //self.view.backgroundColor = [UIColor vinylMediumGray];
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
+
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -632,7 +649,7 @@
 
 -(void)setupLogoImage
 {
-    self.logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"record_globe_image"]];
+    self.logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"vinylMap_icon.png"]];
     [self.view addSubview:self.logoImage];
     [self.logoImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);

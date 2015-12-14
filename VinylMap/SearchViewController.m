@@ -47,6 +47,8 @@
     self.searchTableView.delegate = self;
     self.searchTableView.dataSource = self;
     self.albumResults = [NSMutableArray new];
+    self.view.backgroundColor = [UIColor vinylLightGray];
+    self.searchTableView.backgroundColor = [UIColor vinylLightGray];
     [self setupFirebase];
 
 }
@@ -58,7 +60,7 @@
     [super viewDidAppear:animated];
     
     self.searchField.backgroundColor = [UIColor vinylLightGray];
-    
+    self.searchField.tintColor = [UIColor vinylDarkGray];
     [self.searchField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(self.searchField.superview).multipliedBy(0.86);
         make.bottom.equalTo(self.searchField.superview).offset(-5);
@@ -84,6 +86,9 @@
     
 }
 
+-(void)makeSearchFieldFirstResponder{
+    [self.searchField becomeFirstResponder];
+}
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -227,6 +232,10 @@
         cell.addButton.enabled = YES;
     }
     
+    cell.backgroundColor = [UIColor vinylLightGray];
+    UIView *bgColorView = [[UIView alloc] init];
+    bgColorView.backgroundColor = [UIColor vinylBlue];
+    [cell setSelectedBackgroundView:bgColorView];
     
     return cell;
 }

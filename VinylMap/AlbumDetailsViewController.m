@@ -14,6 +14,7 @@
 #import "ChatMessagesViewController.h"
 #import <Masonry.h>
 #import "DiscogsButton.h"
+#import "VinylColors.h"
 
 @interface AlbumDetailsViewController ()
 
@@ -42,10 +43,11 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"Request failed with error %@", error);
     }];
-
     
-    self.albumNameLabel.text = [NSString stringWithFormat:@"%@ - %@", self.albumDict[@"artist"], self.albumDict[@"title"]];
-    self.ownerLabel.text = self.albumOwnerDisplayName;
+    self.view.backgroundColor = [UIColor vinylLightGray];
+    self.albumNameLabel.text = self.albumDict[@"title"];
+    self.artistLabel.text = self.albumDict[@"artist"];
+    self.ownerLabel.text = [NSString stringWithFormat: @"Owned by %@", self.albumOwnerDisplayName];
     self.askingPriceLabel.text = self.albumPrice;
     if (self.isBuyer) {
         self.sellTradeButton.hidden = YES;

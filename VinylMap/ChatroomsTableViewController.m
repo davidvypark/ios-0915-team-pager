@@ -9,6 +9,8 @@
 #import "ChatroomsTableViewController.h"
 #import "UserObject.h"
 #import "ChatMessagesViewController.h"
+#import "VinylColors.h"
+#import "VinylConstants.h"
 
 @interface ChatroomsTableViewController ()
 @property (nonatomic, strong) NSString *currentUser;
@@ -25,13 +27,14 @@
     self.chatrooms = [[NSMutableArray alloc] init];
     self.chatroomsUnsorted = [[NSMutableArray alloc]init];
     
-    
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     
     self.currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
-    NSString *chatroom = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/chatrooms", self.currentUser];
+    self.view.backgroundColor = [UIColor vinylLightGray];
+    NSString *chatroom = [NSString stringWithFormat:@"%@users/%@/chatrooms",FIREBASE_URL, self.currentUser];
     Firebase *chatroomsFirebase = [[Firebase alloc] initWithUrl:chatroom];
     [chatroomsFirebase observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
         [self.chatroomsUnsorted removeAllObjects];
@@ -44,7 +47,6 @@
             self.values = [chatRoomofUser allValues];
             self.values = [self.values sortedArrayUsingDescriptors:sortDescriptors];
         }
-        
         [self.tableView reloadData];
     }];
 }
@@ -74,7 +76,10 @@
         cell.detailTextLabel.text = chatUsers[@"newest"];
     }
     
-
+    cell.backgroundColor = [UIColor vinylLightGray];
+    UIView *bgColorView = [[UIView alloc] init];
+    bgColorView.backgroundColor = [UIColor vinylBlue];
+    [cell setSelectedBackgroundView:bgColorView];
     
     return cell;
 }

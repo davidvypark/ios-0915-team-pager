@@ -10,13 +10,14 @@
 
 #import "ChatMessagesViewController.h"
 #import "UserObject.h"
+#import "VinylColors.h"
+#import <Masonry.h>
+#import "VinylConstants.h"
 
-
-#define chatroom @"https://amber-torch-8635.firebaseio.com/data/chatrooms"
 
 @interface ChatMessagesViewController ()
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *textFieldBottomContstraint;
-@property (nonatomic) double originalTextFieldBottomConstant;
+@property (nonatomic, assign) double originalTextFieldBottomConstant;
 @property (nonatomic, strong) NSString *currentUser;
 @property (nonatomic, strong) NSString *currentUserDisplayName;
 
@@ -40,20 +41,23 @@
 	
     // Initialize array that will store chat messages.
     self.chat = [[NSMutableArray alloc] init];
+    self.view.backgroundColor = [UIColor vinylLightGray];
+    self.tableView.backgroundColor = [UIColor vinylLightGray];
     
     
     // Initialize the root of our Firebase namespace.
-    self.firebase = [[Firebase alloc] initWithUrl:chatroom];
+    self.firebase = [[Firebase alloc] initWithUrl:FIREBASE_CHATROOM];
     
     
     self.currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
-    NSString *displayName = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@", self.currentUser];
+    NSString *displayName = [NSString stringWithFormat:@"%@users/%@",FIREBASE_URL, self.currentUser];
     Firebase *displayNameFirebase = [[Firebase alloc] initWithUrl:displayName];
     [displayNameFirebase observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
         self.currentUserDisplayName = snapshot.value[@"displayName"];
     }];
     
     nameField.text = self.userToMessageDisplayName;
+    self.title   = self.userToMessageDisplayName;
     
     
     // This allows us to check if these were messages already stored on the server
@@ -70,9 +74,9 @@
     [userChat observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
 
         // Add the chat message to the array.
+
             [self.chat addObject:snapshot.value];
-        
-        
+               
         // Reload the table view so the new message will show up.
         if (!initialAdds) {
             [self.tableView reloadData];
@@ -92,7 +96,7 @@
     self.originalTextFieldBottomConstant = self.textFieldBottomContstraint.constant;
     
 
-    
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
 
 }
 -(void)scrollToBottom{
@@ -118,8 +122,8 @@
     // the FEventTypeChildAdded event will be immediately fired.
     NSString *messageParticipants = [NSString stringWithFormat:@"/%@%@", self.currentUser, self.userToMessage];
     NSString *reversemessageParticipants = [NSString stringWithFormat:@"/%@%@", self.userToMessage, self.currentUser];
-    NSString *chatRooms = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/chatrooms", self.currentUser];
-    NSString *chatroomsReverse = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/chatrooms", self.userToMessage];
+    NSString *chatRooms = [NSString stringWithFormat:@"%@users/%@/chatrooms",FIREBASE_URL ,self.currentUser];
+    NSString *chatroomsReverse = [NSString stringWithFormat:@"%@users/%@/chatrooms",FIREBASE_URL, self.userToMessage];
     Firebase *chatRoomsFirebase = [[Firebase alloc] initWithUrl:chatRooms];
     Firebase *chatroomsReverseFirebase = [[Firebase alloc] initWithUrl:chatroomsReverse];
     Firebase *chatRoomsRef = [chatRoomsFirebase childByAppendingPath:self.userToMessage];
@@ -189,6 +193,11 @@
 
     cell.textLabel.text = chatMessage[@"text"];
     cell.detailTextLabel.text = chatMessage[@"name"];
+    
+    cell.backgroundColor = [UIColor vinylLightGray];
+    UIView *bgColorView = [[UIView alloc] init];
+    bgColorView.backgroundColor = [UIColor vinylBlue];
+    [cell setSelectedBackgroundView:bgColorView];
     
     return cell;
 }
