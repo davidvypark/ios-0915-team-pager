@@ -12,6 +12,7 @@
 
 @property (retain, nonatomic) IBOutlet UIImageView *imageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *albumNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *artistLabel;
 @property (weak, nonatomic) IBOutlet UIButton *sellTradeButton;
 @property (weak, nonatomic) IBOutlet UIButton *wishlistButton;
 @property (weak, nonatomic) IBOutlet UIButton *messageButton;
