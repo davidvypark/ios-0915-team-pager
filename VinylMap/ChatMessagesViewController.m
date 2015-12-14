@@ -10,7 +10,7 @@
 
 #import "ChatMessagesViewController.h"
 #import "UserObject.h"
-
+#import "VinylColors.h"
 
 #define chatroom @"https://amber-torch-8635.firebaseio.com/data/chatrooms"
 
@@ -39,7 +39,7 @@
 	
     // Initialize array that will store chat messages.
     self.chat = [[NSMutableArray alloc] init];
-    
+    self.view.backgroundColor = [UIColor vinylMediumGray];
     
     // Initialize the root of our Firebase namespace.
     self.firebase = [[Firebase alloc] initWithUrl:chatroom];
@@ -198,6 +198,7 @@
 
     cell.textLabel.text = chatMessage[@"text"];
     cell.detailTextLabel.text = chatMessage[@"name"];
+    cell.backgroundColor = [UIColor vinylMediumGray];
     
     return cell;
 }
