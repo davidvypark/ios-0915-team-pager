@@ -83,8 +83,22 @@
         [self.view insertSubview:backgroundImageView atIndex:0];
         
         [backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
+            make.height.and.width.equalTo(self.view).offset(100);
+            make.left.equalTo(self.view).offset(-50);
+            make.top.equalTo(self.view).offset(-50);
         }];
+        
+        
+        UIInterpolatingMotionEffect *verticalMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y" type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+        verticalMotionEffect.minimumRelativeValue = @(-50);
+        verticalMotionEffect.maximumRelativeValue = @(50);
+        UIInterpolatingMotionEffect *horizontalMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x" type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+        horizontalMotionEffect.minimumRelativeValue = @(-50);
+        horizontalMotionEffect.maximumRelativeValue = @(50);
+        UIMotionEffectGroup *group = [UIMotionEffectGroup new];
+        group.motionEffects = @[horizontalMotionEffect, verticalMotionEffect];
+        [backgroundImageView addMotionEffect:group];
+        
         self.view.backgroundColor = [UIColor vinylMediumGray];
     }
     else {

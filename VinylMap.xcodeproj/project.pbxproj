@@ -14,7 +14,6 @@
 		2B6016FD1BFCC978003DB81A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B6016FC1BFCC978003DB81A /* Assets.xcassets */; };
 		2B6017001BFCC978003DB81A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B6016FE1BFCC978003DB81A /* LaunchScreen.storyboard */; };
 		2B9C06241C0C900300060A19 /* AlbumCollectionDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9C06231C0C900300060A19 /* AlbumCollectionDataStore.m */; };
-		2BDB1BF61C19FA6100D42059 /* InitialLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BDB1BF51C19FA6100D42059 /* InitialLoginViewController.m */; };
 		2BF0EB401BFE813800EA03B1 /* AlbumCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB3F1BFE813800EA03B1 /* AlbumCollectionViewCell.m */; };
 		2BF0EB431BFE843A00EA03B1 /* AlbumTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB421BFE843A00EA03B1 /* AlbumTableViewCell.m */; };
 		2BF0EB461BFE847F00EA03B1 /* MyAlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF0EB451BFE847F00EA03B1 /* MyAlbumsViewController.m */; };
@@ -58,8 +57,6 @@
 		2B6017011BFCC978003DB81A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2B9C06221C0C900300060A19 /* AlbumCollectionDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumCollectionDataStore.h; sourceTree = "<group>"; };
 		2B9C06231C0C900300060A19 /* AlbumCollectionDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumCollectionDataStore.m; sourceTree = "<group>"; };
-		2BDB1BF41C19FA6100D42059 /* InitialLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialLoginViewController.h; sourceTree = "<group>"; };
-		2BDB1BF51C19FA6100D42059 /* InitialLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialLoginViewController.m; sourceTree = "<group>"; };
 		2BF0EB3E1BFE813700EA03B1 /* AlbumCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumCollectionViewCell.h; sourceTree = "<group>"; };
 		2BF0EB3F1BFE813800EA03B1 /* AlbumCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumCollectionViewCell.m; sourceTree = "<group>"; };
 		2BF0EB411BFE843A00EA03B1 /* AlbumTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumTableViewCell.h; sourceTree = "<group>"; };
@@ -229,8 +226,6 @@
 		964422AD1BFF8A9300E0CF47 /* Login Files */ = {
 			isa = PBXGroup;
 			children = (
-				2BDB1BF41C19FA6100D42059 /* InitialLoginViewController.h */,
-				2BDB1BF51C19FA6100D42059 /* InitialLoginViewController.m */,
 				9653335A1BFE5A2C00BB4F7A /* LoginViewController.h */,
 				9653335B1BFE5A2C00BB4F7A /* LoginViewController.m */,
 				968C48101C10DC120070B76C /* AccountCreationViewController.h */,
@@ -438,7 +433,6 @@
 				965B735B1C0E4AB200568BC9 /* DiscogsOAuthRequestSerializer.m in Sources */,
 				968C481A1C10F1C90070B76C /* DiscogsButton.m in Sources */,
 				BFF86C0C1C16393900F5F962 /* ChatroomsTableViewController.m in Sources */,
-				2BDB1BF61C19FA6100D42059 /* InitialLoginViewController.m in Sources */,
 				BFC1BE4A1C0ACC35003DF47F /* ChatMessagesViewController.m in Sources */,
 				BF61240E1C04FA7A00B045D6 /* MapViewController.m in Sources */,
 				2BFEA0F91BFE2E9500C65717 /* SearchViewController.m in Sources */,

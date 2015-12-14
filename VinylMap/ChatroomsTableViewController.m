@@ -10,6 +10,7 @@
 #import "UserObject.h"
 #import "ChatMessagesViewController.h"
 #import "VinylColors.h"
+#import "VinylConstants.h"
 
 @interface ChatroomsTableViewController ()
 @property (nonatomic, strong) NSString *currentUser;
@@ -33,7 +34,7 @@
     
     self.currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
     self.view.backgroundColor = [UIColor vinylLightGray];
-    NSString *chatroom = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/chatrooms", self.currentUser];
+    NSString *chatroom = [NSString stringWithFormat:@"%@users/%@/chatrooms",FIREBASE_URL, self.currentUser];
     Firebase *chatroomsFirebase = [[Firebase alloc] initWithUrl:chatroom];
     [chatroomsFirebase observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
         [self.chatroomsUnsorted removeAllObjects];
