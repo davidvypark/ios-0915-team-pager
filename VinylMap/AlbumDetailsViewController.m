@@ -77,7 +77,17 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    
+    Firebase *connectedRef = [[Firebase alloc] initWithUrl:@"https://amber-torch-8635.firebaseio.com/.info/connected"];
+    [connectedRef observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        if([snapshot.value boolValue]) {
+            NSLog(@"connected");
+            
+        } else {
+            NSLog(@"not connected");
+            self.sellTradeButton.enabled = NO;
+        }
+    }];
+ 
     
 }
 
@@ -91,6 +101,7 @@
         destinationVC.albumName = self.albumDict[@"title"];
         destinationVC.albumArtist = self.albumDict[@"artist"];
         destinationVC.albumURL = self.albumDict[@"imageURL"];
+
     }
     
     else {

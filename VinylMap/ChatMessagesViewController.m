@@ -139,6 +139,27 @@
     Firebase *reverseEachMessage = [reverseChatRoomMessages childByAutoId];
     [reverseEachMessage setValue:@{@"name" : self.currentUserDisplayName, @"text": aTextField.text, @"time": kFirebaseServerValueTimestamp}];
     [aTextField setText:@""];
+    
+    
+    UIAlertAction *okAction = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"OK", @"OK action")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction *action)
+                               {
+                                   NSLog(@"OK action");
+                               }];
+    
+    Firebase *connectedRef = [[Firebase alloc] initWithUrl:@"https://amber-torch-8635.firebaseio.com/.info/connected"];
+    [connectedRef observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        if(![snapshot.value boolValue]) {
+            NSLog(@"Not Connected");
+            UIAlertController *internetAlertController = [UIAlertController
+                                                          alertControllerWithTitle:@"You do not currently have network access"
+                                                          message:@"Your messages will be sent when you reconnect to a network"
+                                                          preferredStyle:UIAlertControllerStyleAlert];
+            [internetAlertController addAction:okAction];
+            [self presentViewController:internetAlertController animated:YES completion:nil];
+        }}];
 
     return NO;
 }

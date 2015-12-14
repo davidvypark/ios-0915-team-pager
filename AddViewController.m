@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *tradeSwitch;
 @property (nonatomic) BOOL forSale;
 @property (nonatomic) BOOL forTrade;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButton;
 
 
 @end
@@ -57,6 +58,8 @@
         self.addMapView.showsUserLocation = YES;
     }
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -124,7 +127,21 @@
                                    NSLog(@"OK action");
                                }];
 
+    Firebase *connectedRef = [[Firebase alloc] initWithUrl:@"https://amber-torch-8635.firebaseio.com/.info/connected"];
+    [connectedRef observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        if(![snapshot.value boolValue]) {
+            NSLog(@"Not Connected");
+            UIAlertController *internetAlertController = [UIAlertController
+                                                        alertControllerWithTitle:@"Please turn on internet access"
+                                                        message:@"You must have a network connection to post items"
+                                                        preferredStyle:UIAlertControllerStyleAlert];
+            [internetAlertController addAction:okAction];
+            [self presentViewController:internetAlertController animated:YES completion:nil];
 
+            
+        } else {
+            NSLog(@"Connected");
+    
 
     
 
@@ -173,6 +190,8 @@
                 }
             }];}
     }
+        }
+    }];
     
 }
 - (IBAction)cancelButtonTapped:(id)sender {

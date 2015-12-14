@@ -30,7 +30,7 @@
 #import "VinylColors.h"
 
 
-@interface LoginViewController () <FBSDKLoginButtonDelegate, AccountCreationViewControllerDelegate, UITextFieldDelegate>
+@interface LoginViewController () <FBSDKLoginButtonDelegate, AccountCreationViewControllerDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) FBSDKLoginButton *facebookLoginButton;
 @property (nonatomic, strong) DiscogsButton *dismissViewControllerButton;
@@ -77,6 +77,12 @@
                                                  name:DISCOGS_LOGIN_NOTIFICATION object:nil];
     if (self.modalOne) {
         [self setUpTextFields];
+        self.view.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(screenTapped:)];
+        tapRecognizer.delegate = self;
+        tapRecognizer.numberOfTapsRequired = 1;
+        tapRecognizer.numberOfTouchesRequired = 1;
+        [self.view addGestureRecognizer:tapRecognizer];
         UIImage *background = [UIImage imageNamed:@"records.jpg"];
         UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:background];
         backgroundImageView.alpha = 0.5;
@@ -125,7 +131,8 @@
     
 }
 
-- (IBAction)screenTapped:(id)sender {
+- (IBAction)screenTapped:(UITapGestureRecognizer *)sender {
+    NSLog(@"tap");
     [self.view endEditing:YES];
 }
 
@@ -271,6 +278,7 @@
 {
     self.emailAddressField = [[UITextField alloc] init];
     self.emailAddressField.placeholder = @"email address";
+    self.emailAddressField.keyboardType = UIKeyboardTypeEmailAddress;
     self.emailAddressField.delegate = self;
     [self.view addSubview:self.emailAddressField];
     

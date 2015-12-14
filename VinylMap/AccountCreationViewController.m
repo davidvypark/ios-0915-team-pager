@@ -12,7 +12,7 @@
 #import "UserObject.h"
 #import "VinylColors.h"
 
-@interface AccountCreationViewController () <UITextFieldDelegate>
+@interface AccountCreationViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) UITextField *emailAddressField;
 @property (nonatomic, strong) UITextField *passwordField;
@@ -44,6 +44,12 @@
     [self setupLogoImage];
     [self setupTextFields];
     [self setupButtons];
+    self.view.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(screenTapped:)];
+    tapRecognizer.delegate = self;
+    tapRecognizer.numberOfTapsRequired = 1;
+    tapRecognizer.numberOfTouchesRequired = 1;
+    [self.view addGestureRecognizer:tapRecognizer];
 }
 
 
@@ -59,7 +65,10 @@
         make.height.and.width.equalTo(@(self.view.frame.size.width / 3));
     }];
 }
-
+- (IBAction)screenTapped:(UITapGestureRecognizer *)sender {
+    NSLog(@"tap");
+    [self.view endEditing:YES];
+}
 
 -(void)setupTextFields
 {
@@ -84,6 +93,7 @@
     self.lastName.text = @"debug lastname";
     self.displayName.text = @"debug displayname";
     self.emailAddressField.text = [NSString stringWithFormat:@"%u@%u.com",arc4random()*9999999,arc4random()*9999999];
+    self.emailAddressField.keyboardType = UIKeyboardTypeEmailAddress;
     self.passwordField.text = @"password";
     self.confirmPassword.text = @"password";
     //REMOVE TURN THESE OFF
