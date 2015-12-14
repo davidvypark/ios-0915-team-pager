@@ -154,6 +154,7 @@
         }];
         
     }];
+    
     [query observeEventType:GFEventTypeKeyExited withBlock:^(NSString *key, CLLocation *location) {
         VinylAnnotation *annotation = self.vinylAnnotations[key];
         [self.mapView removeAnnotation:annotation];
