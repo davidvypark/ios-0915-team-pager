@@ -12,8 +12,8 @@
 #import "UserObject.h"
 #import "VinylColors.h"
 #import <Masonry.h>
+#import "VinylConstants.h"
 
-#define chatroom @"https://amber-torch-8635.firebaseio.com/data/chatrooms"
 
 @interface ChatMessagesViewController ()
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *textFieldBottomContstraint;
@@ -45,11 +45,11 @@
     
     
     // Initialize the root of our Firebase namespace.
-    self.firebase = [[Firebase alloc] initWithUrl:chatroom];
+    self.firebase = [[Firebase alloc] initWithUrl:FIREBASE_CHATROOM];
     
     
     self.currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
-    NSString *displayName = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@", self.currentUser];
+    NSString *displayName = [NSString stringWithFormat:@"%@users/%@",FIREBASE_URL, self.currentUser];
     Firebase *displayNameFirebase = [[Firebase alloc] initWithUrl:displayName];
     [displayNameFirebase observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
         self.currentUserDisplayName = snapshot.value[@"displayName"];
@@ -73,7 +73,7 @@
     [userChat observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
 
         // Add the chat message to the array.
-            [self.chat addObject:snapshot.value];
+        [self.chat addObject:snapshot.value];
         if ([[UIApplication sharedApplication] currentUserNotificationSettings].types & UIUserNotificationTypeAlert) {
             UILocalNotification *localNotification = [[UILocalNotification alloc] init];
             localNotification.alertTitle = @"Visit";
@@ -131,8 +131,8 @@
     // the FEventTypeChildAdded event will be immediately fired.
     NSString *messageParticipants = [NSString stringWithFormat:@"/%@%@", self.currentUser, self.userToMessage];
     NSString *reversemessageParticipants = [NSString stringWithFormat:@"/%@%@", self.userToMessage, self.currentUser];
-    NSString *chatRooms = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/chatrooms", self.currentUser];
-    NSString *chatroomsReverse = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/chatrooms", self.userToMessage];
+    NSString *chatRooms = [NSString stringWithFormat:@"%@users/%@/chatrooms",FIREBASE_URL ,self.currentUser];
+    NSString *chatroomsReverse = [NSString stringWithFormat:@"%@users/%@/chatrooms",FIREBASE_URL, self.userToMessage];
     Firebase *chatRoomsFirebase = [[Firebase alloc] initWithUrl:chatRooms];
     Firebase *chatroomsReverseFirebase = [[Firebase alloc] initWithUrl:chatroomsReverse];
     Firebase *chatRoomsRef = [chatRoomsFirebase childByAppendingPath:self.userToMessage];

@@ -26,4 +26,4 @@ extern NSString *const FIREBASE_URL;
 extern NSString *const FIREBASE_SECRET;
 extern NSString *const FIREBASE_DUMMY_USERNAME;
 extern NSString *const FIREBASE_DUMMY_PASSWORD;
-
+extern NSString *const FIREBASE_CHATROOM;

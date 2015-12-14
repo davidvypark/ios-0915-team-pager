@@ -25,3 +25,4 @@ NSString *const FIREBASE_URL = @"https://amber-torch-8635.firebaseio.com/";
 NSString *const FIREBASE_SECRET = @"CGGwgr3urUV02Nct06PEUD2XV6dni8T55VkIifAx";
 NSString *const FIREBASE_DUMMY_USERNAME = @"fake@fake.com";
 NSString *const FIREBASE_DUMMY_PASSWORD = @"password";
+NSString *const FIREBASE_CHATROOM = @"https://amber-torch-8635.firebaseio.com/data/chatrooms";
