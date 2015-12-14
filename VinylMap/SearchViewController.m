@@ -47,6 +47,8 @@
     self.searchTableView.delegate = self;
     self.searchTableView.dataSource = self;
     self.albumResults = [NSMutableArray new];
+    self.view.backgroundColor = [UIColor vinylLightGray];
+    self.searchTableView.backgroundColor = [UIColor vinylLightGray];
     [self setupFirebase];
 
 }
@@ -230,6 +232,10 @@
         cell.addButton.enabled = YES;
     }
     
+    cell.backgroundColor = [UIColor vinylLightGray];
+    UIView *bgColorView = [[UIView alloc] init];
+    bgColorView.backgroundColor = [UIColor vinylBlue];
+    [cell setSelectedBackgroundView:bgColorView];
     
     return cell;
 }

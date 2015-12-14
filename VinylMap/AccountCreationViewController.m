@@ -10,6 +10,7 @@
 #import <Masonry.h>
 #import "DiscogsButton.h"
 #import "UserObject.h"
+#import "VinylColors.h"
 
 @interface AccountCreationViewController () <UITextFieldDelegate>
 
@@ -50,7 +51,7 @@
 
 -(void)setupLogoImage
 {
-    self.logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"record_globe_image"]];
+    self.logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"vinylMap_icon.png"]];
     [self.view addSubview:self.logoImage];
     [self.logoImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
@@ -157,7 +158,7 @@
 {
     UIView *behindVisualEffect = [[UIView alloc] init];
     //    behindVisualEffect.alpha = 0.9;
-    behindVisualEffect.backgroundColor = [UIColor whiteColor];
+    behindVisualEffect.backgroundColor = [UIColor vinylMediumGray];
     [self.view addSubview:behindVisualEffect];
     [behindVisualEffect mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(behindVisualEffect.superview);

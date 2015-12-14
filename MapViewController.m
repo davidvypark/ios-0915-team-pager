@@ -12,7 +12,7 @@
 #import "VinylAnnotation.h"
 #import <UIKit+AFNetworking.h>
 #import "AlbumDetailsViewController.h"
-
+#import "VinylColors.h"
 
 @interface MapViewController () <MKMapViewDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -32,6 +32,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.locationManager = [[CLLocationManager alloc]init];
+//    self.view.backgroundColor = [UIColor vinylMediumGray];
+    self.availableVinylsTableView.backgroundColor = [UIColor vinylLightGray];
     self.mapView.delegate = self;
     self.locationManager.delegate = self;
     self.availableVinylsTableView.delegate = self;
@@ -228,6 +230,10 @@
         VinylAnnotation *rowAnnotation = [self.mapView.annotations objectAtIndex:indexPath.row];
         titleLabel.text = rowAnnotation.title;
 
+    cell.backgroundColor = [UIColor vinylLightGray];
+    UIView *bgColorView = [[UIView alloc] init];
+    bgColorView.backgroundColor = [UIColor vinylBlue];
+    [cell setSelectedBackgroundView:bgColorView];
     
     return cell;
 }

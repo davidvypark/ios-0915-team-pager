@@ -71,6 +71,7 @@
     [self setupLogoImage];
     self.offsetAmount = 15;
     self.widthMultiplier = 0.9;
+    self.view.backgroundColor = [UIColor vinylMediumGray];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(viewDidAppear:)
                                                  name:DISCOGS_LOGIN_NOTIFICATION object:nil];
@@ -634,7 +635,7 @@
 
 -(void)setupLogoImage
 {
-    self.logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"record_globe_image"]];
+    self.logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"vinylMap_icon.png"]];
     [self.view addSubview:self.logoImage];
     [self.logoImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);

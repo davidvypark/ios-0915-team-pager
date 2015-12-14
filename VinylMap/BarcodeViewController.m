@@ -11,13 +11,14 @@
 //#import <RSBarcodes.h>
 #import <AFNetworking.h>
 #import "VinylConstants.h"
-
+#import "VinylColors.h"
 
 @interface BarcodeViewController () <UIGestureRecognizerDelegate>
 @property (nonatomic, strong) UIView *cameraView;
 @property (nonatomic, strong) UIButton *dismissButton;
 @property (nonatomic, strong) UIButton *barcodeButton;
 @property (nonatomic, strong) UIButton *secondBarcode;
+@property (nonatomic, strong) UIImageView *logoImage;
 //@property (nonatomic, strong) RSScannerViewController *scanner;
 //@property (nonatomic, strong) RSScannerViewController *scannerVC;
 @property (nonatomic, strong) UIAlertController *barcodeAlert;
@@ -26,44 +27,67 @@
 
 @implementation BarcodeViewController
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    self.view.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.5];
-//    self.view.backgroundColor = [UIColor clearColor];
     UIView *behindVisualEffect = [[UIView alloc] init];
-    behindVisualEffect.alpha = 0.9;
+    behindVisualEffect.alpha = 1; //supported,, don't change on UIVisualEffectView
     [self.view addSubview:behindVisualEffect];
     [behindVisualEffect mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(behindVisualEffect.superview);
     }];
     
     UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-    UIVisualEffectView *backgroundView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-    backgroundView.accessibilityLabel = @"backOut";
-    [behindVisualEffect addSubview:backgroundView];
+    UIVisualEffectView *visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    visualEffectView.accessibilityLabel = @"backOut";
+    [behindVisualEffect addSubview:visualEffectView];
     
 
-    [backgroundView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [visualEffectView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
     
     [self barcodeScanner];
     
+    UIVibrancyEffect *vibrancyEffect = [UIVibrancyEffect effectForBlurEffect:blurEffect];
+    UIVisualEffectView *vibrancyEffectView = [[UIVisualEffectView alloc] initWithEffect:vibrancyEffect];
+    vibrancyEffectView.accessibilityLabel = @"backOut";
+    [visualEffectView.contentView addSubview:vibrancyEffectView];
+    
+    [vibrancyEffectView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
+    
+    
     UIButton *saysBarcode = [[UIButton alloc] init];
     saysBarcode.userInteractionEnabled = NO;
-    saysBarcode.titleLabel.text = @"Scan Barcode";
+    [saysBarcode setTitle:@"Scan Barcode" forState:UIControlStateNormal];
+    saysBarcode.titleLabel.font = [UIFont fontWithName:@"Arial Hebrew" size:30];
+    saysBarcode.titleLabel.textColor = [UIColor blackColor];
+    saysBarcode.titleLabel.tintColor = [UIColor blackColor];
     
-    [self.view addSubview:saysBarcode];
-    
+    [vibrancyEffectView.contentView addSubview:saysBarcode];
     
     [saysBarcode mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(self.view);
         make.height.equalTo(@40);
-        make.bottom.equalTo(self.cameraView.mas_top).offset(-10);
+        make.bottom.equalTo(self.cameraView.mas_top).offset(-20);
     }];
     
     
+    UIButton *alsoSaysBarcode = [[UIButton alloc] init];
+    alsoSaysBarcode.userInteractionEnabled = NO;
+    [alsoSaysBarcode setTitle:@"Scan Barcode" forState:UIControlStateNormal];
+    alsoSaysBarcode.titleLabel.font = [UIFont fontWithName:@"Arial Hebrew" size:30];
+    alsoSaysBarcode.titleLabel.textColor = [UIColor blackColor];
+    alsoSaysBarcode.titleLabel.tintColor = [UIColor blackColor];
+    
+    [vibrancyEffectView.contentView addSubview:alsoSaysBarcode];
+    
+    [alsoSaysBarcode mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(self.view);
+        make.height.equalTo(@40);
+        make.top.equalTo(self.cameraView.mas_bottom).offset(20);
+    }];
     
 }
 
@@ -113,7 +137,7 @@
     
     NSLog(@"user touched this object: %@",touches.anyObject.view.accessibilityLabel);
     
-    if([touches.anyObject.view.accessibilityLabel isEqualToString:@"backOut"])
+    if(![touches.anyObject.view.accessibilityLabel isEqualToString:@"cameraView"])
     {
         [self.delegate barcodeScanResult:@"dismissed"];
     }
@@ -287,5 +311,18 @@
 //    AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
 //    appDelegate.restrictRotation = restriction;
 //}
+
+#pragma mark - logo image
+
+-(void)setupLogoImage
+{
+    self.logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"vinylMap_icon.png"]];
+    [self.view addSubview:self.logoImage];
+    [self.logoImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(self.mas_topLayoutGuideBottom).offset(self.view.frame.size.height/20);
+        make.height.and.width.equalTo(@(self.view.frame.size.width/1.5));
+    }];
+}
 
 @end
