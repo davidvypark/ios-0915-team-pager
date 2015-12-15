@@ -23,14 +23,6 @@
     [super viewDidLoad];
     [self setSelectedIndex:2];
     
-    UIView *temp = [[UIView alloc] init];
-    temp.backgroundColor = [UIColor vinylOrange];
-    
-    [self.view addSubview:temp];
-    
-//    [temp mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.edges.equalTo(self.view);
-//    }];
     
 }
 
