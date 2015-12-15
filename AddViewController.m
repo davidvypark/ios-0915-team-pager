@@ -99,6 +99,9 @@
     self.tabBarController.tabBar.hidden = NO;
     
 }
+- (IBAction)screenTapped:(id)sender {
+    [self.priceLabel resignFirstResponder];
+}
 
 -(BOOL)prefersStatusBarHidden
 {
@@ -127,11 +130,18 @@
 
 - (MKAnnotationView *) mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>) annotation
 {
-    MKPinAnnotationView *annView=[[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"VinylAnnotation"];
+    MKAnnotationView *annView;
     if ([annotation.title isEqualToString:@"Your location"]) {
-        annView.pinTintColor = [UIColor blueColor];
+        annView=[[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"VinylAnnotation"];
+        annView.tintColor = [UIColor blueColor];
         annView.canShowCallout = YES;
     }
+    else {
+        annView=[[MKAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"VinylAnnotation"];
+        UIImage *pinImage = [UIImage imageNamed:@"accommodations-pin.png"];
+        annView.image = pinImage;
+    }
+    
     return annView;
 }
 
@@ -159,6 +169,21 @@
 
     
     }
+- (IBAction)tradeButtonChanged:(id)sender {
+    if ([self.tradeSwitch isOn]) {
+        self.priceLabel.text = @"";
+        self.priceLabel.enabled = NO;
+    }
+    else self.priceLabel.enabled = YES;
+}
+- (IBAction)sellButtonChanged:(id)sender {
+    if ([self.sellSwitch isOn]) {
+        self.priceLabel.enabled = YES;
+    }
+    else {
+        self.priceLabel.enabled = NO;
+        self.priceLabel.text = @"";
+    }}
 
 - (IBAction)saveButtonTapped:(id)sender {
 
@@ -198,6 +223,7 @@
                                                     preferredStyle:UIAlertControllerStyleAlert];
         [switchAlertController addAction:okAction];
         [self presentViewController:switchAlertController animated:YES completion:nil];
+        
     }
     
     else if (!self.albumLocation) {
