@@ -51,19 +51,29 @@
 
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
     
+    [self firebaseEvents];
     
     
-    //MOVED FROM VIEW WILL LOAD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    
-    // Initialize the root of our Firebase namespace.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(logoutNowDismiss) name:@"userLogOut" object:nil];
+
+}
+
+-(void)logoutNowDismiss
+{
+    [self dismissViewControllerAnimated:NO completion:nil];
+}
+
+-(void)firebaseEvents
+{
     self.firebase = [[Firebase alloc] initWithUrl:FIREBASE_CHATROOM];
-    
-    
+    self.title   = self.userToMessageDisplayName;
     self.currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
+    
     NSString *displayName = [NSString stringWithFormat:@"%@users/%@",FIREBASE_URL, self.currentUser];
     Firebase *displayNameFirebase = [[Firebase alloc] initWithUrl:displayName];
-
-    [displayNameFirebase observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+    
+    [displayNameFirebase observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot)
+    {
         self.currentUserDisplayName = snapshot.value[@"displayName"];
         
     }];
@@ -86,8 +96,13 @@
     [userChat observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
         // Add the chat message to the array.
         [self.chat insertObject:snapshot.value atIndex:0];
-        [UserObject sharedUser].unreadMessages = 0;
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"messageReceived" object:snapshot];
+        
+        if(self.isViewLoaded && self.view.window) //ONLY RUNS WHEN THIS VIEW IS IN THE FRONT
+        {
+            [UserObject sharedUser].unreadMessages = 0;
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"messageReceived" object:snapshot];
+        }
+        
         // Reload the table view so the new message will show up.
         if (!initialAdds) {
             [self.tableView reloadData];
@@ -102,9 +117,12 @@
         initialAdds = NO;
         //        NSLog(@"CHAT VC userchat event in viewWillAppear type value");
     }];
-    
 
 }
+
+
+
+
 -(void)scrollToBottom{
     
     [self.tableView scrollRectToVisible:CGRectMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height, self.tableView.bounds.size.width, self.tableView.bounds.size.height) animated:NO];
@@ -115,6 +133,10 @@
 {
     [super viewWillAppear:animated];
     
+    if([UserObject sharedUser].firebaseRoot.authData.uid != self.currentUser)
+    {
+        [self firebaseEvents];
+    }
     
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     [[NSNotificationCenter defaultCenter]
