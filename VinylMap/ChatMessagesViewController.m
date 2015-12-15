@@ -259,29 +259,39 @@
     [insetView addSubview:messageView];
     
     
-    self.messageFromSelf = ([chatMessage[@"name"] isEqualToString:self.currentUserDisplayName]) && [chatMessage[@"name"] isEqualToString:self.userToMessageDisplayName] && !self.messageFromSelf;
+    self.messageFromSelf = ([chatMessage[@"name"] isEqualToString:self.currentUserDisplayName]) && [chatMessage[@"name"] isEqualToString:self.userToMessageDisplayName];
     
     if([chatMessage[@"name"] isEqualToString:self.currentUserDisplayName])
     {
-        if(!self.messageFromSelf)
-        {
-            messageView.backgroundColor = [UIColor vinylBlue];
-            insetView.backgroundColor = [UIColor vinylBlue];
-            messageView.textColor = [UIColor vinylLightGray];
-            leftOffset = self.view.frame.size.width/5;
-        } else
-        {
-            messageView.backgroundColor = [UIColor vinylMediumGray];
-            insetView.backgroundColor = [UIColor vinylMediumGray];
-            messageView.textColor = [UIColor blackColor];
-            rightOffset = -self.view.frame.size.width/5;
-        }
+        messageView.backgroundColor = [UIColor vinylBlue];
+        insetView.backgroundColor = [UIColor vinylBlue];
+        messageView.textColor = [UIColor vinylLightGray];
+        leftOffset = self.view.frame.size.width/5;
     } else
     {
         messageView.backgroundColor = [UIColor vinylMediumGray];
         insetView.backgroundColor = [UIColor vinylMediumGray];
         messageView.textColor = [UIColor blackColor];
         rightOffset = -self.view.frame.size.width/5;
+    }
+
+    if(self.messageFromSelf)
+    {
+        if(index.row %2 != 0)
+        {
+            messageView.backgroundColor = [UIColor vinylBlue];
+            insetView.backgroundColor = [UIColor vinylBlue];
+            messageView.textColor = [UIColor vinylLightGray];
+            leftOffset = self.view.frame.size.width/5;
+            rightOffset = 0;
+        } else
+        {
+            messageView.backgroundColor = [UIColor vinylMediumGray];
+            insetView.backgroundColor = [UIColor vinylMediumGray];
+            messageView.textColor = [UIColor blackColor];
+            rightOffset = -self.view.frame.size.width/5;
+            leftOffset = 0;
+        }
     }
     
     
