@@ -312,7 +312,7 @@
     NSValue* keyboardFrameBegin = [keyboardInfo valueForKey:UIKeyboardFrameBeginUserInfoKey];
     CGRect keyboardFrameBeginRect = [keyboardFrameBegin CGRectValue];
     CGFloat tabBarHeight = self.tabBarController.tabBar.frame.size.height;
-
+    [self scrollToBottom];
     self.textFieldBottomContstraint.constant -= keyboardFrameBeginRect.size.height - tabBarHeight;
 
 }

@@ -31,6 +31,11 @@
     
 }
 
+-(UIInterfaceOrientationMask)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+}
+
 //-(void)setScreenHeightandWidth
 //{
 //    CGSize screenSize = [UIScreen mainScreen].bounds.size;

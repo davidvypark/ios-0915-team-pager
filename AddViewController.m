@@ -64,6 +64,7 @@
     self.navigationTitleItem.title = @"Add location";
     self.theNavigationBar.tintColor = [UIColor vinylLightGray];
     self.theNavigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
+    self.theNavigationBar.translucent = YES;
 //    self.view.backgroundColor = [UIColor vinylDarkGray];
     
     
