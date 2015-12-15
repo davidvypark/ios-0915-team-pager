@@ -28,6 +28,7 @@
 #import "AlbumDetailsViewController.h"
 #import "SearchViewController.h"
 #import "BarcodeViewController.h"
+#import "ChatMessagesViewController.h"
 
 
 @interface AppDelegate  () <GIDSignInDelegate, UITabBarControllerDelegate>
@@ -121,7 +122,6 @@
         NSLog(@"diff from last %@",result);
         
         [UserObject sharedUser].lastMessageTime = timeValue;
-        
         if(result.integerValue > 110)
         {
             [UserObject sharedUser].unreadMessages ++;
