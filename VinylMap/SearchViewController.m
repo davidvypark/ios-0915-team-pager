@@ -144,7 +144,20 @@
         }];
 
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"Request failed with error %@", error);
+        UIAlertController *alertController = [UIAlertController
+                                              alertControllerWithTitle:@"Error"
+                                              message: @"Sorry, there was a problem with the network. Please try again later."
+                                              preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction
+                                   actionWithTitle:@"OK"
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       
+                                   }];
+        
+        [alertController addAction:okAction];
+        [self presentViewController:alertController animated:YES completion:nil];
     }];
     
     return YES;
