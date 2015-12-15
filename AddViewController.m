@@ -24,14 +24,17 @@
 @property (nonatomic, strong) MKPointAnnotation *user;
 @property (nonatomic, strong) NSString *currentUser;
 @property (nonatomic, strong) VinylAnnotation *albumLocation;
+
 @property (weak, nonatomic) IBOutlet UITextField *priceLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *sellSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *tradeSwitch;
+
 @property (nonatomic) BOOL forSale;
 @property (nonatomic) BOOL forTrade;
+
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButton;
-@property (weak, nonatomic) IBOutlet UINavigationBar *theNavigationBar;
-@property (weak, nonatomic) IBOutlet UINavigationItem *navigationTitleItem;
+//@property (weak, nonatomic) IBOutlet UINavigationBar *theNavigationBar;
+//@property (weak, nonatomic) IBOutlet UINavigationItem *navigationTitleItem;
 
 
 @end
@@ -61,24 +64,38 @@
     else {[self.locationManager startUpdatingLocation];
         self.addMapView.showsUserLocation = YES;
     }
-    self.navigationTitleItem.title = @"Add location";
-    self.theNavigationBar.tintColor = [UIColor vinylLightGray];
-    self.theNavigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
-    self.theNavigationBar.translucent = YES;
-//    self.view.backgroundColor = [UIColor vinylDarkGray];
+    
+    self.title = @"Add location";
+//    self.theNavigationBar.tintColor = [UIColor vinylLightGray];
+//    self.theNavigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
+//    self.theNavigationBar.translucent = YES;
+////    self.view.backgroundColor = [UIColor vinylDarkGray];
+//    
+//    CGFloat navHeight = self.albumDeetVC.navigationController.navigationBar.frame.size.height;
+//    CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
+//    NSLog(@"navHeight: %f \n statusHeight: %f",navHeight,statusBarHeight);
+//    
+//    [self.theNavigationBar mas_remakeConstraints:^(MASConstraintMaker *make) {
+//        make.height.equalTo(@(navHeight + statusBarHeight));
+//        make.topMargin.equalTo(self.view);
+//    }];
     
     
-    CGFloat navHeight = self.albumDeetVC.navigationController.navigationBar.frame.size.height;
-    CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
-    NSLog(@"navHeight: %f \n statusHeight: %f",navHeight,statusBarHeight);
-    
-    [self.theNavigationBar mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@(navHeight + statusBarHeight));
-        make.topMargin.equalTo(self.view);
-    }];
     
     
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
     
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    self.tabBarController.tabBar.hidden = NO;
     
 }
 
@@ -214,7 +231,7 @@
                 else {
                     
     [albumKey updateChildValues:@{@"owner" : weakSelf.currentUser, @"artist": weakSelf.albumArtist, @"title": weakSelf.albumName, @"imageURL": weakSelf.albumURL, @"price" : weakSelf.priceLabel.text, @"sale" : [NSNumber numberWithBool:weakSelf.forSale] , @"trade": [NSNumber numberWithBool:weakSelf.forTrade]} ];
-                    [weakSelf dismissViewControllerAnimated:YES completion:nil];
+                    [self dismissViewControllerAnimated:YES completion:nil];
                 }
             }];}
     }
