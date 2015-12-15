@@ -20,6 +20,8 @@
 @property (nonatomic, assign) double originalTextFieldBottomConstant;
 @property (nonatomic, strong) NSString *currentUser;
 @property (nonatomic, strong) NSString *currentUserDisplayName;
+@property (nonatomic, assign) bool messageFromSelf;
+
 
 
 @end
@@ -38,7 +40,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
+    self.messageFromSelf = YES;
     // Initialize array that will store chat messages.
     self.chat = [[NSMutableArray alloc] init];
     self.view.backgroundColor = [UIColor vinylLightGray];
@@ -225,6 +227,13 @@
     
     UITableViewCell *cell;
     NSDictionary* chatMessage = [self.chat objectAtIndex:self.chat.count - index.row-1];
+    NSDictionary* prevChatMessage;
+    
+    if(index.row != 0)
+    {
+          prevChatMessage= [self.chat objectAtIndex:self.chat.count - index.row];
+    }
+    
     
     if (cell == nil)
     {
@@ -249,12 +258,24 @@
     UIView *insetView = [[UIView alloc] init];
     [insetView addSubview:messageView];
     
+    
+    self.messageFromSelf = ([chatMessage[@"name"] isEqualToString:self.currentUserDisplayName]) && [chatMessage[@"name"] isEqualToString:self.userToMessageDisplayName] && !self.messageFromSelf;
+    
     if([chatMessage[@"name"] isEqualToString:self.currentUserDisplayName])
     {
-        messageView.backgroundColor = [UIColor vinylBlue];
-        insetView.backgroundColor = [UIColor vinylBlue];
-        messageView.textColor = [UIColor vinylLightGray];
-        leftOffset = self.view.frame.size.width/5;
+        if(!self.messageFromSelf)
+        {
+            messageView.backgroundColor = [UIColor vinylBlue];
+            insetView.backgroundColor = [UIColor vinylBlue];
+            messageView.textColor = [UIColor vinylLightGray];
+            leftOffset = self.view.frame.size.width/5;
+        } else
+        {
+            messageView.backgroundColor = [UIColor vinylMediumGray];
+            insetView.backgroundColor = [UIColor vinylMediumGray];
+            messageView.textColor = [UIColor blackColor];
+            rightOffset = -self.view.frame.size.width/5;
+        }
     } else
     {
         messageView.backgroundColor = [UIColor vinylMediumGray];
