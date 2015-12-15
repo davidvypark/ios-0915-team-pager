@@ -126,7 +126,7 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iEW-Aj-buL" id="BON-d7-5Mb">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="70"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="69"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="q1O-TV-rpG">
@@ -354,7 +354,7 @@
                                 <inset key="titleEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                                 <state key="normal" title="Sell/Trade"/>
                                 <connections>
-                                    <segue destination="ITq-5N-15f" kind="show" identifier="addToMap" id="12k-TS-nhv"/>
+                                    <segue destination="ITq-5N-15f" kind="show" identifier="addToMap" id="s3c-Jo-eCS"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -632,7 +632,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="sEF-jZ-iSA">
-                                <rect key="frame" x="0.0" y="36" width="600" height="564"/>
+                                <rect key="frame" x="0.0" y="44" width="600" height="507"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="3IN-lc-2pI" appends="YES" id="IzP-cj-pcH"/>
@@ -640,21 +640,21 @@
                                 </connections>
                             </mapView>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OWZ-yE-riA">
-                                <rect key="frame" x="19" y="517" width="51" height="31"/>
+                                <rect key="frame" x="18" y="467" width="51" height="31"/>
                                 <color key="onTintColor" red="0.19607843137254902" green="0.59999999999999998" blue="0.73333333333333328" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="sellButtonChanged:" destination="ITq-5N-15f" eventType="valueChanged" id="0b1-pa-Pf7"/>
                                 </connections>
                             </switch>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="enj-GU-f0y">
-                                <rect key="frame" x="85" y="517" width="51" height="31"/>
+                                <rect key="frame" x="84" y="467" width="51" height="31"/>
                                 <color key="onTintColor" red="0.19607843137254902" green="0.59999999999999998" blue="0.73333333333333328" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="tradeButtonChanged:" destination="ITq-5N-15f" eventType="valueChanged" id="681-xj-X6b"/>
                                 </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sell" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mpV-tT-2d0">
-                                <rect key="frame" x="28" y="555" width="31" height="21"/>
+                                <rect key="frame" x="27" y="505" width="31" height="21"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -662,19 +662,19 @@
                                 <size key="shadowOffset" width="0.0" height="1"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trade" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G7j-3w-j9S">
-                                <rect key="frame" x="85" y="555" width="48" height="21"/>
+                                <rect key="frame" x="84" y="505" width="48" height="21"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="0.0" height="1"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Price" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="39J-22-1Hk">
-                                <rect key="frame" x="167" y="518" width="54" height="30"/>
+                                <rect key="frame" x="166" y="468" width="54" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GJA-9O-xTc">
-                                <rect key="frame" x="534" y="524" width="24" height="24"/>
+                                <rect key="frame" x="534" y="474" width="24" height="24"/>
                                 <state key="normal" image="gps27"/>
                                 <connections>
                                     <action selector="returnToUserTapped:" destination="ITq-5N-15f" eventType="touchUpInside" id="lGD-uk-yJf"/>
@@ -684,12 +684,11 @@
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="mpV-tT-2d0" firstAttribute="top" secondItem="OWZ-yE-riA" secondAttribute="bottom" constant="7" id="1BQ-fg-7Sv"/>
-
+                            <constraint firstItem="sEF-jZ-iSA" firstAttribute="top" secondItem="a2B-ay-8za" secondAttribute="bottom" id="8ee-ER-0cx"/>
                             <constraint firstItem="G7j-3w-j9S" firstAttribute="top" secondItem="enj-GU-f0y" secondAttribute="bottom" constant="7" id="CWh-BU-ewA"/>
                             <constraint firstItem="G7j-3w-j9S" firstAttribute="bottom" secondItem="mpV-tT-2d0" secondAttribute="bottom" id="ItV-xR-XTT"/>
                             <constraint firstItem="mpV-tT-2d0" firstAttribute="trailing" secondItem="sEF-jZ-iSA" secondAttribute="leading" constant="58" id="Qpr-XD-vwB"/>
-                            <constraint firstItem="89G-DT-DPc" firstAttribute="topMargin" secondItem="a2B-ay-8za" secondAttribute="bottom" id="SWu-jD-nPJ"/>
-
+                            <constraint firstAttribute="topMargin" secondItem="a2B-ay-8za" secondAttribute="bottom" id="SWu-jD-nPJ"/>
                             <constraint firstItem="sEF-jZ-iSA" firstAttribute="width" secondItem="EI7-bh-NHw" secondAttribute="width" id="Wac-WG-ify"/>
                             <constraint firstItem="OWZ-yE-riA" firstAttribute="centerX" secondItem="mpV-tT-2d0" secondAttribute="centerX" id="WlR-N9-3em"/>
                             <constraint firstItem="39J-22-1Hk" firstAttribute="bottom" secondItem="enj-GU-f0y" secondAttribute="bottom" id="ZB9-3f-iim"/>
@@ -702,6 +701,11 @@
                             <constraint firstItem="Fs5-DR-Lk6" firstAttribute="top" secondItem="sEF-jZ-iSA" secondAttribute="bottom" id="usw-1H-0HU"/>
                             <constraint firstItem="mpV-tT-2d0" firstAttribute="bottom" secondItem="sEF-jZ-iSA" secondAttribute="bottom" constant="-25" id="vTW-gb-uVn"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="SWu-jD-nPJ"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="1tB-s2-ly6">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Ba9-R5-6Vt">
@@ -772,9 +776,7 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uXv-8o-ifm" id="C1z-5L-1IN">
-
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="56"/>
-
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="xms-uA-K93">
