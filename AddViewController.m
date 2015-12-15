@@ -130,19 +130,20 @@
 
 - (MKAnnotationView *) mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>) annotation
 {
-    MKAnnotationView *annView;
+    MKAnnotationView *annotationView;
     if ([annotation.title isEqualToString:@"Your location"]) {
-        annView=[[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"VinylAnnotation"];
-        annView.tintColor = [UIColor blueColor];
-        annView.canShowCallout = YES;
+        annotationView=[[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"VinylAnnotation"];
+        annotationView.tintColor = [UIColor blueColor];
+        annotationView.canShowCallout = YES;
     }
     else {
-        annView=[[MKAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"VinylAnnotation"];
+        annotationView=[[MKAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"VinylAnnotation"];
         UIImage *pinImage = [UIImage imageNamed:@"accommodations-pin.png"];
-        annView.image = pinImage;
+        annotationView.image = pinImage;
+        annotationView.centerOffset = CGPointMake(0, -pinImage.size.height/2);
     }
     
-    return annView;
+    return annotationView;
 }
 
 - (IBAction)returnToUserTapped:(UIButton *)sender {
