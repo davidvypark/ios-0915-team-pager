@@ -375,10 +375,6 @@
     CGFloat tabBarHeight = self.tabBarController.tabBar.frame.size.height;
     
     self.textFieldBottomContstraint.constant = self.originalTextFieldBottomConstant - (keyboardFrameEndRect.size.height - tabBarHeight);
-    NSLog(@"tab bar: %f" ,tabBarHeight);
-    NSLog(@"begin rect: %f" ,keyboardFrameBeginRect.size.height);
-    NSLog(@"end rect: %f" ,keyboardFrameEndRect.size.height);
-    NSLog(@"textBottom: %f",self.textFieldBottomContstraint.constant);
     
     NSIndexPath *indexpath = [NSIndexPath indexPathForRow:self.chat.count -1 inSection:0];
     [self.tableView reloadData];
