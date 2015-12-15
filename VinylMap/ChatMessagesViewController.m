@@ -125,7 +125,8 @@
 
 -(void)scrollToBottom{
     
-    [self.tableView scrollRectToVisible:CGRectMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height, self.tableView.bounds.size.width, self.tableView.bounds.size.height) animated:NO];
+    [self.tableView scrollRectToVisible:CGRectMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height, self.tableView.bounds.size.width, self.tableView.contentSize.height) animated:NO];
+    
     
 }
 
@@ -156,67 +157,7 @@
     [super didReceiveMemoryWarning];
 }
 
-#pragma mark - Text field handling
 
-// This method is called when the user enters text in the text field.
-// We add the chat message to our Firebase.
-- (BOOL)textFieldShouldReturn:(UITextField*)aTextField
-{
-    if([aTextField.text isEqualToString:@""])
-    {
-         return NO;
-    }
-    
-    // This will also add the message to our local array self.chat because
-    // the FEventTypeChildAdded event will be immediately fired.
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    NSString *messageParticipants = [NSString stringWithFormat:@"/%@%@", self.currentUser, self.userToMessage];
-    NSString *reversemessageParticipants = [NSString stringWithFormat:@"/%@%@", self.userToMessage, self.currentUser];
-    NSString *chatRooms = [NSString stringWithFormat:@"%@users/%@/chatrooms",FIREBASE_URL ,self.currentUser];
-    NSString *chatroomsReverse = [NSString stringWithFormat:@"%@users/%@/chatrooms",FIREBASE_URL, self.userToMessage];
-    Firebase *chatRoomsFirebase = [[Firebase alloc] initWithUrl:chatRooms];
-    Firebase *chatroomsReverseFirebase = [[Firebase alloc] initWithUrl:chatroomsReverse];
-    Firebase *chatRoomsRef = [chatRoomsFirebase childByAppendingPath:self.userToMessage];
-    [chatRoomsRef setValue:@{@"display" : self.userToMessageDisplayName, @"id" : self.userToMessage, @"time": kFirebaseServerValueTimestamp, @"newest": aTextField.text}];
-    Firebase *chatRoomsRefReverse = [chatroomsReverseFirebase childByAppendingPath:self.currentUser];
-    [chatRoomsRefReverse setValue:@{@"display" : self.currentUserDisplayName, @"id" : self.currentUser, @"time": kFirebaseServerValueTimestamp, @"newest": aTextField.text}];
-    
-
-    Firebase *chatRoomMessages = [self.firebase childByAppendingPath:messageParticipants];
-            Firebase *eachMessage = [chatRoomMessages childByAutoId];
-            [eachMessage setValue:@{@"name" : self.currentUserDisplayName, @"text": aTextField.text, @"time": kFirebaseServerValueTimestamp}];
-    Firebase *reverseChatRoomMessages = [self.firebase childByAppendingPath:reversemessageParticipants];
-    Firebase *reverseEachMessage = [reverseChatRoomMessages childByAutoId];
-    [reverseEachMessage setValue:@{@"name" : self.currentUserDisplayName, @"text": aTextField.text, @"time": kFirebaseServerValueTimestamp}];
-    [aTextField setText:@""];
-    
-    
-    UIAlertAction *okAction = [UIAlertAction
-                               actionWithTitle:NSLocalizedString(@"OK", @"OK action")
-                               style:UIAlertActionStyleDefault
-                               handler:^(UIAlertAction *action)
-                               {
-                                   NSLog(@"OK action");
-                               }];
-    
-    Firebase *connectedRef = [[Firebase alloc] initWithUrl:@"https://amber-torch-8635.firebaseio.com/.info/connected"];
-    [connectedRef observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
-        if(![snapshot.value boolValue]) {
-            NSLog(@"Not Connected");
-            UIAlertController *internetAlertController = [UIAlertController
-                                                          alertControllerWithTitle:@"You do not currently have network access"
-                                                          message:@"Your messages will be sent when you reconnect to a network"
-                                                          preferredStyle:UIAlertControllerStyleAlert];
-            [internetAlertController addAction:okAction];
-            [self presentViewController:internetAlertController animated:YES completion:nil];
-        } else
-        {
-//            NSLog(@"Connected");
-        }
-    }];
-
-    return NO;
-}
 
 #pragma mark - Table view data source
 
@@ -343,6 +284,68 @@
     return cell;
 }
 
+#pragma mark - Text field handling
+
+// This method is called when the user enters text in the text field.
+// We add the chat message to our Firebase.
+- (BOOL)textFieldShouldReturn:(UITextField*)aTextField
+{
+    if([aTextField.text isEqualToString:@""])
+    {
+        return NO;
+    }
+    
+    // This will also add the message to our local array self.chat because
+    // the FEventTypeChildAdded event will be immediately fired.
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    NSString *messageParticipants = [NSString stringWithFormat:@"/%@%@", self.currentUser, self.userToMessage];
+    NSString *reversemessageParticipants = [NSString stringWithFormat:@"/%@%@", self.userToMessage, self.currentUser];
+    NSString *chatRooms = [NSString stringWithFormat:@"%@users/%@/chatrooms",FIREBASE_URL ,self.currentUser];
+    NSString *chatroomsReverse = [NSString stringWithFormat:@"%@users/%@/chatrooms",FIREBASE_URL, self.userToMessage];
+    Firebase *chatRoomsFirebase = [[Firebase alloc] initWithUrl:chatRooms];
+    Firebase *chatroomsReverseFirebase = [[Firebase alloc] initWithUrl:chatroomsReverse];
+    Firebase *chatRoomsRef = [chatRoomsFirebase childByAppendingPath:self.userToMessage];
+    [chatRoomsRef setValue:@{@"display" : self.userToMessageDisplayName, @"id" : self.userToMessage, @"time": kFirebaseServerValueTimestamp, @"newest": aTextField.text}];
+    Firebase *chatRoomsRefReverse = [chatroomsReverseFirebase childByAppendingPath:self.currentUser];
+    [chatRoomsRefReverse setValue:@{@"display" : self.currentUserDisplayName, @"id" : self.currentUser, @"time": kFirebaseServerValueTimestamp, @"newest": aTextField.text}];
+    
+    
+    Firebase *chatRoomMessages = [self.firebase childByAppendingPath:messageParticipants];
+    Firebase *eachMessage = [chatRoomMessages childByAutoId];
+    [eachMessage setValue:@{@"name" : self.currentUserDisplayName, @"text": aTextField.text, @"time": kFirebaseServerValueTimestamp}];
+    Firebase *reverseChatRoomMessages = [self.firebase childByAppendingPath:reversemessageParticipants];
+    Firebase *reverseEachMessage = [reverseChatRoomMessages childByAutoId];
+    [reverseEachMessage setValue:@{@"name" : self.currentUserDisplayName, @"text": aTextField.text, @"time": kFirebaseServerValueTimestamp}];
+    [aTextField setText:@""];
+    
+    
+    UIAlertAction *okAction = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"OK", @"OK action")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction *action)
+                               {
+                                   NSLog(@"OK action");
+                               }];
+    
+    Firebase *connectedRef = [[Firebase alloc] initWithUrl:@"https://amber-torch-8635.firebaseio.com/.info/connected"];
+    [connectedRef observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        if(![snapshot.value boolValue]) {
+            NSLog(@"Not Connected");
+            UIAlertController *internetAlertController = [UIAlertController
+                                                          alertControllerWithTitle:@"You do not currently have network access"
+                                                          message:@"Your messages will be sent when you reconnect to a network"
+                                                          preferredStyle:UIAlertControllerStyleAlert];
+            [internetAlertController addAction:okAction];
+            [self presentViewController:internetAlertController animated:YES completion:nil];
+        } else
+        {
+            //            NSLog(@"Connected");
+        }
+    }];
+    
+    return NO;
+}
+
 
 #pragma mark - Keyboard handling
 
@@ -356,7 +359,9 @@
     [[NSNotificationCenter defaultCenter]
         removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
--(void)viewDidLayoutSubviews{
+-(void)viewDidLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
     
 }
 
@@ -364,12 +369,27 @@
 {
     NSDictionary* keyboardInfo = [notification userInfo];
     NSValue* keyboardFrameBegin = [keyboardInfo valueForKey:UIKeyboardFrameBeginUserInfoKey];
+    NSValue* keyboardFrameEnd = [keyboardInfo valueForKey:UIKeyboardFrameEndUserInfoKey];
     CGRect keyboardFrameBeginRect = [keyboardFrameBegin CGRectValue];
+    CGRect keyboardFrameEndRect = [keyboardFrameEnd CGRectValue];
     CGFloat tabBarHeight = self.tabBarController.tabBar.frame.size.height;
-    [self scrollToBottom];
-    self.textFieldBottomContstraint.constant -= keyboardFrameBeginRect.size.height - tabBarHeight;
-
+    
+    self.textFieldBottomContstraint.constant = self.originalTextFieldBottomConstant - (keyboardFrameEndRect.size.height - tabBarHeight);
+    NSLog(@"tab bar: %f" ,tabBarHeight);
+    NSLog(@"begin rect: %f" ,keyboardFrameBeginRect.size.height);
+    NSLog(@"end rect: %f" ,keyboardFrameEndRect.size.height);
+    NSLog(@"textBottom: %f",self.textFieldBottomContstraint.constant);
+    
+    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:self.chat.count -1 inSection:0];
+    [self.tableView reloadData];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView scrollToRowAtIndexPath:indexpath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    });
+    
 }
+
+
 
 - (void)keyboardWillHide:(NSNotification*)notification
 {
