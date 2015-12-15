@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AlbumDetailsViewController.h"
 
 @interface AddViewController : UIViewController
 @property (nonatomic, strong) NSString *ID;
 @property (nonatomic, strong) NSString *albumName;
 @property (nonatomic, strong) NSString *albumArtist;
 @property (nonatomic, strong) NSString *albumURL;
+@property (nonatomic, strong) AlbumDetailsViewController *albumDeetVC;
 
 @end

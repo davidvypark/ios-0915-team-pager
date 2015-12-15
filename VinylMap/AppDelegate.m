@@ -40,22 +40,18 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [Firebase defaultConfig].persistenceEnabled = YES;
     // Override point for customization after application launch.
     [UserObject sharedUser];
     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions]; // THIS WAKES UP THE FACEBOOK DELEGATES
     [UserObject sharedUser].facebookUserID = [FBSDKAccessToken currentAccessToken].userID;
     [self setUpFirebase];
     [DiscogsAPI pullDiscogsTokenSecret];
-    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert categories:[NSSet setWithObject:@"GLOBAL"]]];
     [AlbumCollectionDataStore sharedDataStore];
     NSLog(@"%@",[UserObject sharedUser].firebaseRoot.authData);
-    
     [self setUpTabBars];
-    
-    
     return YES;
 }
-
 
 
 -(void)setUpFirebase
@@ -218,10 +214,9 @@
     
     [[UITabBar appearance] setBarTintColor:[UIColor vinylDarkGray]];
     [[UITabBar appearance] setTintColor:[UIColor vinylOrange]];
-    [[UINavigationBar appearance] setTranslucent:YES];
+//    [[UINavigationBar appearance] setTranslucent:YES];
     [[UINavigationBar appearance] setTintColor:[UIColor vinylLightGray]];
-    
-    
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
     UITabBar *tabBar = tabBarController.tabBar;
     UITabBarItem *tabBarItem0 = [tabBar.items objectAtIndex:0];
@@ -257,6 +252,7 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {

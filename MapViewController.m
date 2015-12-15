@@ -146,6 +146,11 @@
             if (snapshot.value != [NSNull null]) {
             ownerOfKey = snapshot.value[@"owner"];
             annotation.title = snapshot.value[@"title"];
+            annotation.artist = snapshot.value[@"artist"];
+            annotation.price = snapshot.value[@"price"];
+            annotation.sale = snapshot.value[@"sale"];
+            annotation.trade = snapshot.value[@"trade"];
+            annotation.image = snapshot.value[@"imageURL"];
             annotation.subtitle = snapshot.value[@"artist"];
             annotation.coordinate = location.coordinate;
             annotation.owner = ownerOfKey;
@@ -157,6 +162,7 @@
         }];
         
     }];
+    
     [query observeEventType:GFEventTypeKeyExited withBlock:^(NSString *key, CLLocation *location) {
         VinylAnnotation *annotation = self.vinylAnnotations[key];
         [self.mapView removeAnnotation:annotation];
@@ -225,10 +231,20 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"albumCell" forIndexPath:indexPath];
-    UILabel *titleLabel = (UILabel *) [cell viewWithTag:1];
-
-        VinylAnnotation *rowAnnotation = [self.mapView.annotations objectAtIndex:indexPath.row];
-        titleLabel.text = rowAnnotation.title;
+     VinylAnnotation *rowAnnotation = [self.mapView.annotations objectAtIndex:indexPath.row];
+    UIImageView *imagelabel = (UIImageView*) [cell viewWithTag:1];
+    NSURL *imageThumb = [NSURL URLWithString:rowAnnotation.image];
+    [imagelabel setImageWithURL:imageThumb];
+    UILabel *artistLabel = (UILabel *) [cell viewWithTag:2];
+    artistLabel.text = rowAnnotation.artist;
+    UILabel *priceLabel = (UILabel *) [cell viewWithTag:4];
+    if (![rowAnnotation.price isEqualToString:@""]) {
+        priceLabel.text = [NSString stringWithFormat:@"$%@",rowAnnotation.price];
+    }
+    else {priceLabel.text = @"";}
+    UILabel *titleLabel = (UILabel *) [cell viewWithTag:3];
+   
+    titleLabel.text = rowAnnotation.title;
 
     cell.backgroundColor = [UIColor vinylLightGray];
     UIView *bgColorView = [[UIView alloc] init];
