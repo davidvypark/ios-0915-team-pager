@@ -20,6 +20,8 @@
 @property (nonatomic, assign) double originalTextFieldBottomConstant;
 @property (nonatomic, strong) NSString *currentUser;
 @property (nonatomic, strong) NSString *currentUserDisplayName;
+@property (nonatomic, assign) bool messageFromSelf;
+
 
 
 @end
@@ -38,7 +40,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
+    self.messageFromSelf = YES;
     // Initialize array that will store chat messages.
     self.chat = [[NSMutableArray alloc] init];
     self.view.backgroundColor = [UIColor vinylLightGray];
@@ -240,6 +242,9 @@
     UIView *insetView = [[UIView alloc] init];
     [insetView addSubview:messageView];
     
+    
+    self.messageFromSelf = ([chatMessage[@"name"] isEqualToString:self.currentUserDisplayName]) && [chatMessage[@"name"] isEqualToString:self.userToMessageDisplayName];
+    
     if([chatMessage[@"name"] isEqualToString:self.currentUserDisplayName])
     {
         messageView.backgroundColor = [UIColor vinylBlue];
@@ -252,6 +257,25 @@
         insetView.backgroundColor = [UIColor vinylMediumGray];
         messageView.textColor = [UIColor blackColor];
         rightOffset = -self.view.frame.size.width/5;
+    }
+
+    if(self.messageFromSelf)
+    {
+        if(index.row %2 != 0)
+        {
+            messageView.backgroundColor = [UIColor vinylBlue];
+            insetView.backgroundColor = [UIColor vinylBlue];
+            messageView.textColor = [UIColor vinylLightGray];
+            leftOffset = self.view.frame.size.width/5;
+            rightOffset = 0;
+        } else
+        {
+            messageView.backgroundColor = [UIColor vinylMediumGray];
+            insetView.backgroundColor = [UIColor vinylMediumGray];
+            messageView.textColor = [UIColor blackColor];
+            rightOffset = -self.view.frame.size.width/5;
+            leftOffset = 0;
+        }
     }
     
     
