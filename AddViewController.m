@@ -223,7 +223,7 @@
                                }];
 
     Firebase *connectedRef = [[Firebase alloc] initWithUrl:@"https://amber-torch-8635.firebaseio.com/.info/connected"];
-    [connectedRef observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+    [connectedRef observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
         if(![snapshot.value boolValue]) {
             NSLog(@"Not Connected");
             UIAlertController *internetAlertController = [UIAlertController
