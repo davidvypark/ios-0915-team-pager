@@ -15,6 +15,7 @@
 #import "UserObject.h"
 #import "VinylColors.h"
 #import <Masonry.h>
+#import "VinylConstants.h"
 
 
 @interface AddViewController ()<MKMapViewDelegate, CLLocationManagerDelegate>
@@ -33,8 +34,7 @@
 @property (nonatomic) BOOL forTrade;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButton;
-//@property (weak, nonatomic) IBOutlet UINavigationBar *theNavigationBar;
-//@property (weak, nonatomic) IBOutlet UINavigationItem *navigationTitleItem;
+
 
 
 @end
@@ -49,7 +49,8 @@
     
     
     // Do any additional setup after loading the view.
-    Firebase *geofireRef = [[Firebase alloc] initWithUrl:@"https://amber-torch-8635.firebaseio.com/geofire"];
+    NSString *urlString = [NSString stringWithFormat:@"%@geofire",FIREBASE_URL];
+    Firebase *geofireRef = [[Firebase alloc] initWithUrl:urlString];
     self.geoFire = [[GeoFire alloc] initWithFirebaseRef:geofireRef];
     self.currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
     
@@ -113,7 +114,7 @@
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
     CLLocationCoordinate2D selfCoord = self.addMapView.userLocation.location.coordinate;
-    MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(selfCoord, 1000.0, 1000.0);
+    MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(selfCoord, 2000.0, 2000.0);
     [self.addMapView setRegion:startRegion animated:NO];
     self.user = [[MKPointAnnotation alloc] init];
     self.user.coordinate = selfCoord;
@@ -125,7 +126,6 @@
 }
 
 - (MKAnnotationView *) mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>) annotation
-
 {
     MKPinAnnotationView *annView=[[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"VinylAnnotation"];
     if ([annotation.title isEqualToString:@"Your location"]) {
@@ -146,7 +146,7 @@
 - (IBAction)handleLongPress:(UILongPressGestureRecognizer *)sender {
     if (sender.state != UIGestureRecognizerStateBegan)
         return;
-    sender.minimumPressDuration = 2.0;
+    sender.minimumPressDuration = 0.35;
     CGPoint touchPoint = [sender locationInView:self.addMapView];
     CLLocationCoordinate2D touchMapCoordinate = [self.addMapView convertPoint:touchPoint toCoordinateFromView:self.addMapView];
     self.albumLocation = [[VinylAnnotation alloc] init];
@@ -219,7 +219,7 @@
             [self presentViewController:priceAlertController animated:YES completion:nil];
         }
         else {
-            __unsafe_unretained typeof(self) weakSelf = self;
+            __weak typeof(self) weakSelf = self;
             [self.geoFire setLocation:[[CLLocation alloc] initWithLatitude:self.albumLocation.coordinate.latitude longitude:self.albumLocation.coordinate.longitude] forKey:self.ID withCompletionBlock:^(NSError *error) {
                 NSString *geofireAlbumURL = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/geofire/%@", weakSelf.ID];
                 Firebase *albumKey = [[Firebase alloc] initWithUrl:geofireAlbumURL];
@@ -231,7 +231,7 @@
                 else {
                     
     [albumKey updateChildValues:@{@"owner" : weakSelf.currentUser, @"artist": weakSelf.albumArtist, @"title": weakSelf.albumName, @"imageURL": weakSelf.albumURL, @"price" : weakSelf.priceLabel.text, @"sale" : [NSNumber numberWithBool:weakSelf.forSale] , @"trade": [NSNumber numberWithBool:weakSelf.forTrade]} ];
-                    [self dismissViewControllerAnimated:YES completion:nil];
+                [weakSelf.navigationController popViewControllerAnimated:YES];
                 }
             }];}
     }
@@ -239,10 +239,9 @@
     }];
     
 }
-- (IBAction)cancelButtonTapped:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
+- (IBAction)cancelButtonTapped:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 /*

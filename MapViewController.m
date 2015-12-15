@@ -113,7 +113,7 @@
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
     CLLocationCoordinate2D selfCoord = self.mapView.userLocation.location.coordinate;
-    MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(selfCoord, 3000.0, 3000.0);
+    MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(selfCoord, 5000.0, 5000.0);
     [self.mapView setRegion:startRegion animated:NO];
     [self.locationManager stopUpdatingLocation];
     self.mapView.showsUserLocation = NO;

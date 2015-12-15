@@ -46,7 +46,10 @@
     [self.layer setBorderWidth:1.0];
     [self.layer setBorderColor:[UIColor vinylLightGray].CGColor];
     self.tintColor = [UIColor vinylLightGray];
+    [self setTitleEdgeInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
 }
+
+
 
 
 -(void)setHighlighted:(BOOL)highlighted
