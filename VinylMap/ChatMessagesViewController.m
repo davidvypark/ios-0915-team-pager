@@ -227,13 +227,6 @@
     
     UITableViewCell *cell;
     NSDictionary* chatMessage = [self.chat objectAtIndex:self.chat.count - index.row-1];
-    NSDictionary* prevChatMessage;
-    
-    if(index.row != 0)
-    {
-          prevChatMessage= [self.chat objectAtIndex:self.chat.count - index.row];
-    }
-    
     
     if (cell == nil)
     {
