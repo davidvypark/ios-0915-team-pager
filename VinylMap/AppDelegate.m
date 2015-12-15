@@ -214,8 +214,9 @@
     
     [[UITabBar appearance] setBarTintColor:[UIColor vinylDarkGray]];
     [[UITabBar appearance] setTintColor:[UIColor vinylOrange]];
-//    [[UINavigationBar appearance] setTranslucent:YES];
+//    [UITabBar appearance].translucent = NO;
     [[UINavigationBar appearance] setTintColor:[UIColor vinylLightGray]];
+//    [UINavigationBar appearance].translucent = NO;
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
     UITabBar *tabBar = tabBarController.tabBar;
@@ -235,13 +236,13 @@
 
 #pragma marks - defaults and no rotation
 
--(UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
-{
-    if(self.restrictRotation)
-        return UIInterfaceOrientationMaskPortrait;
-    else
-        return UIInterfaceOrientationMaskAll;
-}
+//-(UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+//{
+//    if(self.restrictRotation)
+//        return UIInterfaceOrientationMaskPortrait;
+//    else
+//        return UIInterfaceOrientationMaskPortraitUpsideDown | UIInterfaceOrientationMaskPortrait;
+//}
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
