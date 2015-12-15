@@ -187,6 +187,7 @@
             pinView.canShowCallout = YES;
             pinView.image = [UIImage imageNamed:@"accommodations-pin.png"];
             pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+            pinView.centerOffset = CGPointMake(0, -pinView.image.size.height/2);
         }
         
         else pinView.annotation = annotation;
