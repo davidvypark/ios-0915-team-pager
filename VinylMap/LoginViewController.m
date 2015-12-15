@@ -278,6 +278,7 @@
 -(void)setUpTextFields
 {
     self.emailAddressField = [[UITextField alloc] init];
+    self.emailAddressField.autocorrectionType = UITextAutocorrectionTypeNo;
     self.emailAddressField.placeholder = @"email address";
     self.emailAddressField.keyboardType = UIKeyboardTypeEmailAddress;
     self.emailAddressField.delegate = self;
@@ -659,6 +660,7 @@
     [DiscogsAPI removeDiscogsKeychain];
     [AlbumCollectionDataStore sharedDataStore].albums = [@[] mutableCopy];
     [self stopCallingViewDidAppear];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"userLogOut" object:nil];
 }
 
 

@@ -36,6 +36,12 @@
 @property (nonatomic, strong) NSString *discogsOAuthVerifier;
 @property (nonatomic, assign) bool loggedInOnce;
 
+
+//MESSAGING
+@property (nonatomic, assign) NSUInteger unreadMessages;
+@property (nonatomic, strong) NSDecimalNumber *lastMessageTime;
+
+
 + (instancetype)sharedUser;
 
 

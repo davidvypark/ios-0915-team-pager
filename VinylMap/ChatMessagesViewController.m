@@ -50,31 +50,36 @@
     
 
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
+    
+    [self firebaseEvents];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(logoutNowDismiss) name:@"userLogOut" object:nil];
 
 }
--(void)scrollToBottom{
-    
-    [self.tableView scrollRectToVisible:CGRectMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height, self.tableView.bounds.size.width, self.tableView.bounds.size.height) animated:NO];
-    
-}
 
--(void)viewWillAppear:(BOOL)animated
+-(void)logoutNowDismiss
 {
-    [super viewWillAppear:animated];
-    
-    
-    // Initialize the root of our Firebase namespace.
+    [self dismissViewControllerAnimated:NO completion:nil];
+}
+
+-(void)firebaseEvents
+{
     self.firebase = [[Firebase alloc] initWithUrl:FIREBASE_CHATROOM];
-    
-    
+    self.title   = self.userToMessageDisplayName;
     self.currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
+    
     NSString *displayName = [NSString stringWithFormat:@"%@users/%@",FIREBASE_URL, self.currentUser];
     Firebase *displayNameFirebase = [[Firebase alloc] initWithUrl:displayName];
-    [displayNameFirebase observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+    
+    [displayNameFirebase observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot)
+    {
         self.currentUserDisplayName = snapshot.value[@"displayName"];
+        
     }];
     
     self.title   = self.userToMessageDisplayName;
+    
     
     
     // This allows us to check if these were messages already stored on the server
@@ -89,9 +94,14 @@
     
     
     [userChat observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
-        
         // Add the chat message to the array.
         [self.chat insertObject:snapshot.value atIndex:0];
+        
+        if(self.isViewLoaded && self.view.window) //ONLY RUNS WHEN THIS VIEW IS IN THE FRONT
+        {
+            [UserObject sharedUser].unreadMessages = 0;
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"messageReceived" object:snapshot];
+        }
         
         // Reload the table view so the new message will show up.
         if (!initialAdds) {
@@ -105,8 +115,28 @@
         [self.tableView reloadData];
         [self scrollToBottom];
         initialAdds = NO;
-        
+        //        NSLog(@"CHAT VC userchat event in viewWillAppear type value");
     }];
+
+}
+
+
+
+
+-(void)scrollToBottom{
+    
+    [self.tableView scrollRectToVisible:CGRectMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height, self.tableView.bounds.size.width, self.tableView.bounds.size.height) animated:NO];
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if([UserObject sharedUser].firebaseRoot.authData.uid != self.currentUser)
+    {
+        [self firebaseEvents];
+    }
     
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     [[NSNotificationCenter defaultCenter]
@@ -116,6 +146,7 @@
     [[NSNotificationCenter defaultCenter]
      addObserver:self selector:@selector(keyboardWillHide:)
      name:UIKeyboardWillHideNotification object:nil];
+    
     [self scrollToBottom];
     
 }
@@ -131,7 +162,11 @@
 // We add the chat message to our Firebase.
 - (BOOL)textFieldShouldReturn:(UITextField*)aTextField
 {
-
+    if([aTextField.text isEqualToString:@""])
+    {
+         return NO;
+    }
+    
     // This will also add the message to our local array self.chat because
     // the FEventTypeChildAdded event will be immediately fired.
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -174,7 +209,11 @@
                                                           preferredStyle:UIAlertControllerStyleAlert];
             [internetAlertController addAction:okAction];
             [self presentViewController:internetAlertController animated:YES completion:nil];
-        }}];
+        } else
+        {
+//            NSLog(@"Connected");
+        }
+    }];
 
     return NO;
 }

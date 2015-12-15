@@ -28,6 +28,7 @@
 #import "AlbumDetailsViewController.h"
 #import "SearchViewController.h"
 #import "BarcodeViewController.h"
+#import "ChatMessagesViewController.h"
 
 
 @interface AppDelegate  () <GIDSignInDelegate, UITabBarControllerDelegate>
@@ -51,6 +52,8 @@
     NSLog(@"%@",[UserObject sharedUser].firebaseRoot.authData);
     [self setUpTabBars];
     [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert categories:[NSSet setWithObject:@"GLOBAL"]]];
+    [UserObject sharedUser].lastMessageTime = [NSDecimalNumber decimalNumberWithString:@"10"];
+    
     
     [self setUpNotifications];
     return YES;
@@ -85,25 +88,6 @@
     
 }
 
--(void)setUpNotifications{
-    NSString *chatroomsOfSelf = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/chatrooms", [UserObject sharedUser].firebaseRoot.authData.uid];
-
-    Firebase *userChatrooms = [[Firebase alloc] initWithUrl:chatroomsOfSelf];
-
-    [userChatrooms observeEventType:FEventTypeChildChanged withBlock:^(FDataSnapshot *snapshot) {
-        NSLog(@"%@", snapshot.value);
-        if ([[UIApplication sharedApplication] currentUserNotificationSettings].types & UIUserNotificationTypeAlert) {
-            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-        localNotification.alertTitle = snapshot.value[@"display"];
-        localNotification.alertBody = snapshot.value[@"newest"];
-        localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:5];
-        localNotification.category = @"GLOBAL"; // Lazy categorization
-
-            [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];}
-    }];
-}
-
-
 
 
 -(void)setUpGoogle
@@ -119,6 +103,41 @@
 -(void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user withError:(NSError *)error
 {
     //GOOGLE'S APP DELEGATE FOR SIGN IN
+    
+}
+
+#pragma mark - message notificadtions
+
+-(void)setUpNotifications{
+    NSString *chatroomsOfSelf = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/chatrooms", [UserObject sharedUser].firebaseRoot.authData.uid];
+    
+    Firebase *userChatrooms = [[Firebase alloc] initWithUrl:chatroomsOfSelf];
+    [userChatrooms observeEventType:FEventTypeChildChanged withBlock:^(FDataSnapshot *snapshot) {
+
+        
+        NSNumber *stringNumber = snapshot.value[@"time"];
+        NSDecimalNumber *timeValue = [NSDecimalNumber decimalNumberWithString:stringNumber.stringValue];
+//        NSLog(@"initial timeVal %@",timeValue);
+        NSDecimalNumber *result = [timeValue decimalNumberBySubtracting:[UserObject sharedUser].lastMessageTime ];
+        NSLog(@"diff from last %@",result);
+        
+        [UserObject sharedUser].lastMessageTime = timeValue;
+        if(result.integerValue > 110)
+        {
+            [UserObject sharedUser].unreadMessages ++;
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"messageReceived" object:snapshot];
+        }
+        
+//        if ([[UIApplication sharedApplication] currentUserNotificationSettings].types & UIUserNotificationTypeAlert) {
+//            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+//            localNotification.alertTitle = snapshot.value[@"display"];
+//            localNotification.alertBody = snapshot.value[@"newest"];
+//            localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:5];
+//            localNotification.category = @"GLOBAL"; // Lazy categorization
+//
+//            [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+//        }
+    }];
     
 }
 
@@ -265,6 +284,9 @@
 //    else
 //        return UIInterfaceOrientationMaskPortraitUpsideDown | UIInterfaceOrientationMaskPortrait;
 //}
+
+
+#pragma mark - application delegates
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {

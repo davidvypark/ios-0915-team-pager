@@ -13,7 +13,7 @@
 
 @property (nonatomic, assign) bool restrictRotation;
 @property (strong, nonatomic) UIWindow *window;
-
+@property (nonatomic, strong) NSString *lastMessageString;
 
 @end
 

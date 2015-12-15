@@ -22,12 +22,38 @@
 
 @implementation ChatroomsTableViewController
 
+-(instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder])
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(updateMessageBadge:)
+                                                     name:@"messageReceived" object:nil];
+    }
+    return self;
+}
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.chatrooms = [[NSMutableArray alloc] init];
     self.chatroomsUnsorted = [[NSMutableArray alloc]init];
     
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
+    
+}
+
+-(void)updateMessageBadge:(id)snapshot
+{
+    if([UserObject sharedUser].unreadMessages == 0)
+    {
+            self.navigationController.tabBarItem.badgeValue = nil;
+    } else
+    {
+        self.navigationController.tabBarItem.badgeValue = @([UserObject sharedUser].unreadMessages).stringValue;
+    }
+
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -49,6 +75,8 @@
         }
         [self.tableView reloadData];
     }];
+    self.navigationController.tabBarItem.badgeValue = nil;
+    [UserObject sharedUser].unreadMessages = 0;
 }
 
 
