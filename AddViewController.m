@@ -108,13 +108,19 @@
 }
 
 - (MKAnnotationView *) mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>) annotation
-
 {
-    MKPinAnnotationView *annView=[[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"VinylAnnotation"];
+    MKAnnotationView *annView;
     if ([annotation.title isEqualToString:@"Your location"]) {
-        annView.pinTintColor = [UIColor blueColor];
+        annView=[[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"VinylAnnotation"];
+        annView.tintColor = [UIColor blueColor];
         annView.canShowCallout = YES;
     }
+    else {
+        annView=[[MKAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"VinylAnnotation"];
+        UIImage *pinImage = [UIImage imageNamed:@"accommodations-pin.png"];
+        annView.image = pinImage;
+    }
+    
     return annView;
 }
 
