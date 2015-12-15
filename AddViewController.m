@@ -15,6 +15,7 @@
 #import "UserObject.h"
 #import "VinylColors.h"
 #import <Masonry.h>
+#import "VinylConstants.h"
 
 
 @interface AddViewController ()<MKMapViewDelegate, CLLocationManagerDelegate>
@@ -24,16 +25,20 @@
 @property (nonatomic, strong) MKPointAnnotation *user;
 @property (nonatomic, strong) NSString *currentUser;
 @property (nonatomic, strong) VinylAnnotation *albumLocation;
+
 @property (weak, nonatomic) IBOutlet UITextField *priceLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *sellSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *tradeSwitch;
+
 @property (nonatomic) BOOL forSale;
 @property (nonatomic) BOOL forTrade;
+
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButton;
 @property (weak, nonatomic) IBOutlet UINavigationBar *theNavigationBar;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationTitleItem;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sellButtonBottomConstraint;
 @property (nonatomic, assign) double originalsellButtonBottomConstant;
+
 
 @end
 
@@ -47,7 +52,8 @@
     
     
     // Do any additional setup after loading the view.
-    Firebase *geofireRef = [[Firebase alloc] initWithUrl:@"https://amber-torch-8635.firebaseio.com/geofire"];
+    NSString *urlString = [NSString stringWithFormat:@"%@geofire",FIREBASE_URL];
+    Firebase *geofireRef = [[Firebase alloc] initWithUrl:urlString];
     self.geoFire = [[GeoFire alloc] initWithFirebaseRef:geofireRef];
     self.currentUser = [UserObject sharedUser].firebaseRoot.authData.uid;
     
@@ -62,21 +68,23 @@
     else {[self.locationManager startUpdatingLocation];
         self.addMapView.showsUserLocation = YES;
     }
-    self.navigationTitleItem.title = @"Add location";
-    self.theNavigationBar.tintColor = [UIColor vinylLightGray];
-    self.theNavigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
-    self.theNavigationBar.translucent = YES;
-//    self.view.backgroundColor = [UIColor vinylDarkGray];
+    
+    self.title = @"Add location";
+//    self.theNavigationBar.tintColor = [UIColor vinylLightGray];
+//    self.theNavigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
+//    self.theNavigationBar.translucent = YES;
+////    self.view.backgroundColor = [UIColor vinylDarkGray];
+//    
+//    CGFloat navHeight = self.albumDeetVC.navigationController.navigationBar.frame.size.height;
+//    CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
+//    NSLog(@"navHeight: %f \n statusHeight: %f",navHeight,statusBarHeight);
+//    
+//    [self.theNavigationBar mas_remakeConstraints:^(MASConstraintMaker *make) {
+//        make.height.equalTo(@(navHeight + statusBarHeight));
+//        make.topMargin.equalTo(self.view);
+//    }];
     
     
-    CGFloat navHeight = self.albumDeetVC.navigationController.navigationBar.frame.size.height;
-    CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
-    NSLog(@"navHeight: %f \n statusHeight: %f",navHeight,statusBarHeight);
-    
-    [self.theNavigationBar mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@(navHeight + statusBarHeight));
-        make.topMargin.equalTo(self.view);
-    }];
     
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     [[NSNotificationCenter defaultCenter]
@@ -87,7 +95,19 @@
      addObserver:self selector:@selector(keyboardWillHide:)
      name:UIKeyboardWillHideNotification object:nil];
     self.originalsellButtonBottomConstant = self.sellButtonBottomConstraint.constant;
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
     
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    self.tabBarController.tabBar.hidden = NO;
     
 }
 - (IBAction)screenTapped:(id)sender {
@@ -121,7 +141,7 @@
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
     CLLocationCoordinate2D selfCoord = self.addMapView.userLocation.location.coordinate;
-    MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(selfCoord, 1000.0, 1000.0);
+    MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(selfCoord, 2000.0, 2000.0);
     [self.addMapView setRegion:startRegion animated:NO];
     self.user = [[MKPointAnnotation alloc] init];
     self.user.coordinate = selfCoord;
@@ -134,19 +154,20 @@
 
 - (MKAnnotationView *) mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>) annotation
 {
-    MKAnnotationView *annView;
+    MKAnnotationView *annotationView;
     if ([annotation.title isEqualToString:@"Your location"]) {
-        annView=[[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"VinylAnnotation"];
-        annView.tintColor = [UIColor blueColor];
-        annView.canShowCallout = YES;
+        annotationView=[[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"VinylAnnotation"];
+        annotationView.tintColor = [UIColor blueColor];
+        annotationView.canShowCallout = YES;
     }
     else {
-        annView=[[MKAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"VinylAnnotation"];
+        annotationView=[[MKAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"VinylAnnotation"];
         UIImage *pinImage = [UIImage imageNamed:@"accommodations-pin.png"];
-        annView.image = pinImage;
+        annotationView.image = pinImage;
+        annotationView.centerOffset = CGPointMake(0, -pinImage.size.height/2);
     }
     
-    return annView;
+    return annotationView;
 }
 
 - (IBAction)returnToUserTapped:(UIButton *)sender {
@@ -160,7 +181,7 @@
 - (IBAction)handleLongPress:(UILongPressGestureRecognizer *)sender {
     if (sender.state != UIGestureRecognizerStateBegan)
         return;
-    sender.minimumPressDuration = 2.0;
+    sender.minimumPressDuration = 0.35;
     CGPoint touchPoint = [sender locationInView:self.addMapView];
     CLLocationCoordinate2D touchMapCoordinate = [self.addMapView convertPoint:touchPoint toCoordinateFromView:self.addMapView];
     self.albumLocation = [[VinylAnnotation alloc] init];
@@ -249,7 +270,7 @@
             [self presentViewController:priceAlertController animated:YES completion:nil];
         }
         else {
-            __unsafe_unretained typeof(self) weakSelf = self;
+            __weak typeof(self) weakSelf = self;
             [self.geoFire setLocation:[[CLLocation alloc] initWithLatitude:self.albumLocation.coordinate.latitude longitude:self.albumLocation.coordinate.longitude] forKey:self.ID withCompletionBlock:^(NSError *error) {
                 NSString *geofireAlbumURL = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/geofire/%@", weakSelf.ID];
                 Firebase *albumKey = [[Firebase alloc] initWithUrl:geofireAlbumURL];
@@ -261,7 +282,7 @@
                 else {
                     
     [albumKey updateChildValues:@{@"owner" : weakSelf.currentUser, @"artist": weakSelf.albumArtist, @"title": weakSelf.albumName, @"imageURL": weakSelf.albumURL, @"price" : weakSelf.priceLabel.text, @"sale" : [NSNumber numberWithBool:weakSelf.forSale] , @"trade": [NSNumber numberWithBool:weakSelf.forTrade]} ];
-                    [weakSelf dismissViewControllerAnimated:YES completion:nil];
+                [weakSelf.navigationController popViewControllerAnimated:YES];
                 }
             }];}
     }
@@ -269,10 +290,9 @@
     }];
     
 }
-- (IBAction)cancelButtonTapped:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
+- (IBAction)cancelButtonTapped:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 /*
