@@ -81,6 +81,9 @@
     
     
 }
+- (IBAction)screenTapped:(id)sender {
+    [self.priceLabel resignFirstResponder];
+}
 
 -(BOOL)prefersStatusBarHidden
 {
@@ -142,6 +145,21 @@
 
     
     }
+- (IBAction)tradeButtonChanged:(id)sender {
+    if ([self.tradeSwitch isOn]) {
+        self.priceLabel.text = @"";
+        self.priceLabel.enabled = NO;
+    }
+    else self.priceLabel.enabled = YES;
+}
+- (IBAction)sellButtonChanged:(id)sender {
+    if ([self.sellSwitch isOn]) {
+        self.priceLabel.enabled = YES;
+    }
+    else {
+        self.priceLabel.enabled = NO;
+        self.priceLabel.text = @"";
+    }}
 
 - (IBAction)saveButtonTapped:(id)sender {
 
@@ -181,6 +199,7 @@
                                                     preferredStyle:UIAlertControllerStyleAlert];
         [switchAlertController addAction:okAction];
         [self presentViewController:switchAlertController animated:YES completion:nil];
+        
     }
     
     else if (!self.albumLocation) {

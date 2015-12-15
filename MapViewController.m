@@ -254,6 +254,11 @@
     return cell;
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 56;
+}
+
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.mapView.annotations.count !=0) {
         [self.mapView selectAnnotation:[self.mapView.annotations objectAtIndex:indexPath.row] animated:NO];}
