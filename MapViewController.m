@@ -132,7 +132,6 @@
 
 
 }
-
 - (void)setupListeners:(GFQuery *)query
 {
     
@@ -148,8 +147,8 @@
             annotation.title = snapshot.value[@"title"];
             annotation.artist = snapshot.value[@"artist"];
             annotation.price = snapshot.value[@"price"];
-            annotation.sale = snapshot.value[@"sale"];
-            annotation.trade = snapshot.value[@"trade"];
+            annotation.sale = [snapshot.value[@"sale"] boolValue];
+            annotation.trade = [snapshot.value[@"trade"] boolValue];
             annotation.image = snapshot.value[@"imageURL"];
             annotation.subtitle = snapshot.value[@"artist"];
             annotation.coordinate = location.coordinate;
@@ -209,6 +208,8 @@
         detailsOfSaleItem.albumDict[@"ID"] = annView.annotationKey;
         detailsOfSaleItem.isBuyer = YES;
         detailsOfSaleItem.albumOwner = annView.owner;
+        detailsOfSaleItem.albumPrice = annView.price;
+        detailsOfSaleItem.trade = annView.trade;
         }];
     
     NSString *saleItemOwnerDisplayName = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@", annView.owner];
@@ -239,12 +240,14 @@
     UILabel *artistLabel = (UILabel *) [cell viewWithTag:2];
     artistLabel.text = rowAnnotation.artist;
     UILabel *priceLabel = (UILabel *) [cell viewWithTag:4];
-    if (![rowAnnotation.price isEqualToString:@""]) {
+    if (rowAnnotation.trade && rowAnnotation.sale) {
+        priceLabel.text = [NSString stringWithFormat:@"$%@/T",rowAnnotation.price];
+    }
+    else if (![rowAnnotation.price isEqualToString:@""]) {
         priceLabel.text = [NSString stringWithFormat:@"$%@",rowAnnotation.price];
     }
-    else {priceLabel.text = @"";}
+    else {priceLabel.text = @"Trade";}
     UILabel *titleLabel = (UILabel *) [cell viewWithTag:3];
-   
     titleLabel.text = rowAnnotation.title;
 
     cell.backgroundColor = [UIColor vinylLightGray];

@@ -47,16 +47,23 @@
     self.view.backgroundColor = [UIColor vinylLightGray];
     self.albumNameLabel.text = self.albumDict[@"title"];
     self.artistLabel.text = self.albumDict[@"artist"];
+    self.albumYear.text =  [self.albumDict[@"releaseYear"] stringValue];
     self.ownerLabel.text = [NSString stringWithFormat: @"Owned by %@", self.albumOwnerDisplayName];
-    self.askingPriceLabel.text = self.albumPrice;
+    if (self.trade && ![self.albumPrice isEqualToString:@""]){
+        self.askingPriceLabel.text = [NSString stringWithFormat:@"$%@ or Trade",self.albumPrice];
+    }
+    else if (![self.albumPrice isEqualToString:@""] && !self.trade) {
+        self.askingPriceLabel.text = [NSString stringWithFormat:@"$%@",self.albumPrice];
+    }
+    
+    else self.askingPriceLabel.text = @"Trade";
     if (self.isBuyer) {
         self.sellTradeButton.hidden = YES;
-        self.wishlistButton.enabled = YES;
         self.messageButton.hidden = NO;
         self.askingPriceLabel.hidden = NO;
         self.ownerLabel.hidden = NO;
     }
-    
+    NSLog(@"%d", self.trade);
     
     
     

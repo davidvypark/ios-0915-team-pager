@@ -17,8 +17,8 @@
 @property (nonatomic, strong) NSString *owner;
 @property (nonatomic, strong) NSString *artist;
 @property (nonatomic, strong) NSString *price;
-@property (nonatomic, strong) NSString *sale;
-@property (nonatomic, strong) NSString *trade;
+@property (nonatomic) BOOL sale;
+@property (nonatomic) BOOL trade;
 @property (nonatomic, strong) NSString *image;
 @property (nonatomic, strong) NSString *annotationKey;
 

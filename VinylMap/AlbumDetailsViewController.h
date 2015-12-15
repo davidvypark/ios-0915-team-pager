@@ -14,14 +14,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *albumNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *artistLabel;
 @property (weak, nonatomic) IBOutlet UIButton *sellTradeButton;
-@property (weak, nonatomic) IBOutlet UIButton *wishlistButton;
 @property (weak, nonatomic) IBOutlet UIButton *messageButton;
 @property (weak, nonatomic) IBOutlet UILabel *askingPriceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *ownerLabel;
 @property (nonatomic, strong) NSMutableDictionary *albumDict;
+@property (weak, nonatomic) IBOutlet UILabel *albumYear;
 
 @property (nonatomic, strong) NSString *albumOwner;
 @property (nonatomic, strong) NSString *albumOwnerDisplayName;
 @property (nonatomic, strong) NSString *albumPrice;
 @property (nonatomic) BOOL isBuyer;
+@property (nonatomic) BOOL trade;
 @end
