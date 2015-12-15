@@ -50,6 +50,9 @@
     [AlbumCollectionDataStore sharedDataStore];
     NSLog(@"%@",[UserObject sharedUser].firebaseRoot.authData);
     [self setUpTabBars];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert categories:[NSSet setWithObject:@"GLOBAL"]]];
+    
+    [self setUpNotifications];
     return YES;
 }
 
@@ -81,6 +84,25 @@
     
     
 }
+
+-(void)setUpNotifications{
+    NSString *chatroomsOfSelf = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@/chatrooms", [UserObject sharedUser].firebaseRoot.authData.uid];
+
+    Firebase *userChatrooms = [[Firebase alloc] initWithUrl:chatroomsOfSelf];
+
+    [userChatrooms observeEventType:FEventTypeChildChanged withBlock:^(FDataSnapshot *snapshot) {
+        NSLog(@"%@", snapshot.value);
+        if ([[UIApplication sharedApplication] currentUserNotificationSettings].types & UIUserNotificationTypeAlert) {
+            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        localNotification.alertTitle = snapshot.value[@"display"];
+        localNotification.alertBody = snapshot.value[@"newest"];
+        localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:5];
+        localNotification.category = @"GLOBAL"; // Lazy categorization
+
+            [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];}
+    }];
+}
+
 
 
 

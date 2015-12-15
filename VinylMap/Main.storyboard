@@ -126,7 +126,7 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iEW-Aj-buL" id="BON-d7-5Mb">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="69.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="70"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="q1O-TV-rpG">
@@ -630,36 +630,29 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="sEF-jZ-iSA">
-                                <rect key="frame" x="0.0" y="36" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="36" width="600" height="564"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="3IN-lc-2pI" appends="YES" id="IzP-cj-pcH"/>
                                     <outletCollection property="gestureRecognizers" destination="kfi-Lk-okE" appends="YES" id="BXb-Eh-Izz"/>
                                 </connections>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GJA-9O-xTc">
-                                <rect key="frame" x="534" y="506" width="46" height="30"/>
-                                <state key="normal" image="gps27"/>
-                                <connections>
-                                    <action selector="returnToUserTapped:" destination="ITq-5N-15f" eventType="touchUpInside" id="lGD-uk-yJf"/>
-                                </connections>
-                            </button>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OWZ-yE-riA">
-                                <rect key="frame" x="18" y="505" width="51" height="31"/>
+                                <rect key="frame" x="19" y="517" width="51" height="31"/>
                                 <color key="onTintColor" red="0.19607843137254902" green="0.59999999999999998" blue="0.73333333333333328" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="sellButtonChanged:" destination="ITq-5N-15f" eventType="valueChanged" id="0b1-pa-Pf7"/>
                                 </connections>
                             </switch>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="enj-GU-f0y">
-                                <rect key="frame" x="84" y="505" width="51" height="31"/>
+                                <rect key="frame" x="85" y="517" width="51" height="31"/>
                                 <color key="onTintColor" red="0.19607843137254902" green="0.59999999999999998" blue="0.73333333333333328" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="tradeButtonChanged:" destination="ITq-5N-15f" eventType="valueChanged" id="681-xj-X6b"/>
                                 </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sell" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mpV-tT-2d0">
-                                <rect key="frame" x="27" y="543" width="31" height="21"/>
+                                <rect key="frame" x="28" y="555" width="31" height="21"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -667,7 +660,7 @@
                                 <size key="shadowOffset" width="0.0" height="1"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trade" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G7j-3w-j9S">
-                                <rect key="frame" x="84" y="543" width="48" height="21"/>
+                                <rect key="frame" x="85" y="555" width="48" height="21"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -694,32 +687,39 @@
                                 </connections>
                             </navigationBar>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Price" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="39J-22-1Hk">
-                                <rect key="frame" x="166" y="506" width="54" height="30"/>
+                                <rect key="frame" x="167" y="518" width="54" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GJA-9O-xTc">
+                                <rect key="frame" x="534" y="524" width="24" height="24"/>
+                                <state key="normal" image="gps27"/>
+                                <connections>
+                                    <action selector="returnToUserTapped:" destination="ITq-5N-15f" eventType="touchUpInside" id="lGD-uk-yJf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="89G-DT-DPc" firstAttribute="centerX" secondItem="EI7-bh-NHw" secondAttribute="centerX" id="0dt-oa-vNz"/>
                             <constraint firstItem="mpV-tT-2d0" firstAttribute="top" secondItem="OWZ-yE-riA" secondAttribute="bottom" constant="7" id="1BQ-fg-7Sv"/>
-                            <constraint firstItem="G7j-3w-j9S" firstAttribute="top" secondItem="sEF-jZ-iSA" secondAttribute="bottom" constant="-93" id="1f8-S1-TEM"/>
                             <constraint firstItem="G7j-3w-j9S" firstAttribute="top" secondItem="enj-GU-f0y" secondAttribute="bottom" constant="7" id="CWh-BU-ewA"/>
-                            <constraint firstItem="sEF-jZ-iSA" firstAttribute="height" secondItem="EI7-bh-NHw" secondAttribute="height" id="EQL-CD-5vj"/>
-                            <constraint firstItem="sEF-jZ-iSA" firstAttribute="leading" secondItem="mpV-tT-2d0" secondAttribute="trailing" constant="-58" id="Qpr-XD-vwB"/>
-                            <constraint firstItem="39J-22-1Hk" firstAttribute="top" secondItem="sEF-jZ-iSA" secondAttribute="bottom" constant="-130" id="SWj-EX-GWM"/>
+                            <constraint firstItem="G7j-3w-j9S" firstAttribute="bottom" secondItem="mpV-tT-2d0" secondAttribute="bottom" id="ItV-xR-XTT"/>
+                            <constraint firstItem="mpV-tT-2d0" firstAttribute="trailing" secondItem="sEF-jZ-iSA" secondAttribute="leading" constant="58" id="Qpr-XD-vwB"/>
                             <constraint firstItem="89G-DT-DPc" firstAttribute="topMargin" secondItem="a2B-ay-8za" secondAttribute="bottom" id="SWu-jD-nPJ"/>
                             <constraint firstItem="sEF-jZ-iSA" firstAttribute="width" secondItem="EI7-bh-NHw" secondAttribute="width" id="Wac-WG-ify"/>
                             <constraint firstItem="OWZ-yE-riA" firstAttribute="centerX" secondItem="mpV-tT-2d0" secondAttribute="centerX" id="WlR-N9-3em"/>
+                            <constraint firstItem="39J-22-1Hk" firstAttribute="bottom" secondItem="enj-GU-f0y" secondAttribute="bottom" id="ZB9-3f-iim"/>
                             <constraint firstItem="GJA-9O-xTc" firstAttribute="leading" secondItem="sEF-jZ-iSA" secondAttribute="trailing" constant="-66" id="alo-bX-NRy"/>
                             <constraint firstItem="89G-DT-DPc" firstAttribute="width" secondItem="EI7-bh-NHw" secondAttribute="width" id="cOA-7e-Kbe"/>
                             <constraint firstItem="sEF-jZ-iSA" firstAttribute="top" secondItem="89G-DT-DPc" secondAttribute="bottom" id="eB9-tP-PfG"/>
                             <constraint firstItem="sEF-jZ-iSA" firstAttribute="centerX" secondItem="EI7-bh-NHw" secondAttribute="centerX" id="fgL-Db-f8e"/>
                             <constraint firstItem="enj-GU-f0y" firstAttribute="centerX" secondItem="G7j-3w-j9S" secondAttribute="centerX" id="n5z-EJ-b6U"/>
+                            <constraint firstItem="GJA-9O-xTc" firstAttribute="bottom" secondItem="39J-22-1Hk" secondAttribute="bottom" id="omy-aO-83o"/>
                             <constraint firstItem="39J-22-1Hk" firstAttribute="leading" secondItem="enj-GU-f0y" secondAttribute="trailing" constant="33" id="sVO-O1-IdJ"/>
                             <constraint firstItem="sEF-jZ-iSA" firstAttribute="leading" secondItem="G7j-3w-j9S" secondAttribute="trailing" constant="-132" id="sWb-mN-Iut"/>
-                            <constraint firstItem="GJA-9O-xTc" firstAttribute="top" secondItem="sEF-jZ-iSA" secondAttribute="bottom" constant="-130" id="t03-JW-7cm"/>
-                            <constraint firstItem="mpV-tT-2d0" firstAttribute="top" secondItem="sEF-jZ-iSA" secondAttribute="bottom" constant="-93" id="vTW-gb-uVn"/>
+                            <constraint firstItem="Fs5-DR-Lk6" firstAttribute="top" secondItem="sEF-jZ-iSA" secondAttribute="bottom" id="usw-1H-0HU"/>
+                            <constraint firstItem="mpV-tT-2d0" firstAttribute="bottom" secondItem="sEF-jZ-iSA" secondAttribute="bottom" constant="-25" id="vTW-gb-uVn"/>
                         </constraints>
                     </view>
                     <connections>
@@ -727,6 +727,7 @@
                         <outlet property="navigationTitleItem" destination="blE-qc-CsQ" id="XHN-Im-L2f"/>
                         <outlet property="priceLabel" destination="39J-22-1Hk" id="hjL-pp-agL"/>
                         <outlet property="saveButton" destination="D4c-5S-pPt" id="hJA-Bc-4iV"/>
+                        <outlet property="sellButtonBottomConstraint" destination="vTW-gb-uVn" id="5fq-tt-uGc"/>
                         <outlet property="sellSwitch" destination="OWZ-yE-riA" id="PaV-kt-1ZJ"/>
                         <outlet property="theNavigationBar" destination="89G-DT-DPc" id="m83-HI-QZr"/>
                         <outlet property="tradeSwitch" destination="enj-GU-f0y" id="ur8-0P-LcG"/>
@@ -780,7 +781,7 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uXv-8o-ifm" id="C1z-5L-1IN">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="55.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="56"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="xms-uA-K93">

@@ -32,7 +32,8 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButton;
 @property (weak, nonatomic) IBOutlet UINavigationBar *theNavigationBar;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationTitleItem;
-
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sellButtonBottomConstraint;
+@property (nonatomic, assign) double originalsellButtonBottomConstant;
 
 @end
 
@@ -77,12 +78,33 @@
         make.topMargin.equalTo(self.view);
     }];
     
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self selector:@selector(keyboardWillShow:)
+     name:UIKeyboardWillShowNotification object:nil];
     
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self selector:@selector(keyboardWillHide:)
+     name:UIKeyboardWillHideNotification object:nil];
+    self.originalsellButtonBottomConstant = self.sellButtonBottomConstraint.constant;
     
     
 }
 - (IBAction)screenTapped:(id)sender {
     [self.priceLabel resignFirstResponder];
+}
+- (void)keyboardWillShow:(NSNotification*)notification
+{
+    NSDictionary* keyboardInfo = [notification userInfo];
+    NSValue* keyboardFrameBegin = [keyboardInfo valueForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardFrameBeginRect = [keyboardFrameBegin CGRectValue];
+    self.sellButtonBottomConstraint.constant -= keyboardFrameBeginRect.size.height;
+    
+}
+
+- (void)keyboardWillHide:(NSNotification*)notification
+{
+    self.sellButtonBottomConstraint.constant = self.originalsellButtonBottomConstant;
 }
 
 -(BOOL)prefersStatusBarHidden

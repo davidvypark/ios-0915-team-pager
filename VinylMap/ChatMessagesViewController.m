@@ -90,15 +90,6 @@
         
         // Add the chat message to the array.
         [self.chat insertObject:snapshot.value atIndex:0];
-        if ([[UIApplication sharedApplication] currentUserNotificationSettings].types & UIUserNotificationTypeAlert) {
-            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-            localNotification.alertTitle = @"Visit";
-            localNotification.alertBody = snapshot.value[@"text"];
-            localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:5];
-            localNotification.category = @"GLOBAL"; // Lazy categorization
-            
-            [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-        }
         
         // Reload the table view so the new message will show up.
         if (!initialAdds) {
