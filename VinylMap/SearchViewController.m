@@ -270,7 +270,13 @@
             [self.view addSubview:spinner];
             [spinner startAnimating];
             [DiscogsAPI barcodeAPIsearch:barcode withCompletion:^(NSArray *arrayOfAlbums, bool isError) {
-                if (isError) {
+                if (!isError)
+                {
+                    [self.albumResults removeAllObjects];
+                    self.albumResults = [arrayOfAlbums mutableCopy];
+                    [self.searchTableView reloadData];
+                } else
+                {
                     UIAlertController *alertController = [UIAlertController
                                                           alertControllerWithTitle:@"Error"
                                                           message: @"Sorry, there was a problem with the network. Please try again later."
