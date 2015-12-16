@@ -268,6 +268,12 @@
             spinner.center = CGPointMake(160, 240);
             spinner.tag = 12;
             [self.view addSubview:spinner];
+            [spinner mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.center.equalTo(self.searchTableView);
+            }];
+            CGAffineTransform transform = CGAffineTransformMakeScale(2, 2);
+            spinner.transform = transform;
+            
             [spinner startAnimating];
             [DiscogsAPI barcodeAPIsearch:barcode withCompletion:^(NSArray *arrayOfAlbums, bool isError) {
                 if (!isError)
@@ -275,6 +281,25 @@
                     [self.albumResults removeAllObjects];
                     self.albumResults = [arrayOfAlbums mutableCopy];
                     [self.searchTableView reloadData];
+                    if (arrayOfAlbums.count == 0)
+                    {
+                        UIAlertController *alertController = [UIAlertController
+                                                              alertControllerWithTitle:@"Error"
+                                                              message: @"Sorry, there were no search results."
+                                                              preferredStyle:UIAlertControllerStyleAlert];
+                        UIAlertAction *okAction = [UIAlertAction
+                                                   actionWithTitle:@"OK"
+                                                   style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction *action)
+                                                   {
+                                                       
+                                                   }];
+                        
+                        [alertController addAction:okAction];
+                        [self presentViewController:alertController animated:YES completion:nil];
+   
+                    }
+                    
                 } else
                 {
                     UIAlertController *alertController = [UIAlertController
