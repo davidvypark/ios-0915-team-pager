@@ -37,13 +37,13 @@
         NSDictionary *responseDictionary = (NSDictionary *)responseObject;
         NSArray *resultsArray = responseDictionary[@"results"];
 
-        completionBlock(resultsArray,YES);
+        completionBlock(resultsArray,NO);
         
         for (NSDictionary *vinylDictionary in resultsArray){
             NSLog(@"%@", vinylDictionary[@"title"]);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        completionBlock(nil,NO);
+        completionBlock(nil,YES);
         NSLog(@"Request failed with error %@", error);
     }];
     
