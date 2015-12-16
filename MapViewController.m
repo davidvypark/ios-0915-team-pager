@@ -204,12 +204,15 @@
     Firebase *detailsOfSaleItemFirebase = [[Firebase alloc] initWithUrl:detailsOfSaleItemFirebaseURL];
     
     [detailsOfSaleItemFirebase observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
-        detailsOfSaleItem.albumDict = snapshot.value;
-        detailsOfSaleItem.albumDict[@"ID"] = annView.annotationKey;
-        detailsOfSaleItem.isBuyer = YES;
-        detailsOfSaleItem.albumOwner = annView.owner;
-        detailsOfSaleItem.albumPrice = annView.price;
-        detailsOfSaleItem.trade = annView.trade;
+        if (snapshot.value != [NSNull null]) {
+            detailsOfSaleItem.albumDict = snapshot.value;
+            detailsOfSaleItem.albumDict[@"ID"] = annView.annotationKey;
+            detailsOfSaleItem.isBuyer = YES;
+            detailsOfSaleItem.albumOwner = annView.owner;
+            detailsOfSaleItem.albumPrice = annView.price;
+            detailsOfSaleItem.trade = annView.trade;
+        }
+        
         }];
     
     NSString *saleItemOwnerDisplayName = [NSString stringWithFormat:@"https://amber-torch-8635.firebaseio.com/users/%@", annView.owner];
