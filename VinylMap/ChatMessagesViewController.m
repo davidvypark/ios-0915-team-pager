@@ -45,6 +45,7 @@
     self.chat = [[NSMutableArray alloc] init];
     self.view.backgroundColor = [UIColor vinylLightGray];
     self.tableView.backgroundColor = [UIColor vinylLightGray];
+    self.tableView.showsVerticalScrollIndicator = NO;
 
     self.originalTextFieldBottomConstant = self.textFieldBottomContstraint.constant;
     

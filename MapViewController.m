@@ -113,6 +113,7 @@
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
     CLLocationCoordinate2D selfCoord = self.mapView.userLocation.location.coordinate;
+    
     MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(selfCoord, 5000.0, 5000.0);
     [self.mapView setRegion:startRegion animated:NO];
     [self.locationManager stopUpdatingLocation];
@@ -122,7 +123,11 @@
 }
 - (void)updateOrSetupRegionQuery
 {
+    
+    // PROBLEM AREA
     MKCoordinateRegion region = self.mapView.region;
+    
+    
     if (self.regionQuery != nil) {
         self.regionQuery.region = region;
     } else {
