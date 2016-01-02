@@ -376,12 +376,15 @@
     
     self.textFieldBottomContstraint.constant = self.originalTextFieldBottomConstant - (keyboardFrameEndRect.size.height - tabBarHeight);
     
-    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:self.chat.count -1 inSection:0];
-    [self.tableView reloadData];
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.tableView scrollToRowAtIndexPath:indexpath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    });
+    if (self.chat.count > 1) {
+        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:self.chat.count -1 inSection:0];
+        [self.tableView reloadData];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView scrollToRowAtIndexPath:indexpath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        });
+
+    };
     
 }
 
